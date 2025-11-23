@@ -101,7 +101,7 @@ VALUES
   (285099346,'Xyla S. Gamble',956254477,'non.magna.nam@icloud.ca','374-5056 Quis Road'),
   (217188686,'Carly I. Deleon',962193073,'eget.volutpat@protonmail.pt','340-4796 Ac Av.');
 
-INSERT INTO PETDB_ClinicaVeterinaria (NIF,name,phone,email,address)
+INSERT INTO PETDB_ClinicaVeterinaria (NIF,Nome,Telefone,Email,Endereco)
 VALUES
 	(184454058,'Dui Augue Institute',292690072,'erat.sed@protonmail.edu','P.O. Box 863, 5373 Mauris Street'),
 	(116690101,'Et LLC',273089528,'a@hotmail.org','P.O. Box 363, 876 Nisi Rd.'),

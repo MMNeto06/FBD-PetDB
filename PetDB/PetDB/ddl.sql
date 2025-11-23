@@ -55,7 +55,7 @@ GO
 
 CREATE TABLE PETDB_Consulta(
 	Id int IDENTITY(1,1) PRIMARY KEY, 
-	[Data] date NOT NULL, 
+	[Data] datetime NOT NULL, 
 	Animal int NOT NULL, 
 	Medico int NOT NULL, 
 	FOREIGN KEY (Animal) REFERENCES PETDB_Animal(Numero),

@@ -1,0 +1,16 @@
+DROP TABLE PETDB_PrescricaoMedicamento;
+DROP TABLE PETDB_Medicamento;
+DROP TABLE PETDB_Prescricao;
+DROP TABLE PETDB_Pagamento;
+DROP TABLE PETDB_MetodoPagamento;
+DROP TABLE PETDB_Relatorio;
+DROP TABLE PETDB_Vacina;
+DROP TABLE PETDB_ConsultaTratamento;
+DROP TABLE PETDB_Tratamento;
+DROP TABLE PETDB_Consulta;
+DROP TABLE PETDB_Animal;
+DROP TABLE PETDB_MedicoVeterinario;
+DROP TABLE PETDB_Especialidade;
+DROP TABLE PETDB_ClinicaVeterinaria;
+DROP TABLE PETDB_Especie;
+DROP TABLE PETDB_Dono;
