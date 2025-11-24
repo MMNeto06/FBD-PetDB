@@ -88,7 +88,7 @@ CREATE TABLE PETDB_Vacina(
 GO 
 
 CREATE TABLE PETDB_Relatorio(
-	CodigoRelatorio int, 
+	CodigoRelatorio int IDENTITY(1,1), 
 	Consulta int, 
 	Conteudo varchar(MAX) NOT NULL, 
 	PRIMARY KEY (CodigoRelatorio, Consulta),
