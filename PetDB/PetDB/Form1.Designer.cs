@@ -407,6 +407,7 @@ namespace PetDB
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Form1";
+            Load += Form1_Load_1;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
