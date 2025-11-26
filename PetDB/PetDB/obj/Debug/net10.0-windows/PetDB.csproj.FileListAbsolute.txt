@@ -58,3 +58,5 @@ C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\De
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.Login.resources
+C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.Properties.Resources.resources
