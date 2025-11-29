@@ -1,7 +1,7 @@
 ﻿
 namespace PetDB
 {
-    partial class Form1
+    partial class AdminForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -88,6 +88,7 @@ namespace PetDB
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             toolStripMenuItem1.Size = new Size(39, 24);
             toolStripMenuItem1.Text = "<-";
+            toolStripMenuItem1.Click += backBtn_Click;
             // 
             // registarToolStripMenuItem
             // 

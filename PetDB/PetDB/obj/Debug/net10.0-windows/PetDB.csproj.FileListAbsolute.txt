@@ -3,7 +3,6 @@ C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\De
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\PetDB.runtimeconfig.json
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\PetDB.dll
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\PetDB.pdb
-C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.Form1.resources
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.csproj.GenerateResource.cache
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.AssemblyInfoInputs.cache
@@ -60,3 +59,7 @@ C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\De
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.Login.resources
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.Properties.Resources.resources
+C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.AdminForm.resources
+C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.ClinicaForm.resources
+C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.DonoForm.resources
+C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.MedicoForm.resources

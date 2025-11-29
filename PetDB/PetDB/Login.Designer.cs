@@ -40,6 +40,22 @@
             loginBtn = new Button();
             registerBtn = new Button();
             backBtn = new Button();
+            registerIdText = new TextBox();
+            registerIdLabel = new Label();
+            registerNomeLabel = new Label();
+            registerNomeTextBox = new TextBox();
+            registerTelefoneLabel = new Label();
+            registerTelefoneTextBox = new TextBox();
+            registerEmailLabel = new Label();
+            registerEmailTextBox = new TextBox();
+            registerEnderecoLabel = new Label();
+            registerEnderecoTextBox = new TextBox();
+            registerClinicaLabel = new Label();
+            registerClinicaTextBox = new TextBox();
+            registerEspecialidadeLabel = new Label();
+            registerBackBtn = new Button();
+            adicionarBtn = new Button();
+            registerEspecialidadeComboBox = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)logoBox).BeginInit();
             SuspendLayout();
             // 
@@ -147,6 +163,7 @@
             registerBtn.TabIndex = 9;
             registerBtn.Text = "Registar";
             registerBtn.UseVisualStyleBackColor = true;
+            registerBtn.Click += registerBtn_Click;
             // 
             // backBtn
             // 
@@ -158,11 +175,160 @@
             backBtn.UseVisualStyleBackColor = true;
             backBtn.Click += backBtn_Click;
             // 
+            // registerIdText
+            // 
+            registerIdText.Location = new Point(125, 39);
+            registerIdText.Name = "registerIdText";
+            registerIdText.Size = new Size(306, 27);
+            registerIdText.TabIndex = 11;
+            // 
+            // registerIdLabel
+            // 
+            registerIdLabel.AutoSize = true;
+            registerIdLabel.Location = new Point(127, 19);
+            registerIdLabel.Name = "registerIdLabel";
+            registerIdLabel.Size = new Size(70, 20);
+            registerIdLabel.TabIndex = 12;
+            registerIdLabel.Text = "NIF/OMV";
+            // 
+            // registerNomeLabel
+            // 
+            registerNomeLabel.AutoSize = true;
+            registerNomeLabel.Location = new Point(127, 76);
+            registerNomeLabel.Name = "registerNomeLabel";
+            registerNomeLabel.Size = new Size(50, 20);
+            registerNomeLabel.TabIndex = 14;
+            registerNomeLabel.Text = "Nome";
+            // 
+            // registerNomeTextBox
+            // 
+            registerNomeTextBox.Location = new Point(125, 96);
+            registerNomeTextBox.Name = "registerNomeTextBox";
+            registerNomeTextBox.Size = new Size(306, 27);
+            registerNomeTextBox.TabIndex = 13;
+            // 
+            // registerTelefoneLabel
+            // 
+            registerTelefoneLabel.AutoSize = true;
+            registerTelefoneLabel.Location = new Point(127, 144);
+            registerTelefoneLabel.Name = "registerTelefoneLabel";
+            registerTelefoneLabel.Size = new Size(66, 20);
+            registerTelefoneLabel.TabIndex = 16;
+            registerTelefoneLabel.Text = "Telefone";
+            // 
+            // registerTelefoneTextBox
+            // 
+            registerTelefoneTextBox.Location = new Point(125, 164);
+            registerTelefoneTextBox.Name = "registerTelefoneTextBox";
+            registerTelefoneTextBox.Size = new Size(306, 27);
+            registerTelefoneTextBox.TabIndex = 15;
+            // 
+            // registerEmailLabel
+            // 
+            registerEmailLabel.AutoSize = true;
+            registerEmailLabel.Location = new Point(127, 213);
+            registerEmailLabel.Name = "registerEmailLabel";
+            registerEmailLabel.Size = new Size(46, 20);
+            registerEmailLabel.TabIndex = 18;
+            registerEmailLabel.Text = "Email";
+            // 
+            // registerEmailTextBox
+            // 
+            registerEmailTextBox.Location = new Point(125, 233);
+            registerEmailTextBox.Name = "registerEmailTextBox";
+            registerEmailTextBox.Size = new Size(306, 27);
+            registerEmailTextBox.TabIndex = 17;
+            // 
+            // registerEnderecoLabel
+            // 
+            registerEnderecoLabel.AutoSize = true;
+            registerEnderecoLabel.Location = new Point(125, 283);
+            registerEnderecoLabel.Name = "registerEnderecoLabel";
+            registerEnderecoLabel.Size = new Size(71, 20);
+            registerEnderecoLabel.TabIndex = 20;
+            registerEnderecoLabel.Text = "Endereco";
+            // 
+            // registerEnderecoTextBox
+            // 
+            registerEnderecoTextBox.Location = new Point(123, 303);
+            registerEnderecoTextBox.Name = "registerEnderecoTextBox";
+            registerEnderecoTextBox.Size = new Size(306, 27);
+            registerEnderecoTextBox.TabIndex = 19;
+            // 
+            // registerClinicaLabel
+            // 
+            registerClinicaLabel.AutoSize = true;
+            registerClinicaLabel.Location = new Point(360, 344);
+            registerClinicaLabel.Name = "registerClinicaLabel";
+            registerClinicaLabel.Size = new Size(79, 20);
+            registerClinicaLabel.TabIndex = 22;
+            registerClinicaLabel.Text = "NIF Clinica";
+            // 
+            // registerClinicaTextBox
+            // 
+            registerClinicaTextBox.Location = new Point(358, 364);
+            registerClinicaTextBox.Name = "registerClinicaTextBox";
+            registerClinicaTextBox.Size = new Size(306, 27);
+            registerClinicaTextBox.TabIndex = 21;
+            // 
+            // registerEspecialidadeLabel
+            // 
+            registerEspecialidadeLabel.AutoSize = true;
+            registerEspecialidadeLabel.Location = new Point(115, 344);
+            registerEspecialidadeLabel.Name = "registerEspecialidadeLabel";
+            registerEspecialidadeLabel.Size = new Size(101, 20);
+            registerEspecialidadeLabel.TabIndex = 24;
+            registerEspecialidadeLabel.Text = "Especialidade";
+            // 
+            // registerBackBtn
+            // 
+            registerBackBtn.Location = new Point(12, 30);
+            registerBackBtn.Name = "registerBackBtn";
+            registerBackBtn.Size = new Size(94, 29);
+            registerBackBtn.TabIndex = 25;
+            registerBackBtn.Text = "<-";
+            registerBackBtn.UseVisualStyleBackColor = true;
+            registerBackBtn.Click += registerBackBtn_Click;
+            // 
+            // adicionarBtn
+            // 
+            adicionarBtn.Font = new Font("Segoe UI", 12F);
+            adicionarBtn.Location = new Point(473, 397);
+            adicionarBtn.Name = "adicionarBtn";
+            adicionarBtn.Size = new Size(115, 46);
+            adicionarBtn.TabIndex = 26;
+            adicionarBtn.Text = "Adicionar";
+            adicionarBtn.UseVisualStyleBackColor = true;
+            // 
+            // registerEspecialidadeComboBox
+            // 
+            registerEspecialidadeComboBox.FormattingEnabled = true;
+            registerEspecialidadeComboBox.Location = new Point(113, 367);
+            registerEspecialidadeComboBox.Name = "registerEspecialidadeComboBox";
+            registerEspecialidadeComboBox.Size = new Size(239, 28);
+            registerEspecialidadeComboBox.TabIndex = 27;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(registerEspecialidadeComboBox);
+            Controls.Add(adicionarBtn);
+            Controls.Add(registerBackBtn);
+            Controls.Add(registerEspecialidadeLabel);
+            Controls.Add(registerClinicaLabel);
+            Controls.Add(registerClinicaTextBox);
+            Controls.Add(registerEnderecoLabel);
+            Controls.Add(registerEnderecoTextBox);
+            Controls.Add(registerEmailLabel);
+            Controls.Add(registerEmailTextBox);
+            Controls.Add(registerTelefoneLabel);
+            Controls.Add(registerTelefoneTextBox);
+            Controls.Add(registerNomeLabel);
+            Controls.Add(registerNomeTextBox);
+            Controls.Add(registerIdLabel);
+            Controls.Add(registerIdText);
             Controls.Add(backBtn);
             Controls.Add(registerBtn);
             Controls.Add(loginBtn);
@@ -194,5 +360,21 @@
         private Button loginBtn;
         private Button registerBtn;
         private Button backBtn;
+        private TextBox registerIdText;
+        private Label registerIdLabel;
+        private Label registerNomeLabel;
+        private TextBox registerNomeTextBox;
+        private Label registerTelefoneLabel;
+        private TextBox registerTelefoneTextBox;
+        private Label registerEmailLabel;
+        private TextBox registerEmailTextBox;
+        private Label registerEnderecoLabel;
+        private TextBox registerEnderecoTextBox;
+        private Label registerClinicaLabel;
+        private TextBox registerClinicaTextBox;
+        private Label registerEspecialidadeLabel;
+        private Button registerBackBtn;
+        private Button adicionarBtn;
+        private ComboBox registerEspecialidadeComboBox;
     }
 }

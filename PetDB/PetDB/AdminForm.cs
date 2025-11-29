@@ -5,13 +5,15 @@ using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 namespace PetDB
 {
-    public partial class Form1 : Form
+    public partial class AdminForm : Form
     {
         private SqlConnection cn;
         private int currentListIndex;
-        public Form1()
+        private Login loginPage;
+        public AdminForm(Login loginPage)
         {
             InitializeComponent();
+            this.loginPage = loginPage;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,6 +38,11 @@ namespace PetDB
             return cn.State == ConnectionState.Open;
         }
 
+        private void backBtn_Click(object sender, EventArgs e)
+        {
+            loginPage.Show();
+            this.Close();
+        }
         private void button1_Click_1(object sender, EventArgs e)
         {
 
