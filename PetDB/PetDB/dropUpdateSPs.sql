@@ -1,0 +1,9 @@
+DROP PROCEDURE SP_UpdateClinic;
+DROP PROCEDURE SP_UpdateVet;
+DROP PROCEDURE SP_UpdateSpecialty;
+DROP PROCEDURE SP_UpdateOwner;
+DROP PROCEDURE SP_UpdateSpecie;
+DROP PROCEDURE SP_UpdateMedicine;
+DROP PROCEDURE SP_UpdateAppointment;
+DROP PROCEDURE SP_UpdatePayment;
+DROP PROCEDURE SP_UpdatePrescription;

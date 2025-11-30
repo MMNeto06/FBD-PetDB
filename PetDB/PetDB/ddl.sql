@@ -8,7 +8,7 @@ CREATE TABLE PETDB_Dono(
 GO
 
 CREATE TABLE PETDB_Especie(
-	Codigo int PRIMARY KEY, 
+	Codigo int IDENTITY(1,1) PRIMARY KEY, 
 	Descricao varchar(64) NOT NULL
 );
 GO
@@ -23,7 +23,7 @@ CREATE TABLE PETDB_ClinicaVeterinaria(
 GO 
 
 CREATE TABLE PETDB_Especialidade(
-	Codigo int PRIMARY KEY, 
+	Codigo int IDENTITY(1,1) PRIMARY KEY, 
 	Descricao varchar(64) NOT NULL
 ); 
 GO
