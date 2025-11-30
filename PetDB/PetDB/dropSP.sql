@@ -1,0 +1,1 @@
+DROP PROCEDURE SP_AddClinic;

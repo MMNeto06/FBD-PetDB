@@ -43,30 +43,6 @@ namespace PetDB
             loginPage.Show();
             this.Close();
         }
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click_2(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click_3(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click_4(object sender, EventArgs e)
-        {
-
-        }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -145,6 +121,31 @@ namespace PetDB
         private void Form1_Load_1(object sender, EventArgs e)
         {
 
+
+        }
+
+        private void editBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void remBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void okBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addBtn_Click(object sender, EventArgs e)
+        {
 
         }
     }
