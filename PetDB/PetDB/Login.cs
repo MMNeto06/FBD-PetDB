@@ -15,6 +15,7 @@ namespace PetDB
     {
         private SqlConnection cn;
         private String idType = "Administrador";
+        private int codigoEspecialidade = 1;
         // opções de idType: Administrador, Clinica, Medico, Veterinario
         private void showInitialPage()
         {
@@ -50,6 +51,21 @@ namespace PetDB
 
         private void showLoginPage()
         {
+            if (idType == "Administrador")
+            {
+                idLabel.Text = "Identificação";
+                registerBtn.Enabled = false;
+            }
+            else if (idType == "Medico")
+            {
+                idLabel.Text = "Identificação (Número OMV)";
+                registerBtn.Enabled = true;
+            }
+            else
+            {
+                idLabel.Text = "Identificação (NIF)";
+                registerBtn.Enabled = true;
+            }
             idLabel.Visible = true;
             idTextBox.Visible = true;
             loginBtn.Visible = true;
@@ -83,7 +99,7 @@ namespace PetDB
 
         private void showRegisterPage()
         {
-            if(idType != "Administrador")
+            if (idType != "Administrador")
             {
                 idLabel.Visible = false;
                 idTextBox.Visible = false;
@@ -114,15 +130,18 @@ namespace PetDB
 
                 if (idType == "Medico")
                 {
+                    registerIdLabel.Text = "Número OMV";
                     registerClinicaLabel.Visible = true;
                     registerClinicaTextBox.Visible = true;
                     registerClinicaTextBox.Text = "";
                     registerEspecialidadeLabel.Visible = true;
                     registerEspecialidadeComboBox.Visible = true;
-                    //combo box por popular
+                    codigoEspecialidade = 1;
+                    registerEspecialidadeComboBox.SelectedIndex = 0;
                 }
                 else
                 {
+                    registerIdLabel.Text = "NIF";
                     registerEnderecoLabel.Visible = true;
                     registerEnderecoTextBox.Visible = true;
                     registerEnderecoTextBox.Text = "";
@@ -132,7 +151,7 @@ namespace PetDB
             {
                 System.Windows.Forms.MessageBox.Show("Opção indisponível para Administrador");
             }
-            
+
         }
         private SqlConnection getSGBDConnection()
         {
@@ -150,17 +169,33 @@ namespace PetDB
             return cn.State == ConnectionState.Open;
         }
 
+        private void populateEspecialidadeComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_Especialidade", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                registerEspecialidadeComboBox.Items.Add(new String(reader["Descricao"].ToString()));
+            }
+
+            cn.Close();
+
+        }
+
         public Login()
         {
             InitializeComponent();
             showInitialPage();
+            populateEspecialidadeComboBox();
         }
 
         private void adminBtn_Click(object sender, EventArgs e)
         {
             idType = "Administrador";
             showLoginPage();
-            registerBtn.Enabled = false;
         }
 
         private void clinicaBtn_Click(object sender, EventArgs e)
@@ -274,6 +309,84 @@ namespace PetDB
             }
         }
 
-        
+        private void adicionarBtn_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            int entityId;
+            int telefone;
+            int clinicaNif;
+            String nome = registerNomeTextBox.Text;
+            String email = registerEmailTextBox.Text;
+            String endereco = registerEnderecoTextBox.Text;
+            if (Int32.TryParse(registerIdText.Text, out entityId) == false)
+            {
+                System.Windows.Forms.MessageBox.Show("Erro: A sua identificação só pode ser composta por números");
+            }
+            if (Int32.TryParse(registerTelefoneTextBox.Text, out telefone) == false)
+            {
+                System.Windows.Forms.MessageBox.Show("Erro: O número de telefone deve ser um número");
+            }
+            if (Int32.TryParse(registerClinicaTextBox.Text, out clinicaNif) == false && idType == "Medico")
+            {
+                System.Windows.Forms.MessageBox.Show("Erro: O NIF da sua clinica deve ser um número");
+            }
+
+
+            SqlCommand cmd;
+            if (idType == "Clinica")
+            {
+                cmd = new SqlCommand("INSERT INTO PETDB_ClinicaVeterinaria VALUES (" + 
+                    entityId + ",'" +
+                    nome + "'," +
+                    telefone + ",'" +
+                    email + "','" +
+                    endereco + "')", cn);
+            }
+            else if (idType == "Medico")
+            {
+                cmd = new SqlCommand("INSERT INTO PETDB_MedicoVeterinario VALUES (" +
+                    entityId + ",'" +
+                    nome + "'," +
+                    telefone + ",'" +
+                    email + "'," +
+                    codigoEspecialidade + "," +
+                    clinicaNif + ")", cn);
+            }
+            else
+            {
+                cmd = new SqlCommand("INSERT INTO PETDB_Dono VALUES (" +
+                    entityId + ",'" +
+                    nome + "'," +
+                    telefone + ",'" +
+                    email + "','" +
+                    endereco + "')", cn);
+            }
+
+            try
+            {
+                if (cmd.ExecuteNonQuery() == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show("Ocorreu um erro: nenhuma linha foi atualizada");
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Registo feito com sucesso!");
+                    idTextBox.Text = entityId.ToString();
+                    loginBtn_Click(sender, new EventArgs());
+                }
+            }
+            catch (Exception exception)
+            {
+                System.Windows.Forms.MessageBox.Show("Ocorreu um erro: " + exception.ToString());
+            }
+        }
+
+        private void registerEspecialidadeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            codigoEspecialidade = registerEspecialidadeComboBox.SelectedIndex + 1;
+            //System.Diagnostics.Debug.WriteLine("Especialidade código: " + selectedEspecialidade);
+        }
     }
 }

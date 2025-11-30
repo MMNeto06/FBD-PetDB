@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
+using System.Xml.Serialization;
 namespace PetDB
 {
     public partial class AdminForm : Form
@@ -10,16 +11,18 @@ namespace PetDB
         private SqlConnection cn;
         private int currentListIndex;
         private Login loginPage;
+        private String option = "Add";
         public AdminForm(Login loginPage)
         {
             InitializeComponent();
             this.loginPage = loginPage;
+            clinicaBaseControls();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            cn = getSGBDConnection();
-            //loadCustomersToolStripMenuItem_Click(null, null);
+            base.OnFormClosing(e);
+            loginPage.Show();
         }
 
         private SqlConnection getSGBDConnection()
@@ -38,20 +41,48 @@ namespace PetDB
             return cn.State == ConnectionState.Open;
         }
 
+        private void clinicaBaseControls()
+        {
+            nifText.Enabled = false;
+            nomeText.Enabled = false;
+            telefoneText.Enabled = false;
+            emailText.Enabled = false;
+            enderecoText.Enabled = false;
+            addBtn.Visible = true;
+            editBtn.Visible = true;
+            remBtn.Visible = true;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
+        }
+
+        private void clinicaEditControls()
+        {
+            nifText.Enabled = true;
+            nomeText.Enabled = true;
+            telefoneText.Enabled = true;
+            emailText.Enabled = true;
+            enderecoText.Enabled = true;
+            addBtn.Visible = false;
+            editBtn.Visible = false;
+            remBtn.Visible = false;
+            okBtn.Visible = true;
+            cancelBtn.Visible = true;
+        }
+
+        private void clinicaAddControls()
+        {
+            clinicaEditControls();
+            nifText.Text = "";
+            nomeText.Text = "";
+            telefoneText.Text = "";
+            emailText.Text = "";
+            enderecoText.Text = "";
+        }
+
         private void backBtn_Click(object sender, EventArgs e)
         {
             loginPage.Show();
             this.Close();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
         }
 
         private void clinicaVeterinariaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,21 +112,6 @@ namespace PetDB
             ShowClinicaVeterinaria();
         }
 
-        private void textBox1_TextChanged_2(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_2(object sender, EventArgs e)
-        {
-
-        }
-
-        private void emailText_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         public void ShowClinicaVeterinaria()
         {
             if (listBox1.Items.Count == 0 | currentListIndex < 0)
@@ -118,25 +134,34 @@ namespace PetDB
             }
         }
 
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-
-
-        }
-
         private void editBtn_Click(object sender, EventArgs e)
         {
-
+            clinicaEditControls();
         }
 
         private void remBtn_Click(object sender, EventArgs e)
         {
+            if (!verifySGBDConnection())
+                return;
 
+            SqlCommand cmd = new SqlCommand("DELETE FROM PetDB_ClinicaVeterinaria WHERE NIF=" + nifText.Text, cn);
+            try
+            {
+                cmd.ExecuteNonQuery();
+                System.Windows.Forms.MessageBox.Show("Clinica apagada da base de dados");
+            }
+            catch(Exception exception)
+            {
+                System.Windows.Forms.MessageBox.Show("Ocorreu um erro: \n" + exception);
+            }
+            cn.Close();
+            clinicaVeterinariaToolStripMenuItem_Click(sender, e);
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-
+            clinicaBaseControls();
+            ShowClinicaVeterinaria();
         }
 
         private void okBtn_Click(object sender, EventArgs e)
@@ -146,7 +171,7 @@ namespace PetDB
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-
+            clinicaAddControls();
         }
     }
 }

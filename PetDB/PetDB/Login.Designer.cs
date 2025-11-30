@@ -299,6 +299,7 @@
             adicionarBtn.TabIndex = 26;
             adicionarBtn.Text = "Adicionar";
             adicionarBtn.UseVisualStyleBackColor = true;
+            adicionarBtn.Click += adicionarBtn_Click;
             // 
             // registerEspecialidadeComboBox
             // 
@@ -307,6 +308,7 @@
             registerEspecialidadeComboBox.Name = "registerEspecialidadeComboBox";
             registerEspecialidadeComboBox.Size = new Size(239, 28);
             registerEspecialidadeComboBox.TabIndex = 27;
+            registerEspecialidadeComboBox.SelectedIndexChanged += registerEspecialidadeComboBox_SelectedIndexChanged;
             // 
             // Login
             // 
