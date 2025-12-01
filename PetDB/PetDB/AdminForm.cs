@@ -12,6 +12,7 @@ namespace PetDB
         private int currentListIndex;
         private Login loginPage;
         private String option = "Add";
+        private String entity = "";
         public AdminForm(Login loginPage)
         {
             InitializeComponent();
@@ -90,6 +91,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            entity = "Clinica";
             SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_ClinicaVeterinaria", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
@@ -111,6 +113,64 @@ namespace PetDB
             currentListIndex = 0; //nã o sei para que isto serve
             ShowClinicaVeterinaria();
         }
+        private void medicoVeterinarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            return;
+            /*if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_MedicoVeterinario", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Vet vet = new Vet();
+                vet.NumOMV = reader["NumOMV"].ToString();
+                vet.Nome = reader["Nome"].ToString();
+                vet.Telefone = reader["Telefone"].ToString();
+                vet.Email = reader["Email"].ToString();
+                vet.Endereco = reader["Endereco"].ToString();
+                vet.Clinica = reader["Clinica"].ToString();
+                listBox1.Items.Add(Vet);
+            }
+
+            cn.Close();
+
+
+            currentListIndex = 0; 
+            ShowClinicaVeterinaria();
+
+            TA EM STANDBY*/
+        }
+
+        private void donoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Dono";
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_Dono", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Owner Owner = new Owner();
+                Owner.NIF = reader["NIF"].ToString();
+                Owner.Nome = reader["Nome"].ToString();
+                Owner.Telefone = reader["Telefone"].ToString();
+                Owner.Email = reader["Email"].ToString();
+                Owner.Endereco = reader["Endereco"].ToString();
+                listBox1.Items.Add(Owner);
+            }
+
+            cn.Close();
+
+
+            currentListIndex = 0;
+            ShowOwner();
+        }
 
         public void ShowClinicaVeterinaria()
         {
@@ -125,12 +185,47 @@ namespace PetDB
             enderecoText.Text = cv.Endereco;
         }
 
+        public void ShowMedicoVeterinario()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+
+            Vet vet = new Vet();
+            vet = (Vet)listBox1.Items[currentListIndex];
+            // ta em stand-by
+        }
+
+        public void ShowOwner()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+            Owner owner = new Owner();
+            owner = (Owner)listBox1.Items[currentListIndex];
+            nifText.Text = owner.NIF;
+            nomeText.Text = owner.Nome;
+            telefoneText.Text = owner.Telefone;
+            emailText.Text = owner.Email;
+            enderecoText.Text = owner.Endereco;
+        }
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex > 0)
             {
                 currentListIndex = listBox1.SelectedIndex;
-                ShowClinicaVeterinaria();
+                switch (entity)
+                {
+                    case "Clinica":
+                        ShowClinicaVeterinaria();
+                        break;
+
+                    case "Dono":
+                        ShowOwner();
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
 
@@ -150,7 +245,7 @@ namespace PetDB
                 cmd.ExecuteNonQuery();
                 System.Windows.Forms.MessageBox.Show("Clinica apagada da base de dados");
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 System.Windows.Forms.MessageBox.Show("Ocorreu um erro: \n" + exception);
             }
@@ -173,5 +268,7 @@ namespace PetDB
         {
             clinicaAddControls();
         }
+
+
     }
 }

@@ -8,6 +8,30 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
+	IF LEN(@ClinicName) = 0 OR LEN(@ClinicName) > 64
+	BEGIN 
+		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
+
+	IF LEN(@ClinicPhone) != 9 
+	BEGIN 
+		RAISERROR('O contacto telefónico deve ter 9 dígitos!', 16, 1);
+		RETURN; 
+	END
+
+	IF @ClinicEmail NOT LIKE '%_@__%.__%'
+	BEGIN 
+		RAISERROR('Formato de Email inválido!', 16, 1);
+		RETURN; 
+	END
+
+	IF LEN(@ClinicAddress) = 0 OR LEN(@ClinicAddress) > 64
+	BEGIN 
+		RAISERROR('Endereço inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
+	
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
 			INSERT INTO PETDB_ClinicaVeterinaria(NIF, Nome, Telefone, Email, Endereco)
@@ -31,6 +55,24 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
+	IF LEN(@VetName) = 0 OR LEN(@VetName) > 64
+	BEGIN 
+		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
+
+	IF LEN(@VetPhone) != 9 
+	BEGIN 
+		RAISERROR('O contacto telefónico deve ter 9 dígitos!', 16, 1);
+		RETURN; 
+	END
+
+	IF @VetEmail NOT LIKE '%_@__%.__%'
+	BEGIN 
+		RAISERROR('Formato de Email inválido!', 16, 1);
+		RETURN; 
+	END
+
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
 			INSERT INTO PETDB_MedicoVeterinario(NumOMV, Nome, Telefone, Email, Especialidade, Clinica)
@@ -48,6 +90,12 @@ CREATE PROCEDURE SP_AddSpecialty
 AS
 BEGIN 
 	SET NOCOUNT ON; 
+
+	IF LEN(@SpecialtyDescription) = 0 OR LEN(@SpecialtyDescription) > 64
+	BEGIN 
+		RAISERROR('Descrição inválida, muito curta ou demasiado longa!', 16, 1); 
+		RETURN;
+	END
 
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
@@ -70,6 +118,30 @@ CREATE PROCEDURE SP_AddOwner
 AS
 BEGIN 
 	SET NOCOUNT ON; 
+
+	IF LEN(@OwnerName) = 0 OR LEN(@OwnerName) > 64
+	BEGIN 
+		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
+
+	IF LEN(@OwnerPhone) != 9 
+	BEGIN 
+		RAISERROR('O contacto telefónico deve ter 9 dígitos!', 16, 1);
+		RETURN; 
+	END
+
+	IF @OwnerEmail NOT LIKE '%_@__%.__%'
+	BEGIN 
+		RAISERROR('Formato de Email inválido!', 16, 1);
+		RETURN; 
+	END
+
+	IF LEN(@OwnerAddress) = 0 OR LEN(@OwnerAddress) > 64
+	BEGIN 
+		RAISERROR('Endereço inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
 
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
@@ -94,6 +166,18 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
+	IF LEN(@PetName) = 0 OR LEN(@PetName) > 64
+	BEGIN 
+		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
+
+	IF @PetWeight <= 0
+	BEGIN 
+		RAISERROR('Peso Inválido!', 16, 1);
+		RETURN; 
+	END
+
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
 			INSERT INTO PETDB_Animal(Nome, DataNascimento, Peso, Sexo, Especie, Dono)
@@ -111,6 +195,12 @@ CREATE PROCEDURE SP_AddSpecie
 AS
 BEGIN 
 	SET NOCOUNT ON; 
+
+	IF LEN(@SpecieDescription) = 0 OR LEN(@SpecieDescription) > 64
+	BEGIN 
+		RAISERROR('Descrição inválida, muito curta ou demasiado longa!', 16, 1); 
+		RETURN;
+	END
 
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
@@ -131,6 +221,24 @@ CREATE PROCEDURE SP_AddMedicine
 AS
 BEGIN 
 	SET NOCOUNT ON; 
+
+	IF @MedicineCode IN (SELECT Codigo FROM PETDB_Medicamento)
+	BEGIN 
+		RAISERROR('Já existe um medicamento com esse código!', 16, 1); 
+		RETURN; 
+	END
+
+	IF LEN(@MedicineDescription) = 0 OR LEN(@MedicineDescription) > 64
+	BEGIN 
+		RAISERROR('Descrição inválida, muito curta ou demasiado longa!', 16, 1); 
+		RETURN;
+	END
+
+	IF LEN(@MedicineDose) = 0 OR LEN(@MedicineDose) > 10
+	BEGIN 
+		RAISERROR('Dose inválida, muito curta ou demasiado longa!', 16, 1); 
+		RETURN;
+	END
 
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
@@ -174,6 +282,12 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
+	IF @PaymentValue < 0
+	BEGIN 
+		RAISERROR('Valor Inválido!', 16, 1); 
+		RETURN; 
+	END
+
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
 			INSERT INTO PETDB_Pagamento([Data], Custo, Estado, MetodoPagamento, Consulta)
@@ -193,6 +307,12 @@ CREATE PROCEDURE SP_AddPrescription
 AS
 BEGIN 
 	SET NOCOUNT ON; 
+
+	IF @PrescriptionNumber IN (SELECT Numero FROM PETDB_Prescricao) 
+	BEGIN 
+		RAISERROR('Já existe uma prescrição com esse número!', 16, 1);
+		RETURN; 
+	END
 
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT

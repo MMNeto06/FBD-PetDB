@@ -1,0 +1,7 @@
+DROP PROCEDURE SP_GetVetsByClinic;
+DROP PROCEDURE SP_GetPetsByOwner;
+DROP PROCEDURE SP_GetPetsByClinic;
+DROP PROCEDURE SP_GetAppointmentsByPet;
+DROP PROCEDURE SP_GetAppointmentsByVet;
+DROP PROCEDURE SP_GetPrescriptionsByPet;
+DROP PROCEDURE SP_GetPaymentsByOwner;
