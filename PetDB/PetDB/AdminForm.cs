@@ -80,10 +80,42 @@ namespace PetDB
             enderecoText.Text = "";
         }
 
+        private void vetBaseControls()
+        {
+            enderecoText.Width /= 2; 
+            nifText.Enabled = false;
+            nomeText.Enabled = false;
+            telefoneText.Enabled = false;
+            emailText.Enabled = false;
+            enderecoText.Enabled = false;
+            addBtn.Visible = true;
+            editBtn.Visible = true;
+            remBtn.Visible = true;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
+            clinicaComboBox.Visible = true; 
+        }
+
         private void backBtn_Click(object sender, EventArgs e)
         {
             loginPage.Show();
             this.Close();
+        }
+
+        private void populateClinicaComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                clinicaComboBox.Items.Add(new String(reader["Descricao"].ToString()));
+            }
+
+            cn.Close();
+
         }
 
         private void clinicaVeterinariaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -115,8 +147,7 @@ namespace PetDB
         }
         private void medicoVeterinarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            return;
-            /*if (!verifySGBDConnection())
+            if (!verifySGBDConnection())
                 return;
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_MedicoVeterinario", cn);
@@ -132,16 +163,14 @@ namespace PetDB
                 vet.Email = reader["Email"].ToString();
                 vet.Endereco = reader["Endereco"].ToString();
                 vet.Clinica = reader["Clinica"].ToString();
-                listBox1.Items.Add(Vet);
+                listBox1.Items.Add(vet);
             }
 
             cn.Close();
 
 
-            currentListIndex = 0; 
-            ShowClinicaVeterinaria();
-
-            TA EM STANDBY*/
+            currentListIndex = 0;
+            ShowVet();
         }
 
         private void donoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -185,14 +214,19 @@ namespace PetDB
             enderecoText.Text = cv.Endereco;
         }
 
-        public void ShowMedicoVeterinario()
+        public void ShowVet()
         {
             if (listBox1.Items.Count == 0 | currentListIndex < 0)
                 return;
-
             Vet vet = new Vet();
             vet = (Vet)listBox1.Items[currentListIndex];
-            // ta em stand-by
+            nifText.Text = vet.NumOMV;
+            nomeText.Text = vet.Nome;
+            telefoneText.Text = vet.Telefone;
+            emailText.Text = vet.Email;
+            enderecoText.Text = vet.Endereco;
+            clinicaComboBox.SelectedIndex = 0;
+            clinicaComboBox.Text = 
         }
 
         public void ShowOwner()
@@ -269,6 +303,14 @@ namespace PetDB
             clinicaAddControls();
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

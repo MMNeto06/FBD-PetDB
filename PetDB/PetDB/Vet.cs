@@ -14,7 +14,7 @@ namespace PetDB
         private String _endereco;
         private String _clinica;
 
-        public String NIF
+        public String NumOMV
         {
             get { return _numOMV; }
             set

@@ -70,6 +70,8 @@ namespace PetDB
             emailText = new TextBox();
             enderecoLabel = new Label();
             enderecoText = new TextBox();
+            clinicaComboBox = new ComboBox();
+            label1 = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -101,7 +103,7 @@ namespace PetDB
             // clinicaVeterinariaToolStripMenuItem
             // 
             clinicaVeterinariaToolStripMenuItem.Name = "clinicaVeterinariaToolStripMenuItem";
-            clinicaVeterinariaToolStripMenuItem.Size = new Size(180, 22);
+            clinicaVeterinariaToolStripMenuItem.Size = new Size(173, 22);
             clinicaVeterinariaToolStripMenuItem.Text = "Clinica Veterinaria";
             clinicaVeterinariaToolStripMenuItem.Click += clinicaVeterinariaToolStripMenuItem_Click;
             // 
@@ -109,7 +111,7 @@ namespace PetDB
             // 
             médicoVeterinárioToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { novoMédicoToolStripMenuItem, novaEspecialidadeToolStripMenuItem });
             médicoVeterinárioToolStripMenuItem.Name = "médicoVeterinárioToolStripMenuItem";
-            médicoVeterinárioToolStripMenuItem.Size = new Size(180, 22);
+            médicoVeterinárioToolStripMenuItem.Size = new Size(173, 22);
             médicoVeterinárioToolStripMenuItem.Text = "Médico Veterinário";
             // 
             // novoMédicoToolStripMenuItem
@@ -128,7 +130,7 @@ namespace PetDB
             // donoToolStripMenuItem
             // 
             donoToolStripMenuItem.Name = "donoToolStripMenuItem";
-            donoToolStripMenuItem.Size = new Size(180, 22);
+            donoToolStripMenuItem.Size = new Size(173, 22);
             donoToolStripMenuItem.Text = "Dono";
             donoToolStripMenuItem.Click += donoToolStripMenuItem_Click;
             // 
@@ -136,7 +138,7 @@ namespace PetDB
             // 
             animalToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { novoAnimalToolStripMenuItem, novaEspécieToolStripMenuItem });
             animalToolStripMenuItem.Name = "animalToolStripMenuItem";
-            animalToolStripMenuItem.Size = new Size(180, 22);
+            animalToolStripMenuItem.Size = new Size(173, 22);
             animalToolStripMenuItem.Text = "Animal";
             // 
             // novoAnimalToolStripMenuItem
@@ -154,25 +156,25 @@ namespace PetDB
             // medicamentoToolStripMenuItem
             // 
             medicamentoToolStripMenuItem.Name = "medicamentoToolStripMenuItem";
-            medicamentoToolStripMenuItem.Size = new Size(180, 22);
+            medicamentoToolStripMenuItem.Size = new Size(173, 22);
             medicamentoToolStripMenuItem.Text = "Medicamento";
             // 
             // consultaToolStripMenuItem
             // 
             consultaToolStripMenuItem.Name = "consultaToolStripMenuItem";
-            consultaToolStripMenuItem.Size = new Size(180, 22);
+            consultaToolStripMenuItem.Size = new Size(173, 22);
             consultaToolStripMenuItem.Text = "Consulta";
             // 
             // pagamentoToolStripMenuItem
             // 
             pagamentoToolStripMenuItem.Name = "pagamentoToolStripMenuItem";
-            pagamentoToolStripMenuItem.Size = new Size(180, 22);
+            pagamentoToolStripMenuItem.Size = new Size(173, 22);
             pagamentoToolStripMenuItem.Text = "Pagamento";
             // 
             // prescricaoToolStripMenuItem
             // 
             prescricaoToolStripMenuItem.Name = "prescricaoToolStripMenuItem";
-            prescricaoToolStripMenuItem.Size = new Size(180, 22);
+            prescricaoToolStripMenuItem.Size = new Size(173, 22);
             prescricaoToolStripMenuItem.Text = "Prescrição";
             // 
             // consultarToolStripMenuItem
@@ -393,11 +395,33 @@ namespace PetDB
             enderecoText.Size = new Size(322, 23);
             enderecoText.TabIndex = 16;
             // 
+            // clinicaComboBox
+            // 
+            clinicaComboBox.FormattingEnabled = true;
+            clinicaComboBox.Location = new Point(457, 169);
+            clinicaComboBox.Name = "clinicaComboBox";
+            clinicaComboBox.Size = new Size(185, 23);
+            clinicaComboBox.TabIndex = 18;
+            clinicaComboBox.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(457, 152);
+            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(43, 15);
+            label1.TabIndex = 19;
+            label1.Text = "Clínica";
+            label1.Click += label1_Click_1;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(650, 279);
+            Controls.Add(label1);
+            Controls.Add(clinicaComboBox);
             Controls.Add(enderecoLabel);
             Controls.Add(enderecoText);
             Controls.Add(emailLabel);
@@ -474,5 +498,7 @@ namespace PetDB
         private TextBox emailText;
         private Label enderecoLabel;
         private TextBox enderecoText;
+        private ComboBox clinicaComboBox;
+        private Label label1;
     }
 }
