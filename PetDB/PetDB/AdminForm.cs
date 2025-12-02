@@ -54,6 +54,8 @@ namespace PetDB
             remBtn.Visible = true;
             okBtn.Visible = false;
             cancelBtn.Visible = false;
+            clinicaLabel.Visible = false; 
+            clinicaComboBox.Visible = false;
         }
 
         private void clinicaEditControls()
@@ -68,6 +70,7 @@ namespace PetDB
             remBtn.Visible = false;
             okBtn.Visible = true;
             cancelBtn.Visible = true;
+            clinicaComboBox.Visible = false;
         }
 
         private void clinicaAddControls()
@@ -107,11 +110,11 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_", cn);
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetClinicTable", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                clinicaComboBox.Items.Add(new String(reader["Descricao"].ToString()));
+                clinicaComboBox.Items.Add(new String(reader["Nome"].ToString()));
             }
 
             cn.Close();
@@ -124,7 +127,7 @@ namespace PetDB
                 return;
 
             entity = "Clinica";
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_ClinicaVeterinaria", cn);
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetClinicTable", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -150,7 +153,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_MedicoVeterinario", cn);
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetVetTable", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -161,7 +164,7 @@ namespace PetDB
                 vet.Nome = reader["Nome"].ToString();
                 vet.Telefone = reader["Telefone"].ToString();
                 vet.Email = reader["Email"].ToString();
-                vet.Endereco = reader["Endereco"].ToString();
+                vet.Especialidade = reader["Especialidade"].ToString();
                 vet.Clinica = reader["Clinica"].ToString();
                 listBox1.Items.Add(vet);
             }
@@ -179,7 +182,7 @@ namespace PetDB
                 return;
 
             entity = "Dono";
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_Dono", cn);
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetOwnerTable", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -224,9 +227,8 @@ namespace PetDB
             nomeText.Text = vet.Nome;
             telefoneText.Text = vet.Telefone;
             emailText.Text = vet.Email;
-            enderecoText.Text = vet.Endereco;
-            clinicaComboBox.SelectedIndex = 0;
-            clinicaComboBox.Text = 
+            enderecoText.Text = vet.Especialidade; // just for testing, this is not correct
+            //clinicaComboBox.SelectedIndex = 0;
         }
 
         public void ShowOwner()

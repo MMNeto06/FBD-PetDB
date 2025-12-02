@@ -11,7 +11,7 @@ namespace PetDB
         private String _nome;
         private String _telefone;
         private String _email;
-        private String _endereco;
+        private String _especialidade;
         private String _clinica;
 
         public String NumOMV
@@ -70,9 +70,9 @@ namespace PetDB
             }
         }
 
-        public String Endereco
+        public String Especialidade
         {
-            get { return _endereco; }
+            get { return _especialidade; }
             set
             {
                 if (value == null | String.IsNullOrEmpty(value))
@@ -80,7 +80,7 @@ namespace PetDB
                     throw new Exception("Company Name field can’t be empty");
                     return;
                 }
-                _endereco = value;
+                _especialidade = value;
             }
         }
 
