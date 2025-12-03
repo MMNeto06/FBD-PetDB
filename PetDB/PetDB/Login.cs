@@ -337,7 +337,7 @@ namespace PetDB
             SqlCommand cmd;
             if (idType == "Clinica")
             {
-                cmd = new SqlCommand("INSERT INTO PETDB_ClinicaVeterinaria VALUES (" + 
+                cmd = new SqlCommand("INSERT INTO PETDB_ClinicaVeterinaria VALUES (" +
                     entityId + ",'" +
                     nome + "'," +
                     telefone + ",'" +
@@ -387,6 +387,16 @@ namespace PetDB
         {
             codigoEspecialidade = registerEspecialidadeComboBox.SelectedIndex + 1;
             //System.Diagnostics.Debug.WriteLine("Especialidade código: " + selectedEspecialidade);
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                loginBtn_Click(sender, e);
+            }
+
         }
     }
 }

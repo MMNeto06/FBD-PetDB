@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj": {}
+    "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj": {}
   },
   "projects": {
-    "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj": {
+    "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj",
+        "projectUniqueName": "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj",
         "projectName": "PetDB",
-        "projectPath": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj",
-        "packagesPath": "C:\\Users\\diosi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\obj\\",
+        "projectPath": "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj",
+        "packagesPath": "C:\\Users\\netom\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\diosi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\netom\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

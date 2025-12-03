@@ -142,6 +142,7 @@
             idTextBox.Name = "idTextBox";
             idTextBox.Size = new Size(318, 41);
             idTextBox.TabIndex = 7;
+            idTextBox.KeyDown += OnKeyDownHandler;
             // 
             // loginBtn
             // 
