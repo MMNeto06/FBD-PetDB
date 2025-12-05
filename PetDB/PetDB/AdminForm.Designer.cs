@@ -96,6 +96,13 @@ namespace PetDB
             donoEmailLabel = new Label();
             donoEmailText = new TextBox();
             donoTelefoneText = new TextBox();
+            animalTabPage = new TabPage();
+            medicamentoTabPage = new TabPage();
+            consultaTabPage = new TabPage();
+            pagamentoTabPage = new TabPage();
+            prescricaoTabPage = new TabPage();
+            especialidadeTabPage = new TabPage();
+            especieTabPage = new TabPage();
             menuStrip1.SuspendLayout();
             registarTabControl.SuspendLayout();
             clinicaTabPage.SuspendLayout();
@@ -109,7 +116,7 @@ namespace PetDB
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, registarToolStripMenuItem, consultarToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(812, 28);
+            menuStrip1.Size = new Size(785, 28);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -273,13 +280,13 @@ namespace PetDB
             listBox1.Location = new Point(12, 31);
             listBox1.Margin = new Padding(2);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(356, 304);
+            listBox1.Size = new Size(356, 364);
             listBox1.TabIndex = 2;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
             // addBtn
             // 
-            addBtn.Location = new Point(400, 260);
+            addBtn.Location = new Point(402, 317);
             addBtn.Margin = new Padding(2);
             addBtn.Name = "addBtn";
             addBtn.Size = new Size(94, 29);
@@ -290,7 +297,7 @@ namespace PetDB
             // 
             // editBtn
             // 
-            editBtn.Location = new Point(525, 260);
+            editBtn.Location = new Point(527, 317);
             editBtn.Margin = new Padding(2);
             editBtn.Name = "editBtn";
             editBtn.Size = new Size(94, 29);
@@ -301,7 +308,7 @@ namespace PetDB
             // 
             // remBtn
             // 
-            remBtn.Location = new Point(649, 260);
+            remBtn.Location = new Point(651, 317);
             remBtn.Margin = new Padding(2);
             remBtn.Name = "remBtn";
             remBtn.Size = new Size(94, 29);
@@ -312,7 +319,7 @@ namespace PetDB
             // 
             // okBtn
             // 
-            okBtn.Location = new Point(584, 295);
+            okBtn.Location = new Point(586, 352);
             okBtn.Margin = new Padding(2);
             okBtn.Name = "okBtn";
             okBtn.Size = new Size(94, 29);
@@ -323,7 +330,7 @@ namespace PetDB
             // 
             // cancelBtn
             // 
-            cancelBtn.Location = new Point(459, 295);
+            cancelBtn.Location = new Point(461, 352);
             cancelBtn.Margin = new Padding(2);
             cancelBtn.Name = "cancelBtn";
             cancelBtn.Size = new Size(94, 29);
@@ -391,11 +398,19 @@ namespace PetDB
             registarTabControl.Controls.Add(clinicaTabPage);
             registarTabControl.Controls.Add(medicoTabPage);
             registarTabControl.Controls.Add(donoTabPage);
+            registarTabControl.Controls.Add(animalTabPage);
+            registarTabControl.Controls.Add(medicamentoTabPage);
+            registarTabControl.Controls.Add(consultaTabPage);
+            registarTabControl.Controls.Add(pagamentoTabPage);
+            registarTabControl.Controls.Add(prescricaoTabPage);
+            registarTabControl.Controls.Add(especialidadeTabPage);
+            registarTabControl.Controls.Add(especieTabPage);
             registarTabControl.Location = new Point(374, 31);
             registarTabControl.Margin = new Padding(4);
+            registarTabControl.Multiline = true;
             registarTabControl.Name = "registarTabControl";
             registarTabControl.SelectedIndex = 0;
-            registarTabControl.Size = new Size(409, 222);
+            registarTabControl.Size = new Size(407, 264);
             registarTabControl.TabIndex = 20;
             registarTabControl.SelectedIndexChanged += registarTabControl_onSelectedIndexChange;
             // 
@@ -411,11 +426,11 @@ namespace PetDB
             clinicaTabPage.Controls.Add(clinicaEmailLabel);
             clinicaTabPage.Controls.Add(clinicaEmailText);
             clinicaTabPage.Controls.Add(clinicaTelefoneText);
-            clinicaTabPage.Location = new Point(4, 29);
+            clinicaTabPage.Location = new Point(4, 54);
             clinicaTabPage.Margin = new Padding(4);
             clinicaTabPage.Name = "clinicaTabPage";
             clinicaTabPage.Padding = new Padding(4);
-            clinicaTabPage.Size = new Size(401, 189);
+            clinicaTabPage.Size = new Size(399, 206);
             clinicaTabPage.TabIndex = 0;
             clinicaTabPage.Text = "Clinica";
             clinicaTabPage.UseVisualStyleBackColor = true;
@@ -471,11 +486,11 @@ namespace PetDB
             medicoTabPage.Controls.Add(medicoTelefoneText);
             medicoTabPage.Controls.Add(medicoClinicaLabel);
             medicoTabPage.Controls.Add(medicoClinicaComboBox);
-            medicoTabPage.Location = new Point(4, 29);
+            medicoTabPage.Location = new Point(4, 79);
             medicoTabPage.Margin = new Padding(4);
             medicoTabPage.Name = "medicoTabPage";
             medicoTabPage.Padding = new Padding(4);
-            medicoTabPage.Size = new Size(401, 189);
+            medicoTabPage.Size = new Size(399, 139);
             medicoTabPage.TabIndex = 1;
             medicoTabPage.Text = "Medico";
             medicoTabPage.UseVisualStyleBackColor = true;
@@ -601,10 +616,10 @@ namespace PetDB
             donoTabPage.Controls.Add(donoEmailLabel);
             donoTabPage.Controls.Add(donoEmailText);
             donoTabPage.Controls.Add(donoTelefoneText);
-            donoTabPage.Location = new Point(4, 29);
+            donoTabPage.Location = new Point(4, 79);
             donoTabPage.Name = "donoTabPage";
             donoTabPage.Padding = new Padding(3);
-            donoTabPage.Size = new Size(401, 189);
+            donoTabPage.Size = new Size(399, 139);
             donoTabPage.TabIndex = 2;
             donoTabPage.Text = "Dono";
             donoTabPage.UseVisualStyleBackColor = true;
@@ -699,11 +714,81 @@ namespace PetDB
             donoTelefoneText.Size = new Size(154, 27);
             donoTelefoneText.TabIndex = 24;
             // 
+            // animalTabPage
+            // 
+            animalTabPage.Location = new Point(4, 79);
+            animalTabPage.Name = "animalTabPage";
+            animalTabPage.Padding = new Padding(3);
+            animalTabPage.Size = new Size(399, 139);
+            animalTabPage.TabIndex = 3;
+            animalTabPage.Text = "Animal";
+            animalTabPage.UseVisualStyleBackColor = true;
+            // 
+            // medicamentoTabPage
+            // 
+            medicamentoTabPage.Location = new Point(4, 79);
+            medicamentoTabPage.Name = "medicamentoTabPage";
+            medicamentoTabPage.Padding = new Padding(3);
+            medicamentoTabPage.Size = new Size(399, 139);
+            medicamentoTabPage.TabIndex = 4;
+            medicamentoTabPage.Text = "Medicamento";
+            medicamentoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // consultaTabPage
+            // 
+            consultaTabPage.Location = new Point(4, 79);
+            consultaTabPage.Name = "consultaTabPage";
+            consultaTabPage.Padding = new Padding(3);
+            consultaTabPage.Size = new Size(399, 139);
+            consultaTabPage.TabIndex = 5;
+            consultaTabPage.Text = "Consulta";
+            consultaTabPage.UseVisualStyleBackColor = true;
+            // 
+            // pagamentoTabPage
+            // 
+            pagamentoTabPage.Location = new Point(4, 79);
+            pagamentoTabPage.Name = "pagamentoTabPage";
+            pagamentoTabPage.Padding = new Padding(3);
+            pagamentoTabPage.Size = new Size(399, 139);
+            pagamentoTabPage.TabIndex = 6;
+            pagamentoTabPage.Text = "Pagamento";
+            pagamentoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // prescricaoTabPage
+            // 
+            prescricaoTabPage.Location = new Point(4, 79);
+            prescricaoTabPage.Name = "prescricaoTabPage";
+            prescricaoTabPage.Padding = new Padding(3);
+            prescricaoTabPage.Size = new Size(399, 139);
+            prescricaoTabPage.TabIndex = 7;
+            prescricaoTabPage.Text = "Prescrição";
+            prescricaoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // especialidadeTabPage
+            // 
+            especialidadeTabPage.Location = new Point(4, 79);
+            especialidadeTabPage.Name = "especialidadeTabPage";
+            especialidadeTabPage.Padding = new Padding(3);
+            especialidadeTabPage.Size = new Size(399, 139);
+            especialidadeTabPage.TabIndex = 8;
+            especialidadeTabPage.Text = "Especialidade";
+            especialidadeTabPage.UseVisualStyleBackColor = true;
+            // 
+            // especieTabPage
+            // 
+            especieTabPage.Location = new Point(4, 54);
+            especieTabPage.Name = "especieTabPage";
+            especieTabPage.Padding = new Padding(3);
+            especieTabPage.Size = new Size(399, 206);
+            especieTabPage.TabIndex = 9;
+            especieTabPage.Text = "Espécie";
+            especieTabPage.UseVisualStyleBackColor = true;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(812, 349);
+            ClientSize = new Size(785, 406);
             Controls.Add(registarTabControl);
             Controls.Add(cancelBtn);
             Controls.Add(okBtn);
@@ -806,5 +891,12 @@ namespace PetDB
         private Label donoEmailLabel;
         private TextBox donoEmailText;
         private TextBox donoTelefoneText;
+        private TabPage animalTabPage;
+        private TabPage medicamentoTabPage;
+        private TabPage consultaTabPage;
+        private TabPage pagamentoTabPage;
+        private TabPage prescricaoTabPage;
+        private TabPage especialidadeTabPage;
+        private TabPage especieTabPage;
     }
 }
