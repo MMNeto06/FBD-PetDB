@@ -312,7 +312,7 @@ namespace PetDB
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex > 0)
+            if (listBox1.SelectedIndex >= 0)
             {
                 currentListIndex = listBox1.SelectedIndex;
                 switch (entity)
