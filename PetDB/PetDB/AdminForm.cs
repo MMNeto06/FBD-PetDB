@@ -51,6 +51,15 @@ namespace PetDB
             cancelBtn.Visible = false;
         }
 
+        private void generalEditControls()
+        {
+            addBtn.Visible = false;
+            editBtn.Visible = false;
+            remBtn.Visible = false;
+            okBtn.Visible = true;
+            cancelBtn.Visible = true;
+        }
+
         private void clinicaBaseControls()
         {
             clinicaNifText.Enabled = false;
@@ -68,11 +77,7 @@ namespace PetDB
             clinicaTelefoneText.Enabled = true;
             clinicaEmailText.Enabled = true;
             clinicaEnderecoText.Enabled = true;
-            addBtn.Visible = false;
-            editBtn.Visible = false;
-            remBtn.Visible = false;
-            okBtn.Visible = true;
-            cancelBtn.Visible = true;
+            generalEditControls();
         }
 
         private void clinicaAddControls()
@@ -105,11 +110,7 @@ namespace PetDB
             medicoEmailText.Enabled = true;
             medicoEspecialidadeText.Enabled = true;
             medicoClinicaText.Enabled = true;
-            addBtn.Visible = false;
-            editBtn.Visible = false;
-            remBtn.Visible = false;
-            okBtn.Visible = true;
-            cancelBtn.Visible = true;
+            generalEditControls();
         }
 
         private void medicoAddControls()
@@ -140,21 +141,17 @@ namespace PetDB
             donoTelefoneText.Enabled = true;
             donoEmailText.Enabled = true;
             donoEnderecoText.Enabled = true;
-            addBtn.Visible = false;
-            editBtn.Visible = false;
-            remBtn.Visible = false;
-            okBtn.Visible = true;
-            cancelBtn.Visible = true;
+            generalEditControls();
         }
 
         private void donoAddControls()
         {
             donoEditControls();
-            clinicaNifText.Text = "";
-            clinicaNomeText.Text = "";
-            clinicaTelefoneText.Text = "";
-            clinicaEmailText.Text = "";
-            clinicaEnderecoText.Text = "";
+            donoNifText.Text = "";
+            donoNomeText.Text = "";
+            donoTelefoneText.Text = "";
+            donoEmailText.Text = "";
+            donoEnderecoText.Text = "";
         }
 
         private void animalBaseControls()
@@ -169,13 +166,56 @@ namespace PetDB
             generalBaseControls();
         }
 
+        private void animalEditControls()
+        {
+            animalNomeText.Enabled = true;
+            animalSexoText.Enabled = true;
+            animalPesoText.Enabled = true;
+            animalDataNascimentoText.Enabled = true;
+            animalEspecieText.Enabled = true;
+            animalDonoText.Enabled = true;
+            generalEditControls();
+        }
+
+        // TODO
+        /*private void animalAddControls()
+        {
+            animalNumeroText.Text = "Automático";
+            ideias: 
+                mudar coisas para dropdowns; 
+                calendário para data de nascimento;
+        }*/
+
+        private void medicamentoBaseControls()
+        {
+            medicamentoCodigoText.Enabled = false;
+            medicamentoDoseText.Enabled = false;
+            medicamentoNomeText.Enabled = false;
+            generalBaseControls();
+        }
+
+        private void medicamentoEditControls()
+        {
+            medicamentoNomeText.Enabled = true;
+            medicamentoDoseText.Enabled = true;
+            medicamentoNomeText.Enabled = true;
+            generalEditControls();
+        }
+
+        private void medicamentoAddControls()
+        {
+            medicamentoCodigoText.Text = "";
+            medicamentoDoseText.Text = "";
+            medicamentoNomeText.Text = "";
+        }
+
         private void backBtn_Click(object sender, EventArgs e)
         {
             loginPage.Show();
             this.Close();
         }
 
-        private void clinicaVeterinariaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void clinicaVeterinariaTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -203,7 +243,7 @@ namespace PetDB
             currentListIndex = 0; //nã o sei para que isto serve
             ShowClinicaVeterinaria();
         }
-        private void medicoVeterinarioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void medicoVeterinarioTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -233,7 +273,7 @@ namespace PetDB
             ShowVet();
         }
 
-        private void donoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void donoTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -262,7 +302,7 @@ namespace PetDB
             ShowOwner();
         }
 
-        private void animalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void animalTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -291,6 +331,33 @@ namespace PetDB
 
             currentListIndex = 0;
             ShowPet();
+        }
+
+        private void medTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Medicamento";
+            medicamentoBaseControls();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetMedInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Med med = new Med();
+                med.Codigo = reader["Codigo"].ToString();
+                med.Nome = reader["Nome"].ToString();
+                med.Dose = reader["Dose"].ToString();
+                listBox1.Items.Add(med);
+            }
+
+            cn.Close();
+
+
+            currentListIndex = 0;
+            ShowMed();
         }
 
         public void ShowClinicaVeterinaria()
@@ -349,6 +416,17 @@ namespace PetDB
             animalDonoText.Text = pet.Dono;
         }
 
+        public void ShowMed()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+            Med med = new Med();
+            med = (Med)listBox1.Items[currentListIndex];
+            medicamentoCodigoText.Text = med.Codigo;
+            medicamentoNomeText.Text = med.Nome;
+            medicamentoDoseText.Text = med.Dose;
+        }
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex >= 0)
@@ -367,6 +445,9 @@ namespace PetDB
                         break;
                     case "Animal":
                         ShowPet();
+                        break;
+                    case "Medicamento":
+                        ShowMed();
                         break;
 
                     default:
@@ -388,6 +469,12 @@ namespace PetDB
                 case "Dono":
                     donoEditControls();
                     break;
+                case "Animal":
+                    animalEditControls();
+                    break;
+                case "Medicamento":
+                    medicamentoEditControls();
+                    break;
                 default: break;
             }
         }
@@ -397,7 +484,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("DELETE FROM PetDB_ClinicaVeterinaria WHERE NIF=" + clinicaNifText.Text, cn);
+            SqlCommand cmd = new SqlCommand("DELETE FROM PetDB_ClinicaVeterinaria WHERE NIF=" + clinicaNifText.Text, cn); // MUDAR PARA SP; ADICIONAR SWITCH CASE
             try
             {
                 cmd.ExecuteNonQuery();
@@ -408,7 +495,7 @@ namespace PetDB
                 System.Windows.Forms.MessageBox.Show("Ocorreu um erro: \n" + exception);
             }
             cn.Close();
-            clinicaVeterinariaToolStripMenuItem_Click(sender, e);
+            clinicaVeterinariaTab_Click(sender, e);
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
@@ -426,6 +513,14 @@ namespace PetDB
                 case "Dono":
                     donoBaseControls();
                     ShowOwner();
+                    break;
+                case "Animal":
+                    animalBaseControls();
+                    ShowPet();
+                    break;
+                case "Medicamento":
+                    medicamentoBaseControls();
+                    ShowMed();
                     break;
                 default: break;
             }
@@ -449,6 +544,12 @@ namespace PetDB
                 case "Dono":
                     donoAddControls();
                     break;
+                case "Animal":
+                    //animalAddControls();
+                    break;
+                case "Medicamento":
+                    medicamentoAddControls();
+                    break;
                 default: break;
             }
         }
@@ -464,24 +565,22 @@ namespace PetDB
             switch (selectedTabIndex)
             {
                 case 0://clinica
-                    clinicaVeterinariaToolStripMenuItem_Click(sender, e);
+                    clinicaVeterinariaTab_Click(sender, e);
                     break;
                 case 1: //Medico
-                    medicoVeterinarioToolStripMenuItem_Click(sender, e);
+                    medicoVeterinarioTab_Click(sender, e);
                     break;
                 case 2: //Dono
-                    donoToolStripMenuItem_Click(sender, e);
+                    donoTab_Click(sender, e);
                     break;
                 case 3: // Animal
-                    animalToolStripMenuItem_Click(sender, e);
+                    animalTab_Click(sender, e);
+                    break;
+                case 4: // Medicamento
+                    medTab_Click(sender, e);
                     break;
                 default: break;
             }
-        }
-
-        private void animalTabPage_Click(object sender, EventArgs e)
-        {
-
         }
 
     }

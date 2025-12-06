@@ -1,3 +1,24 @@
+CREATE PROCEDURE SP_GetMedInfo
+AS 
+BEGIN
+	SET NOCOUNT ON; 
+
+	SELECT Codigo, Descricao AS Nome, Dose FROM PETDB_Medicamento;
+END
+GO
+
+CREATE PROCEDURE SP_GetAppointmentInfo
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT c.Id, c.[Data], a.Nome as Animal, v.Nome as Medico
+	FROM PETDB_Consulta as c
+	JOIN PETDB_Animal as a ON c.Animal = a.Numero
+	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
+END 
+GO 
+
 CREATE PROCEDURE SP_GetClinicTable
 AS 
 BEGIN 
