@@ -7,14 +7,30 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE SP_GetVetTable
+CREATE PROCEDURE SP_GetVetInfo
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
 
-	SELECT * FROM PETDB_MedicoVeterinario
+	SELECT v.NumOMV, v.Nome, v.Telefone, v.Email, e.Descricao as Especialidade, c.Nome as Clinica
+	FROM PETDB_MedicoVeterinario as v
+	JOIN PETDB_Especialidade as e ON v.Especialidade = e.Codigo
+	JOIN PETDB_ClinicaVeterinaria as c ON v.Clinica = c.NIF
 END
 GO
+
+CREATE PROCEDURE SP_GetPetInfo
+AS
+BEGIN
+	SET NOCOUNT ON; 
+
+	SELECT a.Numero, a.Nome, a.DataNascimento, a.Peso, a.Sexo, e.Descricao as Especie, d.Nome as Dono
+	FROM PETDB_Animal as a
+	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
+	JOIN PETDB_Dono as d ON d.NIF = a.Dono;
+END
+GO
+
 
 CREATE PROCEDURE SP_GetOwnerTable
 AS 

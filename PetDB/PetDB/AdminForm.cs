@@ -42,6 +42,15 @@ namespace PetDB
             return cn.State == ConnectionState.Open;
         }
 
+        private void generalBaseControls()
+        {
+            addBtn.Visible = true;
+            editBtn.Visible = true;
+            remBtn.Visible = true;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
+        }
+
         private void clinicaBaseControls()
         {
             clinicaNifText.Enabled = false;
@@ -49,11 +58,7 @@ namespace PetDB
             clinicaTelefoneText.Enabled = false;
             clinicaEmailText.Enabled = false;
             clinicaEnderecoText.Enabled = false;
-            addBtn.Visible = true;
-            editBtn.Visible = true;
-            remBtn.Visible = true;
-            okBtn.Visible = false;
-            cancelBtn.Visible = false;
+            generalBaseControls();
         }
 
         private void clinicaEditControls()
@@ -87,13 +92,9 @@ namespace PetDB
             medicoTelefoneText.Enabled = false;
             medicoEmailText.Enabled = false;
             medicoEspecialidadeText.Enabled = false;
-            medicoClinicaComboBox.Enabled = false;
-            addBtn.Visible = true;
-            editBtn.Visible = true;
-            remBtn.Visible = true;
-            okBtn.Visible = false;
-            cancelBtn.Visible = false;
-            medicoClinicaComboBox.Visible = true;
+            medicoClinicaText.Enabled = false;
+            medicoClinicaText.Visible = true;
+            generalBaseControls();
         }
 
         private void medicoEditControls()
@@ -103,7 +104,7 @@ namespace PetDB
             medicoTelefoneText.Enabled = true;
             medicoEmailText.Enabled = true;
             medicoEspecialidadeText.Enabled = true;
-            medicoClinicaComboBox.Enabled = true;
+            medicoClinicaText.Enabled = true;
             addBtn.Visible = false;
             editBtn.Visible = false;
             remBtn.Visible = false;
@@ -119,7 +120,7 @@ namespace PetDB
             medicoTelefoneText.Text = "";
             medicoEmailText.Text = "";
             medicoEspecialidadeText.Text = "";
-            medicoClinicaComboBox.Text = "";
+            medicoClinicaText.Text = "";
         }
 
         private void donoBaseControls()
@@ -129,11 +130,7 @@ namespace PetDB
             donoTelefoneText.Enabled = false;
             donoEmailText.Enabled = false;
             donoEnderecoText.Enabled = false;
-            addBtn.Visible = true;
-            editBtn.Visible = true;
-            remBtn.Visible = true;
-            okBtn.Visible = false;
-            cancelBtn.Visible = false;
+            generalBaseControls();
         }
 
         private void donoEditControls()
@@ -160,26 +157,22 @@ namespace PetDB
             clinicaEnderecoText.Text = "";
         }
 
+        private void animalBaseControls()
+        {
+            animalNumeroText.Enabled = false;
+            animalNomeText.Enabled = false;
+            animalSexoText.Enabled = false;
+            animalPesoText.Enabled = false;
+            animalDataNascimentoText.Enabled = false;
+            animalEspecieText.Enabled = false;
+            animalDonoText.Enabled = false;
+            generalBaseControls();
+        }
+
         private void backBtn_Click(object sender, EventArgs e)
         {
             loginPage.Show();
             this.Close();
-        }
-
-        private void populateClinicaComboBox()
-        {
-            if (!verifySGBDConnection())
-                return;
-
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetClinicTable", cn);
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                medicoClinicaComboBox.Items.Add(new String(reader["Nome"].ToString()));
-            }
-
-            cn.Close();
-
         }
 
         private void clinicaVeterinariaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -217,7 +210,7 @@ namespace PetDB
 
             entity = "Medico";
             medicoBaseControls();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetVetTable", cn);
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetVetInfo", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -269,6 +262,37 @@ namespace PetDB
             ShowOwner();
         }
 
+        private void animalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Animal";
+            animalBaseControls();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetPetInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Pet pet = new Pet();
+                pet.Numero = reader["Numero"].ToString();
+                pet.Nome = reader["Nome"].ToString();
+                pet.DataNascimento = reader["DataNascimento"].ToString();
+                pet.Sexo = reader["Sexo"].ToString();
+                pet.Peso = reader["Peso"].ToString();
+                pet.Especie = reader["Especie"].ToString();
+                pet.Dono = reader["Dono"].ToString();
+                listBox1.Items.Add(pet);
+            }
+
+            cn.Close();
+
+
+            currentListIndex = 0;
+            ShowPet();
+        }
+
         public void ShowClinicaVeterinaria()
         {
             if (listBox1.Items.Count == 0 | currentListIndex < 0)
@@ -280,7 +304,7 @@ namespace PetDB
             clinicaTelefoneText.Text = cv.Telefone;
             clinicaEmailText.Text = cv.Email;
             clinicaEnderecoText.Text = cv.Endereco;
-           
+
         }
 
         public void ShowVet()
@@ -293,8 +317,8 @@ namespace PetDB
             medicoNomeText.Text = vet.Nome;
             medicoTelefoneText.Text = vet.Telefone;
             medicoEmailText.Text = vet.Email;
-            medicoEspecialidadeText.Text = vet.Especialidade; // just for testing, this is not correct
-            //clinicaComboBox.SelectedIndex = 0;
+            medicoEspecialidadeText.Text = vet.Especialidade;
+            medicoClinicaText.Text = vet.Clinica;
         }
 
         public void ShowOwner()
@@ -310,6 +334,21 @@ namespace PetDB
             donoEnderecoText.Text = owner.Endereco;
         }
 
+        public void ShowPet()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+            Pet pet = new Pet();
+            pet = (Pet)listBox1.Items[currentListIndex];
+            animalNumeroText.Text = pet.Numero;
+            animalNomeText.Text = pet.Nome;
+            animalSexoText.Text = pet.Sexo;
+            animalPesoText.Text = pet.Peso;
+            animalDataNascimentoText.Text = pet.DataNascimento;
+            animalEspecieText.Text = pet.Especie;
+            animalDonoText.Text = pet.Dono;
+        }
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex >= 0)
@@ -320,12 +359,14 @@ namespace PetDB
                     case "Clinica":
                         ShowClinicaVeterinaria();
                         break;
-
                     case "Medico":
                         ShowVet();
                         break;
                     case "Dono":
                         ShowOwner();
+                        break;
+                    case "Animal":
+                        ShowPet();
                         break;
 
                     default:
@@ -347,7 +388,7 @@ namespace PetDB
                 case "Dono":
                     donoEditControls();
                     break;
-                default : break;
+                default: break;
             }
         }
 
@@ -431,8 +472,17 @@ namespace PetDB
                 case 2: //Dono
                     donoToolStripMenuItem_Click(sender, e);
                     break;
+                case 3: // Animal
+                    animalToolStripMenuItem_Click(sender, e);
+                    break;
                 default: break;
             }
         }
+
+        private void animalTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
