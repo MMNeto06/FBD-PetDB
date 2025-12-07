@@ -10,11 +10,20 @@
     <Compile Update="DonoForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="PopUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Login.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="MedicoForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UC_ListStrings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UC_ShowReport.cs">
+      <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
 </Project>

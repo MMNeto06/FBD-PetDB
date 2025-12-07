@@ -119,18 +119,51 @@ namespace PetDB
             medicamentoCodigoText = new TextBox();
             medicamentCodigoLabel = new Label();
             consultaTabPage = new TabPage();
+            btnConsultarRelatorio = new Button();
+            btnVerTratamentos = new Button();
             consultaMedicoText = new TextBox();
             consultaMedicoLabel = new Label();
-            textBox2 = new TextBox();
+            consultaAnimalText = new TextBox();
             consultaAnimalLabel = new Label();
-            textBox1 = new TextBox();
+            consultaDataText = new TextBox();
             consultaDataLabel = new Label();
             consultaIdText = new TextBox();
             consultaIdLabel = new Label();
             pagamentoTabPage = new TabPage();
+            pagamentoMedicoText = new TextBox();
+            pagamentoMedicoLabel = new Label();
+            pagamentoAnimalText = new TextBox();
+            pagamentoAnimalLabel = new Label();
+            pagamentoMetodoText = new TextBox();
+            pagamentoMetodoLabel = new Label();
+            pagamentoEstadoText = new TextBox();
+            pagamentoEstadoLabel = new Label();
+            pagamentoValorText = new TextBox();
+            pagamentoValorLabel = new Label();
+            pagamentoDataText = new TextBox();
+            pagamentoDataLabel = new Label();
+            pagamentoIdText = new TextBox();
+            pagamentoIdLabel = new Label();
             prescricaoTabPage = new TabPage();
+            btnVerMedicamentos = new Button();
+            prescricaoAnimalText = new TextBox();
+            prescricaoAnimalLabel = new Label();
+            prescricaoDataText = new TextBox();
+            prescricaoDataLabel = new Label();
+            prescricaoNumeroText = new TextBox();
+            prescricaoNumeroLabel = new Label();
             especialidadeTabPage = new TabPage();
+            btnConsultarMedicos = new Button();
+            especialidadeDescricaoText = new TextBox();
+            especialidadeDescricaoLabel = new Label();
+            especialidadeCodigoText = new TextBox();
+            especialidadeCodigoLabel = new Label();
             especieTabPage = new TabPage();
+            btnConsultaAnimais = new Button();
+            especieDescricaoText = new TextBox();
+            especieDescricaoLabel = new Label();
+            especieCodigoText = new TextBox();
+            especieCodigoLabel = new Label();
             menuStrip1.SuspendLayout();
             registarTabControl.SuspendLayout();
             clinicaTabPage.SuspendLayout();
@@ -139,6 +172,10 @@ namespace PetDB
             animalTabPage.SuspendLayout();
             medicamentoTabPage.SuspendLayout();
             consultaTabPage.SuspendLayout();
+            pagamentoTabPage.SuspendLayout();
+            prescricaoTabPage.SuspendLayout();
+            especialidadeTabPage.SuspendLayout();
+            especieTabPage.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -945,11 +982,13 @@ namespace PetDB
             // 
             // consultaTabPage
             // 
+            consultaTabPage.Controls.Add(btnConsultarRelatorio);
+            consultaTabPage.Controls.Add(btnVerTratamentos);
             consultaTabPage.Controls.Add(consultaMedicoText);
             consultaTabPage.Controls.Add(consultaMedicoLabel);
-            consultaTabPage.Controls.Add(textBox2);
+            consultaTabPage.Controls.Add(consultaAnimalText);
             consultaTabPage.Controls.Add(consultaAnimalLabel);
-            consultaTabPage.Controls.Add(textBox1);
+            consultaTabPage.Controls.Add(consultaDataText);
             consultaTabPage.Controls.Add(consultaDataLabel);
             consultaTabPage.Controls.Add(consultaIdText);
             consultaTabPage.Controls.Add(consultaIdLabel);
@@ -962,9 +1001,29 @@ namespace PetDB
             consultaTabPage.Text = "Consulta";
             consultaTabPage.UseVisualStyleBackColor = true;
             // 
+            // btnConsultarRelatorio
+            // 
+            btnConsultarRelatorio.Location = new Point(147, 102);
+            btnConsultarRelatorio.Name = "btnConsultarRelatorio";
+            btnConsultarRelatorio.Size = new Size(166, 23);
+            btnConsultarRelatorio.TabIndex = 9;
+            btnConsultarRelatorio.Text = "Consultar Relatório";
+            btnConsultarRelatorio.UseVisualStyleBackColor = true;
+            btnConsultarRelatorio.Click += btnConsultarRelatorio_Click;
+            // 
+            // btnVerTratamentos
+            // 
+            btnVerTratamentos.Location = new Point(8, 102);
+            btnVerTratamentos.Name = "btnVerTratamentos";
+            btnVerTratamentos.Size = new Size(133, 23);
+            btnVerTratamentos.TabIndex = 8;
+            btnVerTratamentos.Text = "Ver Tratamentos";
+            btnVerTratamentos.UseVisualStyleBackColor = true;
+            btnVerTratamentos.Click += btnVerTratamentos_Click;
+            // 
             // consultaMedicoText
             // 
-            consultaMedicoText.Location = new Point(147, 94);
+            consultaMedicoText.Location = new Point(147, 63);
             consultaMedicoText.Name = "consultaMedicoText";
             consultaMedicoText.Size = new Size(166, 23);
             consultaMedicoText.TabIndex = 7;
@@ -972,39 +1031,39 @@ namespace PetDB
             // consultaMedicoLabel
             // 
             consultaMedicoLabel.AutoSize = true;
-            consultaMedicoLabel.Location = new Point(147, 76);
+            consultaMedicoLabel.Location = new Point(147, 45);
             consultaMedicoLabel.Name = "consultaMedicoLabel";
             consultaMedicoLabel.Size = new Size(47, 15);
             consultaMedicoLabel.TabIndex = 6;
             consultaMedicoLabel.Text = "Medico";
             // 
-            // textBox2
+            // consultaAnimalText
             // 
-            textBox2.Location = new Point(7, 94);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(134, 23);
-            textBox2.TabIndex = 5;
+            consultaAnimalText.Location = new Point(7, 63);
+            consultaAnimalText.Name = "consultaAnimalText";
+            consultaAnimalText.Size = new Size(134, 23);
+            consultaAnimalText.TabIndex = 5;
             // 
             // consultaAnimalLabel
             // 
             consultaAnimalLabel.AutoSize = true;
-            consultaAnimalLabel.Location = new Point(8, 76);
+            consultaAnimalLabel.Location = new Point(8, 45);
             consultaAnimalLabel.Name = "consultaAnimalLabel";
             consultaAnimalLabel.Size = new Size(45, 15);
             consultaAnimalLabel.TabIndex = 4;
             consultaAnimalLabel.Text = "Animal";
             // 
-            // textBox1
+            // consultaDataText
             // 
-            textBox1.Location = new Point(126, 19);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(187, 23);
-            textBox1.TabIndex = 3;
+            consultaDataText.Location = new Point(147, 19);
+            consultaDataText.Name = "consultaDataText";
+            consultaDataText.Size = new Size(166, 23);
+            consultaDataText.TabIndex = 3;
             // 
             // consultaDataLabel
             // 
             consultaDataLabel.AutoSize = true;
-            consultaDataLabel.Location = new Point(126, 4);
+            consultaDataLabel.Location = new Point(147, 4);
             consultaDataLabel.Name = "consultaDataLabel";
             consultaDataLabel.Size = new Size(31, 15);
             consultaDataLabel.TabIndex = 2;
@@ -1014,7 +1073,7 @@ namespace PetDB
             // 
             consultaIdText.Location = new Point(7, 19);
             consultaIdText.Name = "consultaIdText";
-            consultaIdText.Size = new Size(113, 23);
+            consultaIdText.Size = new Size(134, 23);
             consultaIdText.TabIndex = 1;
             // 
             // consultaIdLabel
@@ -1028,6 +1087,20 @@ namespace PetDB
             // 
             // pagamentoTabPage
             // 
+            pagamentoTabPage.Controls.Add(pagamentoMedicoText);
+            pagamentoTabPage.Controls.Add(pagamentoMedicoLabel);
+            pagamentoTabPage.Controls.Add(pagamentoAnimalText);
+            pagamentoTabPage.Controls.Add(pagamentoAnimalLabel);
+            pagamentoTabPage.Controls.Add(pagamentoMetodoText);
+            pagamentoTabPage.Controls.Add(pagamentoMetodoLabel);
+            pagamentoTabPage.Controls.Add(pagamentoEstadoText);
+            pagamentoTabPage.Controls.Add(pagamentoEstadoLabel);
+            pagamentoTabPage.Controls.Add(pagamentoValorText);
+            pagamentoTabPage.Controls.Add(pagamentoValorLabel);
+            pagamentoTabPage.Controls.Add(pagamentoDataText);
+            pagamentoTabPage.Controls.Add(pagamentoDataLabel);
+            pagamentoTabPage.Controls.Add(pagamentoIdText);
+            pagamentoTabPage.Controls.Add(pagamentoIdLabel);
             pagamentoTabPage.Location = new Point(4, 64);
             pagamentoTabPage.Margin = new Padding(2);
             pagamentoTabPage.Name = "pagamentoTabPage";
@@ -1037,8 +1110,127 @@ namespace PetDB
             pagamentoTabPage.Text = "Pagamento";
             pagamentoTabPage.UseVisualStyleBackColor = true;
             // 
+            // pagamentoMedicoText
+            // 
+            pagamentoMedicoText.Location = new Point(148, 106);
+            pagamentoMedicoText.Name = "pagamentoMedicoText";
+            pagamentoMedicoText.Size = new Size(165, 23);
+            pagamentoMedicoText.TabIndex = 13;
+            // 
+            // pagamentoMedicoLabel
+            // 
+            pagamentoMedicoLabel.AutoSize = true;
+            pagamentoMedicoLabel.Location = new Point(148, 89);
+            pagamentoMedicoLabel.Name = "pagamentoMedicoLabel";
+            pagamentoMedicoLabel.Size = new Size(47, 15);
+            pagamentoMedicoLabel.TabIndex = 12;
+            pagamentoMedicoLabel.Text = "Médico";
+            // 
+            // pagamentoAnimalText
+            // 
+            pagamentoAnimalText.Location = new Point(5, 106);
+            pagamentoAnimalText.Name = "pagamentoAnimalText";
+            pagamentoAnimalText.Size = new Size(131, 23);
+            pagamentoAnimalText.TabIndex = 11;
+            // 
+            // pagamentoAnimalLabel
+            // 
+            pagamentoAnimalLabel.AutoSize = true;
+            pagamentoAnimalLabel.Location = new Point(5, 88);
+            pagamentoAnimalLabel.Name = "pagamentoAnimalLabel";
+            pagamentoAnimalLabel.Size = new Size(109, 15);
+            pagamentoAnimalLabel.TabIndex = 10;
+            pagamentoAnimalLabel.Text = "Animal Consultado";
+            // 
+            // pagamentoMetodoText
+            // 
+            pagamentoMetodoText.Location = new Point(143, 62);
+            pagamentoMetodoText.Name = "pagamentoMetodoText";
+            pagamentoMetodoText.Size = new Size(170, 23);
+            pagamentoMetodoText.TabIndex = 9;
+            // 
+            // pagamentoMetodoLabel
+            // 
+            pagamentoMetodoLabel.AutoSize = true;
+            pagamentoMetodoLabel.Location = new Point(143, 44);
+            pagamentoMetodoLabel.Name = "pagamentoMetodoLabel";
+            pagamentoMetodoLabel.Size = new Size(129, 15);
+            pagamentoMetodoLabel.TabIndex = 8;
+            pagamentoMetodoLabel.Text = "Método de Pagamento";
+            // 
+            // pagamentoEstadoText
+            // 
+            pagamentoEstadoText.Location = new Point(5, 62);
+            pagamentoEstadoText.Name = "pagamentoEstadoText";
+            pagamentoEstadoText.Size = new Size(131, 23);
+            pagamentoEstadoText.TabIndex = 7;
+            // 
+            // pagamentoEstadoLabel
+            // 
+            pagamentoEstadoLabel.AutoSize = true;
+            pagamentoEstadoLabel.Location = new Point(5, 44);
+            pagamentoEstadoLabel.Name = "pagamentoEstadoLabel";
+            pagamentoEstadoLabel.Size = new Size(42, 15);
+            pagamentoEstadoLabel.TabIndex = 6;
+            pagamentoEstadoLabel.Text = "Estado";
+            // 
+            // pagamentoValorText
+            // 
+            pagamentoValorText.Location = new Point(52, 18);
+            pagamentoValorText.Name = "pagamentoValorText";
+            pagamentoValorText.Size = new Size(85, 23);
+            pagamentoValorText.TabIndex = 5;
+            // 
+            // pagamentoValorLabel
+            // 
+            pagamentoValorLabel.AutoSize = true;
+            pagamentoValorLabel.Location = new Point(52, 3);
+            pagamentoValorLabel.Name = "pagamentoValorLabel";
+            pagamentoValorLabel.Size = new Size(33, 15);
+            pagamentoValorLabel.TabIndex = 4;
+            pagamentoValorLabel.Text = "Valor";
+            // 
+            // pagamentoDataText
+            // 
+            pagamentoDataText.Location = new Point(143, 18);
+            pagamentoDataText.Name = "pagamentoDataText";
+            pagamentoDataText.Size = new Size(170, 23);
+            pagamentoDataText.TabIndex = 3;
+            // 
+            // pagamentoDataLabel
+            // 
+            pagamentoDataLabel.AutoSize = true;
+            pagamentoDataLabel.Location = new Point(143, 2);
+            pagamentoDataLabel.Name = "pagamentoDataLabel";
+            pagamentoDataLabel.Size = new Size(93, 15);
+            pagamentoDataLabel.TabIndex = 2;
+            pagamentoDataLabel.Text = "Data de Emissão";
+            // 
+            // pagamentoIdText
+            // 
+            pagamentoIdText.Location = new Point(5, 18);
+            pagamentoIdText.Name = "pagamentoIdText";
+            pagamentoIdText.Size = new Size(41, 23);
+            pagamentoIdText.TabIndex = 1;
+            // 
+            // pagamentoIdLabel
+            // 
+            pagamentoIdLabel.AutoSize = true;
+            pagamentoIdLabel.Location = new Point(4, 2);
+            pagamentoIdLabel.Name = "pagamentoIdLabel";
+            pagamentoIdLabel.Size = new Size(17, 15);
+            pagamentoIdLabel.TabIndex = 0;
+            pagamentoIdLabel.Text = "Id";
+            // 
             // prescricaoTabPage
             // 
+            prescricaoTabPage.Controls.Add(btnVerMedicamentos);
+            prescricaoTabPage.Controls.Add(prescricaoAnimalText);
+            prescricaoTabPage.Controls.Add(prescricaoAnimalLabel);
+            prescricaoTabPage.Controls.Add(prescricaoDataText);
+            prescricaoTabPage.Controls.Add(prescricaoDataLabel);
+            prescricaoTabPage.Controls.Add(prescricaoNumeroText);
+            prescricaoTabPage.Controls.Add(prescricaoNumeroLabel);
             prescricaoTabPage.Location = new Point(4, 64);
             prescricaoTabPage.Margin = new Padding(2);
             prescricaoTabPage.Name = "prescricaoTabPage";
@@ -1048,8 +1240,71 @@ namespace PetDB
             prescricaoTabPage.Text = "Prescrição";
             prescricaoTabPage.UseVisualStyleBackColor = true;
             // 
+            // btnVerMedicamentos
+            // 
+            btnVerMedicamentos.Location = new Point(174, 94);
+            btnVerMedicamentos.Name = "btnVerMedicamentos";
+            btnVerMedicamentos.Size = new Size(119, 23);
+            btnVerMedicamentos.TabIndex = 6;
+            btnVerMedicamentos.Text = "Ver Medicamentos";
+            btnVerMedicamentos.UseVisualStyleBackColor = true;
+            btnVerMedicamentos.Click += btnVerMedicamentos_Click;
+            // 
+            // prescricaoAnimalText
+            // 
+            prescricaoAnimalText.Location = new Point(5, 94);
+            prescricaoAnimalText.Name = "prescricaoAnimalText";
+            prescricaoAnimalText.Size = new Size(136, 23);
+            prescricaoAnimalText.TabIndex = 5;
+            // 
+            // prescricaoAnimalLabel
+            // 
+            prescricaoAnimalLabel.AutoSize = true;
+            prescricaoAnimalLabel.Location = new Point(5, 76);
+            prescricaoAnimalLabel.Name = "prescricaoAnimalLabel";
+            prescricaoAnimalLabel.Size = new Size(45, 15);
+            prescricaoAnimalLabel.TabIndex = 4;
+            prescricaoAnimalLabel.Text = "Animal";
+            // 
+            // prescricaoDataText
+            // 
+            prescricaoDataText.Location = new Point(156, 20);
+            prescricaoDataText.Name = "prescricaoDataText";
+            prescricaoDataText.Size = new Size(157, 23);
+            prescricaoDataText.TabIndex = 3;
+            // 
+            // prescricaoDataLabel
+            // 
+            prescricaoDataLabel.AutoSize = true;
+            prescricaoDataLabel.Location = new Point(156, 2);
+            prescricaoDataLabel.Name = "prescricaoDataLabel";
+            prescricaoDataLabel.Size = new Size(93, 15);
+            prescricaoDataLabel.TabIndex = 2;
+            prescricaoDataLabel.Text = "Data de Emissão";
+            // 
+            // prescricaoNumeroText
+            // 
+            prescricaoNumeroText.Location = new Point(5, 20);
+            prescricaoNumeroText.Name = "prescricaoNumeroText";
+            prescricaoNumeroText.Size = new Size(136, 23);
+            prescricaoNumeroText.TabIndex = 1;
+            // 
+            // prescricaoNumeroLabel
+            // 
+            prescricaoNumeroLabel.AutoSize = true;
+            prescricaoNumeroLabel.Location = new Point(5, 2);
+            prescricaoNumeroLabel.Name = "prescricaoNumeroLabel";
+            prescricaoNumeroLabel.Size = new Size(51, 15);
+            prescricaoNumeroLabel.TabIndex = 0;
+            prescricaoNumeroLabel.Text = "Número";
+            // 
             // especialidadeTabPage
             // 
+            especialidadeTabPage.Controls.Add(btnConsultarMedicos);
+            especialidadeTabPage.Controls.Add(especialidadeDescricaoText);
+            especialidadeTabPage.Controls.Add(especialidadeDescricaoLabel);
+            especialidadeTabPage.Controls.Add(especialidadeCodigoText);
+            especialidadeTabPage.Controls.Add(especialidadeCodigoLabel);
             especialidadeTabPage.Location = new Point(4, 64);
             especialidadeTabPage.Margin = new Padding(2);
             especialidadeTabPage.Name = "especialidadeTabPage";
@@ -1059,8 +1314,55 @@ namespace PetDB
             especialidadeTabPage.Text = "Especialidade";
             especialidadeTabPage.UseVisualStyleBackColor = true;
             // 
+            // btnConsultarMedicos
+            // 
+            btnConsultarMedicos.Location = new Point(66, 83);
+            btnConsultarMedicos.Name = "btnConsultarMedicos";
+            btnConsultarMedicos.Size = new Size(175, 23);
+            btnConsultarMedicos.TabIndex = 4;
+            btnConsultarMedicos.Text = "Médicos desta Especialidade";
+            btnConsultarMedicos.UseVisualStyleBackColor = true;
+            btnConsultarMedicos.Click += btnConsultarMedicos_Click;
+            // 
+            // especialidadeDescricaoText
+            // 
+            especialidadeDescricaoText.Location = new Point(147, 20);
+            especialidadeDescricaoText.Name = "especialidadeDescricaoText";
+            especialidadeDescricaoText.Size = new Size(166, 23);
+            especialidadeDescricaoText.TabIndex = 3;
+            // 
+            // especialidadeDescricaoLabel
+            // 
+            especialidadeDescricaoLabel.AutoSize = true;
+            especialidadeDescricaoLabel.Location = new Point(147, 2);
+            especialidadeDescricaoLabel.Name = "especialidadeDescricaoLabel";
+            especialidadeDescricaoLabel.Size = new Size(78, 15);
+            especialidadeDescricaoLabel.TabIndex = 2;
+            especialidadeDescricaoLabel.Text = "Especialidade";
+            // 
+            // especialidadeCodigoText
+            // 
+            especialidadeCodigoText.Location = new Point(5, 20);
+            especialidadeCodigoText.Name = "especialidadeCodigoText";
+            especialidadeCodigoText.Size = new Size(136, 23);
+            especialidadeCodigoText.TabIndex = 1;
+            // 
+            // especialidadeCodigoLabel
+            // 
+            especialidadeCodigoLabel.AutoSize = true;
+            especialidadeCodigoLabel.Location = new Point(5, 2);
+            especialidadeCodigoLabel.Name = "especialidadeCodigoLabel";
+            especialidadeCodigoLabel.Size = new Size(46, 15);
+            especialidadeCodigoLabel.TabIndex = 0;
+            especialidadeCodigoLabel.Text = "Código";
+            // 
             // especieTabPage
             // 
+            especieTabPage.Controls.Add(btnConsultaAnimais);
+            especieTabPage.Controls.Add(especieDescricaoText);
+            especieTabPage.Controls.Add(especieDescricaoLabel);
+            especieTabPage.Controls.Add(especieCodigoText);
+            especieTabPage.Controls.Add(especieCodigoLabel);
             especieTabPage.Location = new Point(4, 64);
             especieTabPage.Margin = new Padding(2);
             especieTabPage.Name = "especieTabPage";
@@ -1069,6 +1371,48 @@ namespace PetDB
             especieTabPage.TabIndex = 9;
             especieTabPage.Text = "Espécie";
             especieTabPage.UseVisualStyleBackColor = true;
+            // 
+            // btnConsultaAnimais
+            // 
+            btnConsultaAnimais.Location = new Point(66, 83);
+            btnConsultaAnimais.Name = "btnConsultaAnimais";
+            btnConsultaAnimais.Size = new Size(175, 23);
+            btnConsultaAnimais.TabIndex = 9;
+            btnConsultaAnimais.Text = "Animais desta Espécie";
+            btnConsultaAnimais.UseVisualStyleBackColor = true;
+            btnConsultaAnimais.Click += btnConsultaAnimais_Click;
+            // 
+            // especieDescricaoText
+            // 
+            especieDescricaoText.Location = new Point(147, 20);
+            especieDescricaoText.Name = "especieDescricaoText";
+            especieDescricaoText.Size = new Size(166, 23);
+            especieDescricaoText.TabIndex = 8;
+            // 
+            // especieDescricaoLabel
+            // 
+            especieDescricaoLabel.AutoSize = true;
+            especieDescricaoLabel.Location = new Point(147, 2);
+            especieDescricaoLabel.Name = "especieDescricaoLabel";
+            especieDescricaoLabel.Size = new Size(46, 15);
+            especieDescricaoLabel.TabIndex = 7;
+            especieDescricaoLabel.Text = "Espécie";
+            // 
+            // especieCodigoText
+            // 
+            especieCodigoText.Location = new Point(5, 20);
+            especieCodigoText.Name = "especieCodigoText";
+            especieCodigoText.Size = new Size(136, 23);
+            especieCodigoText.TabIndex = 6;
+            // 
+            // especieCodigoLabel
+            // 
+            especieCodigoLabel.AutoSize = true;
+            especieCodigoLabel.Location = new Point(5, 2);
+            especieCodigoLabel.Name = "especieCodigoLabel";
+            especieCodigoLabel.Size = new Size(46, 15);
+            especieCodigoLabel.TabIndex = 5;
+            especieCodigoLabel.Text = "Código";
             // 
             // AdminForm
             // 
@@ -1103,6 +1447,14 @@ namespace PetDB
             medicamentoTabPage.PerformLayout();
             consultaTabPage.ResumeLayout(false);
             consultaTabPage.PerformLayout();
+            pagamentoTabPage.ResumeLayout(false);
+            pagamentoTabPage.PerformLayout();
+            prescricaoTabPage.ResumeLayout(false);
+            prescricaoTabPage.PerformLayout();
+            especialidadeTabPage.ResumeLayout(false);
+            especialidadeTabPage.PerformLayout();
+            especieTabPage.ResumeLayout(false);
+            especieTabPage.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1212,11 +1564,44 @@ namespace PetDB
         private TextBox medicamentoDoseText;
         private TextBox consultaMedicoText;
         private Label consultaMedicoLabel;
-        private TextBox textBox2;
+        private TextBox consultaAnimalText;
         private Label consultaAnimalLabel;
-        private TextBox textBox1;
+        private TextBox consultaDataText;
         private Label consultaDataLabel;
         private TextBox consultaIdText;
         private Label consultaIdLabel;
+        private Label pagamentoEstadoLabel;
+        private TextBox pagamentoValorText;
+        private Label pagamentoValorLabel;
+        private TextBox pagamentoDataText;
+        private Label pagamentoDataLabel;
+        private TextBox pagamentoIdText;
+        private Label pagamentoIdLabel;
+        private TextBox pagamentoMedicoText;
+        private Label pagamentoMedicoLabel;
+        private TextBox pagamentoAnimalText;
+        private Label pagamentoAnimalLabel;
+        private TextBox pagamentoMetodoText;
+        private Label pagamentoMetodoLabel;
+        private TextBox pagamentoEstadoText;
+        private Button btnVerTratamentos;
+        private Button btnConsultarRelatorio;
+        private Button btnVerMedicamentos;
+        private TextBox prescricaoAnimalText;
+        private Label prescricaoAnimalLabel;
+        private TextBox prescricaoDataText;
+        private Label prescricaoDataLabel;
+        private TextBox prescricaoNumeroText;
+        private Label prescricaoNumeroLabel;
+        private Label especialidadeCodigoLabel;
+        private Button btnConsultarMedicos;
+        private TextBox especialidadeDescricaoText;
+        private Label especialidadeDescricaoLabel;
+        private TextBox especialidadeCodigoText;
+        private Button btnConsultaAnimais;
+        private TextBox especieDescricaoText;
+        private Label especieDescricaoLabel;
+        private TextBox especieCodigoText;
+        private Label especieCodigoLabel;
     }
 }

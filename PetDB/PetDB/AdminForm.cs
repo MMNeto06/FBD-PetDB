@@ -209,10 +209,213 @@ namespace PetDB
             medicamentoNomeText.Text = "";
         }
 
+        private void consultaBaseControls()
+        {
+            consultaIdText.Enabled = false;
+            consultaDataText.Enabled = false;
+            consultaAnimalText.Enabled = false;
+            consultaMedicoText.Enabled = false;
+            generalBaseControls();
+        }
+
+        private void pagamentoBaseControls()
+        {
+            pagamentoIdText.Enabled = false;
+            pagamentoValorText.Enabled = false;
+            pagamentoDataText.Enabled = false;
+            pagamentoEstadoText.Enabled = false;
+            pagamentoMetodoText.Enabled = false;
+            pagamentoAnimalText.Enabled = false;
+            pagamentoMedicoText.Enabled = false;
+            generalBaseControls();
+        }
+
+        // falta corrigir, por dropdowns
+        private void pagamentoEditControls()
+        {
+            pagamentoValorText.Enabled = true;
+            pagamentoDataText.Enabled = true;
+            pagamentoEstadoText.Enabled = true;
+            pagamentoMetodoText.Enabled = true;
+            pagamentoAnimalText.Enabled = true;
+            pagamentoMedicoText.Enabled = true;
+            generalEditControls();
+        }
+
+        // TODO 
+        /*private void pagamentoAddControls()
+        {
+
+        }*/
+
+        private void prescricaoBaseControls()
+        {
+            prescricaoNumeroText.Enabled = false;
+            prescricaoDataText.Enabled = false;
+            prescricaoAnimalText.Enabled = false;
+            generalBaseControls();
+        }
+
+        /*TODO
+        private void prescricaoEditControls()
+        {
+
+        }*/
+
+        /* TODO
+        private void prescricaoAddControls()
+        {
+
+        }*/
+
+        private void especialidadeBaseControls()
+        {
+            especialidadeCodigoText.Enabled = false;
+            especialidadeDescricaoText.Enabled = false;
+            generalBaseControls();
+        }
+
+        /*TODO
+        private void especialidadeEditControls()
+        {
+
+        }*/
+
+        /* TODO
+        private void especialidadeAddControls()
+        {
+
+        }*/
+
+        private void especieBaseControls()
+        {
+            especieCodigoText.Enabled = false;
+            especieDescricaoText.Enabled = false;
+            generalBaseControls();
+        }
+
+        /*TODO
+        private void especieEditControls()
+        {
+
+        }*/
+
+        /* TODO
+        private void especieAddControls()
+        {
+
+        }*/
+
         private void backBtn_Click(object sender, EventArgs e)
         {
             loginPage.Show();
             this.Close();
+        }
+
+        private List<String> getAppointmentTreatmentsById(int appointmentId)
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<String> treatments = new List<String>();
+            SqlCommand cmd = new SqlCommand("SP_GetAppointmentTreatmentsById", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                treatments.Add(reader["Descricao"].ToString());
+            }
+
+            cn.Close();
+
+            return treatments;
+
+        }
+
+        private String getAppointmentReportById(int appointmentId)
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            String reportContent = "Inválido!";
+            SqlCommand cmd = new SqlCommand("SP_GetAppointmentReportById", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                reportContent = reader["Conteudo"].ToString();
+            }
+
+            cn.Close();
+
+            return reportContent;
+        }
+
+        private List<String> getPrescriptionMedsById(int appointmentId)
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<String> meds = new List<String>();
+            SqlCommand cmd = new SqlCommand("SP_GetPrescriptionMedsById", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@prescriptionID", appointmentId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                meds.Add(reader["Descricao"].ToString());
+            }
+
+            cn.Close();
+
+            return meds;
+        }
+
+        private List<String> getVetsBySpeciality(int especialidade)
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<String> vets = new List<String>();
+            SqlCommand cmd = new SqlCommand("SP_GetVetsBySpeciality", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@specialityID", especialidade);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                vets.Add(reader["Nome"].ToString());
+            }
+
+            cn.Close();
+
+            return vets;
+        }
+
+        private List<String> getAnimalsBySpecie(int especie)
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<String> animals = new List<String>();
+            SqlCommand cmd = new SqlCommand("SP_GetAnimalsBySpecie", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@specieID", especie);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                animals.Add(reader["Nome"].ToString());
+            }
+
+            cn.Close();
+
+            return animals;
         }
 
         private void clinicaVeterinariaTab_Click(object sender, EventArgs e)
@@ -360,7 +563,142 @@ namespace PetDB
             ShowMed();
         }
 
-        public void ShowClinicaVeterinaria()
+        private void consultaTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Consulta";
+            consultaBaseControls();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetAppointmentInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Appointment ap = new Appointment();
+                ap.Id = reader["Id"].ToString();
+                ap.Data = reader["Data"].ToString();
+                ap.Animal = reader["Animal"].ToString();
+                ap.Medico = reader["Medico"].ToString();
+                listBox1.Items.Add(ap);
+            }
+
+            cn.Close();
+
+
+            currentListIndex = 0;
+            ShowConsulta();
+        }
+
+        private void pagamentoTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Pagamento";
+            pagamentoBaseControls();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetPaymentInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Payment payment = new Payment();
+                payment.Id = reader["Id"].ToString();
+                payment.Valor = reader["Custo"].ToString();
+                payment.Data = reader["Data"].ToString();
+                payment.Estado = reader["Estado"].ToString();
+                payment.Metodo = reader["Metodo"].ToString();
+                payment.Animal = reader["Animal"].ToString();
+                payment.Medico = reader["Medico"].ToString();
+                listBox1.Items.Add(payment);
+            }
+
+            cn.Close();
+
+
+            currentListIndex = 0;
+            ShowPayment();
+        }
+
+        private void prescricaoTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Prescricao";
+            prescricaoBaseControls();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetPrescriptionInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Prescription prescription = new Prescription();
+                prescription.Numero = reader["Numero"].ToString();
+                prescription.Data = reader["Data"].ToString();
+                prescription.Animal = reader["Animal"].ToString();
+                listBox1.Items.Add(prescription);
+            }
+
+            cn.Close();
+
+            currentListIndex = 0;
+            ShowPrescription();
+        }
+
+        private void especialidadeTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Especialidade";
+            especialidadeBaseControls();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecialityInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Especialidade especialidade = new Especialidade();
+                especialidade.Codigo = reader["Codigo"].ToString();
+                especialidade.Descricao = reader["Descricao"].ToString();
+                listBox1.Items.Add(especialidade);
+            }
+
+            cn.Close();
+
+            currentListIndex = 0;
+            ShowEspecialidade();
+        }
+
+        private void especieTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Especie";
+            especieBaseControls();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecieInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            listBox1.Items.Clear();
+
+            while (reader.Read())
+            {
+                Especie especie = new Especie();
+                especie.Codigo = reader["Codigo"].ToString();
+                especie.Descricao = reader["Descricao"].ToString();
+                listBox1.Items.Add(especie);
+            }
+
+            cn.Close();
+
+            currentListIndex = 0;
+            ShowEspecie();
+        }
+
+        private void ShowClinicaVeterinaria()
         {
             if (listBox1.Items.Count == 0 | currentListIndex < 0)
                 return;
@@ -374,7 +712,7 @@ namespace PetDB
 
         }
 
-        public void ShowVet()
+        private void ShowVet()
         {
             if (listBox1.Items.Count == 0 | currentListIndex < 0)
                 return;
@@ -388,7 +726,7 @@ namespace PetDB
             medicoClinicaText.Text = vet.Clinica;
         }
 
-        public void ShowOwner()
+        private void ShowOwner()
         {
             if (listBox1.Items.Count == 0 | currentListIndex < 0)
                 return;
@@ -401,7 +739,7 @@ namespace PetDB
             donoEnderecoText.Text = owner.Endereco;
         }
 
-        public void ShowPet()
+        private void ShowPet()
         {
             if (listBox1.Items.Count == 0 | currentListIndex < 0)
                 return;
@@ -416,7 +754,7 @@ namespace PetDB
             animalDonoText.Text = pet.Dono;
         }
 
-        public void ShowMed()
+        private void ShowMed()
         {
             if (listBox1.Items.Count == 0 | currentListIndex < 0)
                 return;
@@ -425,6 +763,67 @@ namespace PetDB
             medicamentoCodigoText.Text = med.Codigo;
             medicamentoNomeText.Text = med.Nome;
             medicamentoDoseText.Text = med.Dose;
+        }
+
+        private void ShowConsulta()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+            Appointment ap = new Appointment();
+            ap = (Appointment)listBox1.Items[currentListIndex];
+            consultaIdText.Text = ap.Id;
+            consultaDataText.Text = ap.Data;
+            consultaAnimalText.Text = ap.Animal;
+            consultaMedicoText.Text = ap.Medico;
+        }
+
+        private void ShowPayment()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+            Payment payment = new Payment();
+            payment = (Payment)listBox1.Items[currentListIndex];
+            pagamentoIdText.Text = payment.Id;
+            pagamentoValorText.Text = payment.Valor;
+            pagamentoDataText.Text = payment.Data;
+            pagamentoEstadoText.Text = payment.Estado;
+            pagamentoMetodoText.Text = payment.Metodo;
+            pagamentoAnimalText.Text = payment.Animal;
+            pagamentoMedicoText.Text = payment.Medico;
+        }
+
+        private void ShowPrescription()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+
+            Prescription prescription = new Prescription();
+            prescription = (Prescription)listBox1.Items[currentListIndex];
+            prescricaoNumeroText.Text = prescription.Numero;
+            prescricaoDataText.Text = prescription.Data;
+            prescricaoAnimalText.Text = prescription.Animal;
+        }
+
+        private void ShowEspecialidade()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+
+            Especialidade especialidade = new Especialidade();
+            especialidade = (Especialidade)listBox1.Items[currentListIndex];
+            especialidadeCodigoText.Text = especialidade.Codigo;
+            especialidadeDescricaoText.Text = especialidade.Descricao;
+        }
+
+        private void ShowEspecie()
+        {
+            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+                return;
+
+            Especie especie = new Especie();
+            especie = (Especie)listBox1.Items[currentListIndex];
+            especieCodigoText.Text = especie.Codigo;
+            especieDescricaoText.Text = especie.Descricao;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -448,6 +847,21 @@ namespace PetDB
                         break;
                     case "Medicamento":
                         ShowMed();
+                        break;
+                    case "Consulta":
+                        ShowConsulta();
+                        break;
+                    case "Pagamento":
+                        ShowPayment();
+                        break;
+                    case "Prescricao":
+                        ShowPrescription();
+                        break;
+                    case "Especialidade":
+                        ShowEspecialidade();
+                        break;
+                    case "Especie":
+                        ShowEspecie();
                         break;
 
                     default:
@@ -474,6 +888,21 @@ namespace PetDB
                     break;
                 case "Medicamento":
                     medicamentoEditControls();
+                    break;
+                case "Consulta":
+                    //consultaEditControls();
+                    break;
+                case "Pagamento":
+                    pagamentoEditControls();
+                    break;
+                case "Prescricao":
+                    //prescricaoEditControls();
+                    break;
+                case "Especialidade":
+                    //especialidadeEditControls();
+                    break;
+                case "Especie":
+                    //especieEditControls();
                     break;
                 default: break;
             }
@@ -522,6 +951,27 @@ namespace PetDB
                     medicamentoBaseControls();
                     ShowMed();
                     break;
+                case "Consulta":
+                    consultaBaseControls();
+                    ShowConsulta();
+                    break;
+                case "Pagamento":
+                    pagamentoBaseControls();
+                    ShowPayment();
+                    break;
+                case "Prescricao":
+                    prescricaoBaseControls();
+                    ShowPrescription();
+                    break;
+                case "Especialidade":
+                    especialidadeBaseControls();
+                    ShowEspecialidade();
+                    break;
+                case "Especie":
+                    especieBaseControls();
+                    ShowEspecie();
+                    break;
+
                 default: break;
             }
         }
@@ -549,6 +999,21 @@ namespace PetDB
                     break;
                 case "Medicamento":
                     medicamentoAddControls();
+                    break;
+                case "Consulta":
+                    //consultaAddControls();
+                    break;
+                case "Pagamento":
+                    //pagamentoAddControls();
+                    break;
+                case "Prescricao":
+                    //prescricaoAddControls();
+                    break;
+                case "Especialidade":
+                    //especialidadeAddControls(); 
+                    break;
+                case "Especie":
+                    //especieAddControls(); 
                     break;
                 default: break;
             }
@@ -579,9 +1044,91 @@ namespace PetDB
                 case 4: // Medicamento
                     medTab_Click(sender, e);
                     break;
+                case 5: // Consulta
+                    consultaTab_Click(sender, e);
+                    break;
+                case 6: // Pagamento
+                    pagamentoTab_Click(sender, e);
+                    break;
+                case 7: // Prescricao
+                    prescricaoTab_Click(sender, e);
+                    break;
+                case 8: // Especialidade
+                    especialidadeTab_Click(sender, e);
+                    break;
+                case 9: // Especie
+                    especieTab_Click(sender, e);
+                    break;
                 default: break;
             }
         }
 
+        private void btnVerTratamentos_Click(object sender, EventArgs e)
+        {
+            int idConsulta = Int32.Parse(consultaIdText.Text);
+
+            List<String> treatments = getAppointmentTreatmentsById(idConsulta);
+
+            UC_ListStrings uc = new UC_ListStrings();
+            uc.setStrings(treatments);
+
+            PopUpForm popup = new PopUpForm(uc, "Tratamentos da Consulta");
+            popup.ShowDialog();
+
+        }
+
+        private void btnConsultarRelatorio_Click(object sender, EventArgs e)
+        {
+            int idConsulta = Int32.Parse(consultaIdText.Text);
+
+            String reportContent = getAppointmentReportById(idConsulta);
+
+            UC_ShowReport uc = new UC_ShowReport();
+            uc.setReportText(reportContent);
+
+            PopUpForm popup = new PopUpForm(uc, "Relatório da Consulta");
+            popup.ShowDialog();
+        }
+
+        private void btnVerMedicamentos_Click(object sender, EventArgs e)
+        {
+            int idPrescricao = Int32.Parse(prescricaoNumeroText.Text);
+
+            List<String> meds = getPrescriptionMedsById(idPrescricao);
+
+            UC_ListStrings uc = new UC_ListStrings();
+            uc.setStrings(meds);
+
+            PopUpForm popup = new PopUpForm(uc, "Medicamentos da Prescrição");
+            popup.ShowDialog();
+        }
+
+        private void btnConsultarMedicos_Click(object sender, EventArgs e)
+        {
+            int especialidade = Int32.Parse(especialidadeCodigoText.Text);
+
+            List<String> vets = getVetsBySpeciality(especialidade);
+
+            UC_ListStrings uc = new UC_ListStrings();
+            uc.setStrings(vets);
+
+            PopUpForm popup = new PopUpForm(uc, "Médicos");
+            popup.ShowDialog();
+
+        }
+
+        private void btnConsultaAnimais_Click(object sender, EventArgs e)
+        {
+            int especie = Int32.Parse(especieCodigoText.Text);
+
+            List<String> animais = getAnimalsBySpecie(especie);
+
+            UC_ListStrings uc = new UC_ListStrings();
+            uc.setStrings(animais);
+
+            PopUpForm popup = new PopUpForm(uc, "Animais");
+            popup.ShowDialog();
+
+        }
     }
 }

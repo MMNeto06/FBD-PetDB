@@ -7,6 +7,106 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_GetAnimalsBySpecie @specieID INT
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT a.Nome 
+	FROM PETDB_Animal as a
+	WHERE a.Especie = @specieID;
+END
+GO
+
+CREATE PROCEDURE SP_GetSpecieInfo
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT * FROM PETDB_Especie;
+END 
+GO
+
+CREATE PROCEDURE SP_GetSpecialityInfo
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT * FROM PETDB_Especialidade;
+END 
+GO
+
+CREATE PROCEDURE SP_GetVetsBySpeciality @specialityID INT 
+AS
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT v.Nome 
+	FROM PETDB_MedicoVeterinario as v 
+	WHERE v.Especialidade = @specialityID;
+END
+GO
+
+CREATE PROCEDURE SP_GetPrescriptionMedsById @prescriptionID INT
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT m.Codigo, m.Descricao, m.Dose
+	FROM PETDB_PrescricaoMedicamento as pm 
+	JOIN PETDB_Medicamento as m ON pm.CodigoMedicamento = m.Codigo
+	WHERE pm.NumeroPrescricao = @prescriptionID;
+END 
+GO
+
+CREATE PROCEDURE SP_GetPrescriptionInfo 
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT p.Numero, p.[Data], a.Nome as Animal
+	FROM PETDB_Prescricao as p 
+	JOIN PETDB_Animal as a ON p.Animal = a.Numero;
+END 
+GO 
+
+CREATE PROCEDURE SP_GetAppointmentReportById @appointmentID INT
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT r.CodigoRelatorio, r.Conteudo
+	FROM PETDB_Relatorio as r 
+	WHERE r.Consulta = @appointmentID;
+END 
+GO 
+
+CREATE PROCEDURE SP_GetAppointmentTreatmentsById @appointmentID INT 
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT Codigo, Descricao
+	FROM PETDB_ConsultaTratamento as ct
+	JOIN PETDB_Tratamento as t ON ct.CodigoTratamento = t.Codigo
+	WHERE ct.IdConsulta = @appointmentID;
+END 
+GO 
+
+CREATE PROCEDURE SP_GetPaymentInfo
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT p.Id, p.[Data], p.Custo, p.Estado, m.Descricao as Metodo, a.Nome as Animal, v.Nome as Medico
+	FROM PETDB_Pagamento as p
+	JOIN PETDB_MetodoPagamento as m ON p.MetodoPagamento = m.Codigo
+	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
+	JOIN PETDB_Animal as a ON c.Animal = a.Numero
+	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV;
+END 
+GO
+
 CREATE PROCEDURE SP_GetAppointmentInfo
 AS 
 BEGIN 
