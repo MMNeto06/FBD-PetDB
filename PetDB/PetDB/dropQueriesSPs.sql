@@ -5,3 +5,5 @@ DROP PROCEDURE SP_GetAppointmentsByPet;
 DROP PROCEDURE SP_GetAppointmentsByVet;
 DROP PROCEDURE SP_GetPrescriptionsByPet;
 DROP PROCEDURE SP_GetPaymentsByOwner;
+DROP PROCEDURE SP_GetClinicTable;
+DROP PROCEDURE SP_GetOwnerTable;

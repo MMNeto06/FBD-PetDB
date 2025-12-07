@@ -12,8 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\diosi\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\diosi\\.nuget\\packages"
+      "C:\\Users\\netom\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\netom\\.nuget\\packages"
     ],
     "configProperties": {
       "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false,

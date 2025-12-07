@@ -174,7 +174,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PETDB_Especialidade", cn);
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecialtyTable", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -262,15 +262,15 @@ namespace PetDB
                     SqlCommand cmd;
                     if (idType == "Clinica")
                     {
-                        cmd = new SqlCommand("SELECT * FROM PETDB_ClinicaVeterinaria WHERE NIF=" + id, cn);
+                        cmd = new SqlCommand("EXEC SP_GetClinicByNIF " + id, cn);
                     }
                     else if (idType == "Medico")
                     {
-                        cmd = new SqlCommand("SELECT * FROM PETDB_MedicoVeterinario WHERE NumOMV=" + id, cn);
+                        cmd = new SqlCommand("EXEC SP_GetMedicByOMV " + id, cn);
                     }
                     else
                     {
-                        cmd = new SqlCommand("SELECT * FROM PETDB_Dono WHERE NIF=" + id, cn);
+                        cmd = new SqlCommand("EXEC SP_GetOwnerByNIF " + id, cn);
                     }
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -337,31 +337,31 @@ namespace PetDB
             SqlCommand cmd;
             if (idType == "Clinica")
             {
-                cmd = new SqlCommand("INSERT INTO PETDB_ClinicaVeterinaria VALUES (" +
+                cmd = new SqlCommand("EXEC SP_AddClinic " +
                     entityId + ",'" +
-                    nome + "'," +
-                    telefone + ",'" +
-                    email + "','" +
-                    endereco + "')", cn);
+                    nome + "', '" +
+                    telefone + "', '" +
+                    email + "', '" +
+                    endereco + "'", cn);
             }
             else if (idType == "Medico")
             {
-                cmd = new SqlCommand("INSERT INTO PETDB_MedicoVeterinario VALUES (" +
+                cmd = new SqlCommand("EXEC SP_AddVet " +
                     entityId + ",'" +
-                    nome + "'," +
-                    telefone + ",'" +
-                    email + "'," +
-                    codigoEspecialidade + "," +
-                    clinicaNif + ")", cn);
+                    nome + "', '" +
+                    telefone + "', '" +
+                    email + "', " +
+                    codigoEspecialidade + ", " +
+                    clinicaNif, cn);
             }
             else
             {
-                cmd = new SqlCommand("INSERT INTO PETDB_Dono VALUES (" +
-                    entityId + ",'" +
-                    nome + "'," +
-                    telefone + ",'" +
-                    email + "','" +
-                    endereco + "')", cn);
+                cmd = new SqlCommand("EXEC SP_AddOwner " +
+                    entityId + ", '" +
+                    nome + "', '" +
+                    telefone + "', '" +
+                    email + "', '" +
+                    endereco + "'", cn);
             }
 
             try
