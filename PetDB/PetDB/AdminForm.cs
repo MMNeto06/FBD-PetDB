@@ -72,7 +72,6 @@ namespace PetDB
 
         private void clinicaEditControls()
         {
-            clinicaNifText.Enabled = true;
             clinicaNomeText.Enabled = true;
             clinicaTelefoneText.Enabled = true;
             clinicaEmailText.Enabled = true;
@@ -83,6 +82,7 @@ namespace PetDB
         private void clinicaAddControls()
         {
             clinicaEditControls();
+            clinicaNifText.Enabled = true;
             clinicaNifText.Text = "";
             clinicaNomeText.Text = "";
             clinicaTelefoneText.Text = "";
@@ -99,23 +99,27 @@ namespace PetDB
             medicoEspecialidadeText.Enabled = false;
             medicoClinicaText.Enabled = false;
             medicoClinicaText.Visible = true;
+            medicoEspecialidadeComboBox.Visible = false;
+            medicoClinicaComboBox.Visible = false;
             generalBaseControls();
         }
 
         private void medicoEditControls()
         {
-            medicoOMVText.Enabled = true;
             medicoNomeText.Enabled = true;
             medicoTelefoneText.Enabled = true;
             medicoEmailText.Enabled = true;
             medicoEspecialidadeText.Enabled = true;
             medicoClinicaText.Enabled = true;
+            medicoEspecialidadeComboBox.Visible = true;
+            medicoClinicaComboBox.Visible = true;
             generalEditControls();
         }
 
         private void medicoAddControls()
         {
             medicoEditControls();
+            medicoOMVText.Enabled = true; 
             medicoOMVText.Text = "";
             medicoNomeText.Text = "";
             medicoTelefoneText.Text = "";
@@ -418,16 +422,14 @@ namespace PetDB
             return animals;
         }
 
-        private void clinicaVeterinariaTab_Click(object sender, EventArgs e)
+        private List<CliVet> GetClinicasVeterinarias()
         {
             if (!verifySGBDConnection())
-                return;
+                return null;
 
-            entity = "Clinica";
-            clinicaBaseControls();
+            List<CliVet> clinicas = new List<CliVet>();
             SqlCommand cmd = new SqlCommand("EXEC SP_GetClinicTable", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            listBox1.Items.Clear();
 
             while (reader.Read())
             {
@@ -437,13 +439,32 @@ namespace PetDB
                 CV.Telefone = reader["Telefone"].ToString();
                 CV.Email = reader["Email"].ToString();
                 CV.Endereco = reader["Endereco"].ToString();
+                clinicas.Add(CV);
+            }
+
+            return clinicas;
+        }
+
+        private void clinicaVeterinariaTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Clinica";
+            clinicaBaseControls();
+
+            listBox1.Items.Clear();
+
+            List<CliVet> clinicas = GetClinicasVeterinarias();
+
+            foreach(var CV in clinicas)
+            {
                 listBox1.Items.Add(CV);
             }
 
             cn.Close();
 
-
-            currentListIndex = 0; //nã o sei para que isto serve
+            currentListIndex = 0; 
             ShowClinicaVeterinaria();
         }
         private void medicoVeterinarioTab_Click(object sender, EventArgs e)
@@ -648,6 +669,28 @@ namespace PetDB
             ShowPrescription();
         }
 
+        private List<Especialidade> getEspecialidades()
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<Especialidade> especialidades = new List<Especialidade>();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecialityInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Especialidade especialidade = new Especialidade();
+                especialidade.Codigo = reader["Codigo"].ToString();
+                especialidade.Descricao = reader["Descricao"].ToString();
+                especialidades.Add(especialidade);
+            }
+
+            cn.Close();
+
+            return especialidades;
+        }
+
         private void especialidadeTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
@@ -655,17 +698,12 @@ namespace PetDB
 
             entity = "Especialidade";
             especialidadeBaseControls();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecialityInfo", cn);
-            SqlDataReader reader = cmd.ExecuteReader();
+            List<Especialidade> especialidades = getEspecialidades();
+
             listBox1.Items.Clear();
 
-            while (reader.Read())
-            {
-                Especialidade especialidade = new Especialidade();
-                especialidade.Codigo = reader["Codigo"].ToString();
-                especialidade.Descricao = reader["Descricao"].ToString();
+            foreach (var especialidade in especialidades)
                 listBox1.Items.Add(especialidade);
-            }
 
             cn.Close();
 
@@ -870,8 +908,59 @@ namespace PetDB
             }
         }
 
+        private void LoadEspecialidadesComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            List<Especialidade> especialidades = getEspecialidades();
+
+            foreach (var e in especialidades)
+            {
+                medicoEspecialidadeComboBox.Items.Add(e);
+            }
+
+            for (int i = 0; i < medicoEspecialidadeComboBox.Items.Count; i++)
+            {
+                Especialidade e = (Especialidade)medicoEspecialidadeComboBox.Items[i];
+                if (e.Descricao == medicoEspecialidadeText.Text)
+                {
+                    medicoEspecialidadeComboBox.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            cn.Close();
+        }
+
+        private void LoadClinicasComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            List<CliVet> clinicas = GetClinicasVeterinarias();
+
+            foreach(var CV in clinicas)
+            {
+                medicoClinicaComboBox.Items.Add(CV);
+            }
+
+            for (int i = 0; i < medicoClinicaComboBox.Items.Count; i++)
+            {
+                CliVet c = (CliVet)medicoClinicaComboBox.Items[i];
+                if (c.Nome == medicoClinicaText.Text)
+                {
+                    medicoClinicaComboBox.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            cn.Close();
+        }
+
         private void editBtn_Click(object sender, EventArgs e)
         {
+            option = "Edit";
             switch (entity)
             {
                 case "Clinica":
@@ -879,6 +968,8 @@ namespace PetDB
                     break;
                 case "Medico":
                     medicoEditControls();
+                    LoadEspecialidadesComboBox();
+                    LoadClinicasComboBox();
                     break;
                 case "Dono":
                     donoEditControls();
@@ -976,10 +1067,7 @@ namespace PetDB
             }
         }
 
-        private void okBtn_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
@@ -990,6 +1078,8 @@ namespace PetDB
                     break;
                 case "Medico":
                     medicoAddControls();
+                    LoadEspecialidadesComboBox();
+                    LoadClinicasComboBox();
                     break;
                 case "Dono":
                     donoAddControls();
@@ -1019,9 +1109,132 @@ namespace PetDB
             }
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private bool ExecuteInsertSP(SqlCommand cmd)
         {
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException e)
+            {
+                MessageBox.Show(e.Message, "Erro na Base de Dados", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
 
+        private void ClinicaAddTuple()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SP_AddClinic", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ClinicNIF", int.Parse(clinicaNifText.Text));
+            cmd.Parameters.AddWithValue("@ClinicName", clinicaNomeText.Text);
+            cmd.Parameters.AddWithValue("@ClinicPhone", clinicaTelefoneText.Text);
+            cmd.Parameters.AddWithValue("@ClinicEmail", clinicaEmailText.Text);
+            cmd.Parameters.AddWithValue("@ClinicAddress", clinicaEnderecoText.Text);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show("Clínica adicionada com sucesso!");
+            }
+
+            cn.Close();
+        }
+
+        private void ClinicaEditTuple()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SP_UpdateClinic", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ClinicNIF", int.Parse(clinicaNifText.Text));
+            cmd.Parameters.AddWithValue("@ClinicName", clinicaNomeText.Text);
+            cmd.Parameters.AddWithValue("@ClinicPhone", clinicaTelefoneText.Text);
+            cmd.Parameters.AddWithValue("@ClinicEmail", clinicaEmailText.Text);
+            cmd.Parameters.AddWithValue("@ClinicAddress", clinicaEnderecoText.Text);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show("Informações atualizadas com sucesso!");
+            }
+
+            cn.Close();
+        }
+
+        private void MedicoAddTuple()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SP_AddVet", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@VetOMV", int.Parse(medicoOMVText.Text));
+            cmd.Parameters.AddWithValue("@VetName", medicoNomeText.Text);
+            cmd.Parameters.AddWithValue("@VetPhone", medicoTelefoneText.Text);
+            cmd.Parameters.AddWithValue("@VetEmail", medicoEmailText.Text);
+            Especialidade e = (Especialidade)medicoEspecialidadeComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@VetSpecialty", e.Codigo);
+            CliVet c = (CliVet)medicoClinicaComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@VetClinic", c.NIF);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show("Médico adicionado com sucesso!");
+            }
+
+            cn.Close();
+        }
+
+        private void MedicoEditTuple()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SP_UpdateVet", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@VetOMV", int.Parse(medicoOMVText.Text));
+            cmd.Parameters.AddWithValue("@VetName", medicoNomeText.Text);
+            cmd.Parameters.AddWithValue("@VetPhone", medicoTelefoneText.Text);
+            cmd.Parameters.AddWithValue("@VetEmail", medicoEmailText.Text);
+            Especialidade e = (Especialidade)medicoEspecialidadeComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@VetSpecialty", e.Codigo);
+            CliVet c = (CliVet)medicoClinicaComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@VetClinic", c.NIF);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show("Informações atualizadas com sucesso!");
+            }
+
+            cn.Close();
+        }
+
+        private void OkBtn_Click(object sender, EventArgs e)
+        {
+            switch (option, entity)
+            {
+                case ("Add", "Clinica"):
+                    ClinicaAddTuple();
+                    clinicaVeterinariaTab_Click(sender, e);
+                    break;
+                case ("Edit", "Clinica"):
+                    ClinicaEditTuple();
+                    clinicaVeterinariaTab_Click(sender, e);
+                    break;
+                case ("Add", "Medico"):
+                    MedicoAddTuple();
+                    medicoVeterinarioTab_Click(sender, e);
+                    break;
+                case ("Edit", "Medico"):
+                    MedicoEditTuple();
+                    medicoVeterinarioTab_Click(sender, e);
+                    break;
+
+            }
         }
 
         private void registarTabControl_onSelectedIndexChange(object sender, EventArgs e)

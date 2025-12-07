@@ -8,6 +8,12 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
+	IF EXISTS (SELECT 1 FROM PETDB_ClinicaVeterinaria WHERE NIF = @ClinicNIF)
+    BEGIN
+        RAISERROR('Já existe uma clínica com esse NIF!', 16, 1);
+        RETURN;
+    END
+
 	IF LEN(@ClinicName) = 0 OR LEN(@ClinicName) > 64
 	BEGIN 
 		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
@@ -54,6 +60,13 @@ CREATE PROCEDURE SP_AddVet
 AS
 BEGIN 
 	SET NOCOUNT ON; 
+
+	IF EXISTS (SELECT 1 FROM PETDB_MedicoVeterinario WHERE NumOMV = @VetOMV)
+    BEGIN
+        RAISERROR('Já existe um médico com esse OMV!', 16, 1);
+        RETURN;
+    END
+
 
 	IF LEN(@VetName) = 0 OR LEN(@VetName) > 64
 	BEGIN 

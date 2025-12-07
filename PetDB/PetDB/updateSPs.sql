@@ -8,6 +8,31 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
+	
+	IF LEN(@ClinicName) = 0 OR LEN(@ClinicName) > 64
+	BEGIN 
+		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
+
+	IF LEN(@ClinicPhone) != 9 
+	BEGIN 
+		RAISERROR('O contacto telefónico deve ter 9 dígitos!', 16, 1);
+		RETURN; 
+	END
+
+	IF @ClinicEmail NOT LIKE '%_@__%.__%'
+	BEGIN 
+		RAISERROR('Formato de Email inválido!', 16, 1);
+		RETURN; 
+	END
+
+	IF LEN(@ClinicAddress) = 0 OR LEN(@ClinicAddress) > 64
+	BEGIN 
+		RAISERROR('Endereço inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
+
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEUPDATE
 			UPDATE PETDB_ClinicaVeterinaria 
@@ -31,6 +56,24 @@ CREATE PROCEDURE SP_UpdateVet
 AS
 BEGIN 
 	SET NOCOUNT ON; 
+
+	IF LEN(@VetName) = 0 OR LEN(@VetName) > 64
+	BEGIN 
+		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
+		RETURN;
+	END
+
+	IF LEN(@VetPhone) != 9 
+	BEGIN 
+		RAISERROR('O contacto telefónico deve ter 9 dígitos!', 16, 1);
+		RETURN; 
+	END
+
+	IF @VetEmail NOT LIKE '%_@__%.__%'
+	BEGIN 
+		RAISERROR('Formato de Email inválido!', 16, 1);
+		RETURN; 
+	END
 
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEUPDATE

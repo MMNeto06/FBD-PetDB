@@ -73,6 +73,8 @@ namespace PetDB
             clinicaNifLabel = new Label();
             clinicaNifText = new TextBox();
             medicoTabPage = new TabPage();
+            medicoClinicaComboBox = new ComboBox();
+            medicoEspecialidadeComboBox = new ComboBox();
             medicoClinicaText = new TextBox();
             medicoEspecialidadeLabel = new Label();
             medicoEspecialidadeText = new TextBox();
@@ -392,7 +394,7 @@ namespace PetDB
             okBtn.TabIndex = 6;
             okBtn.Text = "OK";
             okBtn.UseVisualStyleBackColor = true;
-            okBtn.Click += okBtn_Click;
+            okBtn.Click += OkBtn_Click;
             // 
             // cancelBtn
             // 
@@ -538,6 +540,8 @@ namespace PetDB
             // 
             // medicoTabPage
             // 
+            medicoTabPage.Controls.Add(medicoClinicaComboBox);
+            medicoTabPage.Controls.Add(medicoEspecialidadeComboBox);
             medicoTabPage.Controls.Add(medicoClinicaText);
             medicoTabPage.Controls.Add(medicoEspecialidadeLabel);
             medicoTabPage.Controls.Add(medicoEspecialidadeText);
@@ -557,6 +561,22 @@ namespace PetDB
             medicoTabPage.TabIndex = 1;
             medicoTabPage.Text = "Medico";
             medicoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // medicoClinicaComboBox
+            // 
+            medicoClinicaComboBox.FormattingEnabled = true;
+            medicoClinicaComboBox.Location = new Point(134, 110);
+            medicoClinicaComboBox.Name = "medicoClinicaComboBox";
+            medicoClinicaComboBox.Size = new Size(178, 23);
+            medicoClinicaComboBox.TabIndex = 35;
+            // 
+            // medicoEspecialidadeComboBox
+            // 
+            medicoEspecialidadeComboBox.FormattingEnabled = true;
+            medicoEspecialidadeComboBox.Location = new Point(6, 110);
+            medicoEspecialidadeComboBox.Name = "medicoEspecialidadeComboBox";
+            medicoEspecialidadeComboBox.Size = new Size(121, 23);
+            medicoEspecialidadeComboBox.TabIndex = 34;
             // 
             // medicoClinicaText
             // 
@@ -1603,5 +1623,7 @@ namespace PetDB
         private Label especieDescricaoLabel;
         private TextBox especieCodigoText;
         private Label especieCodigoLabel;
+        private ComboBox medicoClinicaComboBox;
+        private ComboBox medicoEspecialidadeComboBox;
     }
 }
