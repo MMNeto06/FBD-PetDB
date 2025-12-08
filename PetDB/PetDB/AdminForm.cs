@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using System.Xml.Serialization;
+using System.Runtime.CompilerServices;
 namespace PetDB
 {
     public partial class AdminForm : Form
@@ -18,6 +19,8 @@ namespace PetDB
             InitializeComponent();
             this.loginPage = loginPage;
             clinicaBaseControls();
+            registarTabControl.Visible = true;
+            consultarTabControl.Visible = false;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -119,7 +122,7 @@ namespace PetDB
         private void medicoAddControls()
         {
             medicoEditControls();
-            medicoOMVText.Enabled = true; 
+            medicoOMVText.Enabled = true;
             medicoOMVText.Text = "";
             medicoNomeText.Text = "";
             medicoTelefoneText.Text = "";
@@ -457,14 +460,14 @@ namespace PetDB
 
             List<CliVet> clinicas = GetClinicasVeterinarias();
 
-            foreach(var CV in clinicas)
+            foreach (var CV in clinicas)
             {
                 listBox1.Items.Add(CV);
             }
 
             cn.Close();
 
-            currentListIndex = 0; 
+            currentListIndex = 0;
             ShowClinicaVeterinaria();
         }
         private void medicoVeterinarioTab_Click(object sender, EventArgs e)
@@ -940,7 +943,7 @@ namespace PetDB
 
             List<CliVet> clinicas = GetClinicasVeterinarias();
 
-            foreach(var CV in clinicas)
+            foreach (var CV in clinicas)
             {
                 medicoClinicaComboBox.Items.Add(CV);
             }
@@ -1342,6 +1345,24 @@ namespace PetDB
             PopUpForm popup = new PopUpForm(uc, "Animais");
             popup.ShowDialog();
 
+        }
+
+        private void registarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            consultarTabControl.Visible = false;
+            registarTabControl.Visible = true;
+            generalBaseControls();
+        }
+
+        private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            consultarTabControl.Visible = true;
+            registarTabControl.Visible = false;
+            addBtn.Visible = false;
+            editBtn.Visible = false;
+            remBtn.Visible = false;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
         }
     }
 }
