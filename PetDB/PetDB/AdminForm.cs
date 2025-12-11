@@ -1,10 +1,11 @@
+using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
-using System.Xml.Serialization;
+using System.Drawing;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 namespace PetDB
 {
     public partial class AdminForm : Form
@@ -21,6 +22,7 @@ namespace PetDB
             clinicaBaseControls();
             registarTabControl.Visible = true;
             consultarTabControl.Visible = false;
+            clinicaVeterinariaTab_Click(null, null);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -545,7 +547,7 @@ namespace PetDB
                 Pet pet = new Pet();
                 pet.Numero = reader["Numero"].ToString();
                 pet.Nome = reader["Nome"].ToString();
-                pet.DataNascimento = reader["DataNascimento"].ToString();
+                pet.DataNascimento = ((DateTime)reader["DataNascimento"]).ToString("dd/MM/yyyy");
                 pet.Sexo = reader["Sexo"].ToString();
                 pet.Peso = reader["Peso"].ToString();
                 pet.Especie = reader["Especie"].ToString();
@@ -661,7 +663,7 @@ namespace PetDB
             {
                 Prescription prescription = new Prescription();
                 prescription.Numero = reader["Numero"].ToString();
-                prescription.Data = reader["Data"].ToString();
+                prescription.Data = ((DateTime)reader["Data"]).ToString("dd/MM/yyyy");
                 prescription.Animal = reader["Animal"].ToString();
                 listBox1.Items.Add(prescription);
             }
@@ -1126,12 +1128,12 @@ namespace PetDB
             }
         }
 
-        private void ClinicaAddTuple()
+        private void ClinicaTuples(String sp, String msgShow)
         {
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SP_AddClinic", cn);
+            SqlCommand cmd = new SqlCommand(sp, cn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@ClinicNIF", int.Parse(clinicaNifText.Text));
             cmd.Parameters.AddWithValue("@ClinicName", clinicaNomeText.Text);
@@ -1141,39 +1143,17 @@ namespace PetDB
 
             if (ExecuteInsertSP(cmd))
             {
-                MessageBox.Show("Clínica adicionada com sucesso!");
+                MessageBox.Show(msgShow);
             }
 
             cn.Close();
         }
-
-        private void ClinicaEditTuple()
+        private void MedicoTuples(String sp, String msgShow)
         {
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SP_UpdateClinic", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@ClinicNIF", int.Parse(clinicaNifText.Text));
-            cmd.Parameters.AddWithValue("@ClinicName", clinicaNomeText.Text);
-            cmd.Parameters.AddWithValue("@ClinicPhone", clinicaTelefoneText.Text);
-            cmd.Parameters.AddWithValue("@ClinicEmail", clinicaEmailText.Text);
-            cmd.Parameters.AddWithValue("@ClinicAddress", clinicaEnderecoText.Text);
-
-            if (ExecuteInsertSP(cmd))
-            {
-                MessageBox.Show("Informações atualizadas com sucesso!");
-            }
-
-            cn.Close();
-        }
-
-        private void MedicoAddTuple()
-        {
-            if (!verifySGBDConnection())
-                return;
-
-            SqlCommand cmd = new SqlCommand("SP_AddVet", cn);
+            SqlCommand cmd = new SqlCommand(sp, cn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@VetOMV", int.Parse(medicoOMVText.Text));
             cmd.Parameters.AddWithValue("@VetName", medicoNomeText.Text);
@@ -1186,31 +1166,52 @@ namespace PetDB
 
             if (ExecuteInsertSP(cmd))
             {
-                MessageBox.Show("Médico adicionado com sucesso!");
+                MessageBox.Show(msgShow);
             }
 
             cn.Close();
         }
 
-        private void MedicoEditTuple()
+        private void DonoTuples(String sp, String msgShow)
         {
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SP_UpdateVet", cn);
+            SqlCommand cmd = new SqlCommand(sp, cn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@VetOMV", int.Parse(medicoOMVText.Text));
-            cmd.Parameters.AddWithValue("@VetName", medicoNomeText.Text);
-            cmd.Parameters.AddWithValue("@VetPhone", medicoTelefoneText.Text);
-            cmd.Parameters.AddWithValue("@VetEmail", medicoEmailText.Text);
-            Especialidade e = (Especialidade)medicoEspecialidadeComboBox.SelectedItem;
-            cmd.Parameters.AddWithValue("@VetSpecialty", e.Codigo);
-            CliVet c = (CliVet)medicoClinicaComboBox.SelectedItem;
-            cmd.Parameters.AddWithValue("@VetClinic", c.NIF);
+            cmd.Parameters.AddWithValue("@OwnerNIF", int.Parse(donoNifText.Text));
+            cmd.Parameters.AddWithValue("@OwnerName", donoNomeText.Text);
+            cmd.Parameters.AddWithValue("@OwnerPhone", donoTelefoneText.Text);
+            cmd.Parameters.AddWithValue("@OwnerEmail", donoEmailText.Text);
+            cmd.Parameters.AddWithValue("@OwnerAddress", donoEnderecoText.Text);
 
             if (ExecuteInsertSP(cmd))
             {
-                MessageBox.Show("Informações atualizadas com sucesso!");
+                MessageBox.Show(msgShow);
+            }
+
+            cn.Close();
+        }
+
+        private void AnimalTuples(String sp, String msgShow)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (sp.Equals("SP_UpdatePet"))
+            {
+                cmd.Parameters.AddWithValue("@PetNumero", animalNumeroText.Text);
+            }
+            cmd.Parameters.AddWithValue("@PetName", animalNomeText.Text);
+            cmd.Parameters.AddWithValue("@OwnerPhone", donoTelefoneText.Text);
+            cmd.Parameters.AddWithValue("@OwnerEmail", donoEmailText.Text);
+            cmd.Parameters.AddWithValue("@OwnerAddress", donoEnderecoText.Text);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show(msgShow);
             }
 
             cn.Close();
@@ -1218,24 +1219,41 @@ namespace PetDB
 
         private void OkBtn_Click(object sender, EventArgs e)
         {
-            switch (option, entity)
+            switch ((option, entity))
             {
                 case ("Add", "Clinica"):
-                    ClinicaAddTuple();
+                    ClinicaTuples("SP_AddClinic", "Clinica adicionada com sucesso!");
                     clinicaVeterinariaTab_Click(sender, e);
                     break;
                 case ("Edit", "Clinica"):
-                    ClinicaEditTuple();
+                    ClinicaTuples("SP_UpdateClinic", "Informações atualizadas com sucesso!");
                     clinicaVeterinariaTab_Click(sender, e);
                     break;
                 case ("Add", "Medico"):
-                    MedicoAddTuple();
+                    MedicoTuples("SP_AddVet", "Médico adicionado com sucesso!");
                     medicoVeterinarioTab_Click(sender, e);
                     break;
                 case ("Edit", "Medico"):
-                    MedicoEditTuple();
+                    MedicoTuples("SP_UpdateVet", "Informações atualizadas com sucesso!");
                     medicoVeterinarioTab_Click(sender, e);
                     break;
+                case ("Add", "Dono"):
+                    DonoTuples("SP_AddOwner", "Dono adicionado com sucesso!");
+                    donoTab_Click(sender, e);
+                    break;
+                case ("Edit", "Dono"):
+                    DonoTuples("SP_UpdateOwner", "Informações atualizadas com sucesso!");
+                    donoTab_Click(sender, e);
+                    break;
+                case ("Add", "Animal"):
+                    AnimalTuples("SP_AddPet", "Animal adicionado com sucesso!");
+                    animalTab_Click(sender, e);
+                    break;
+                case ("Edit", "Animal"):
+                    AnimalTuples("SP_UpdatePet", "Informações atualizadas com sucesso");
+                    animalTab_Click(sender, e);
+                    break; 
+
 
             }
         }

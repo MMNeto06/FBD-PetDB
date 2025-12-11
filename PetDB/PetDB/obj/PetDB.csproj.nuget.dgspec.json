@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj": {}
+    "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj": {}
   },
   "projects": {
-    "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj": {
+    "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj",
+        "projectUniqueName": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj",
         "projectName": "PetDB",
-        "projectPath": "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj",
-        "packagesPath": "C:\\Users\\netom\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\obj\\",
+        "projectPath": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PetDB.csproj",
+        "packagesPath": "C:\\Users\\diosi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\netom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\diosi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -70,7 +70,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

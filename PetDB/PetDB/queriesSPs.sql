@@ -3,7 +3,8 @@ AS
 BEGIN
 	SET NOCOUNT ON; 
 
-	SELECT Codigo, Descricao AS Nome, Dose FROM PETDB_Medicamento;
+	SELECT Codigo, Descricao AS Nome, Dose FROM PETDB_Medicamento
+	ORDER BY Descricao;
 END
 GO
 
@@ -14,7 +15,8 @@ BEGIN
 
 	SELECT a.Nome 
 	FROM PETDB_Animal as a
-	WHERE a.Especie = @specieID;
+	WHERE a.Especie = @specieID
+	ORDER BY a.Nome;
 END
 GO
 
@@ -23,7 +25,8 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
-	SELECT * FROM PETDB_Especie;
+	SELECT * FROM PETDB_Especie
+	ORDER BY Descricao;
 END 
 GO
 
@@ -32,7 +35,8 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
-	SELECT * FROM PETDB_Especialidade;
+	SELECT * FROM PETDB_Especialidade
+	ORDER BY Descricao;
 END 
 GO
 
@@ -43,7 +47,8 @@ BEGIN
 
 	SELECT v.Nome 
 	FROM PETDB_MedicoVeterinario as v 
-	WHERE v.Especialidade = @specialityID;
+	WHERE v.Especialidade = @specialityID
+	ORDER BY v.Nome;
 END
 GO
 
@@ -55,7 +60,8 @@ BEGIN
 	SELECT m.Codigo, m.Descricao, m.Dose
 	FROM PETDB_PrescricaoMedicamento as pm 
 	JOIN PETDB_Medicamento as m ON pm.CodigoMedicamento = m.Codigo
-	WHERE pm.NumeroPrescricao = @prescriptionID;
+	WHERE pm.NumeroPrescricao = @prescriptionID
+	ORDER BY m.Descricao;
 END 
 GO
 
@@ -66,7 +72,8 @@ BEGIN
 
 	SELECT p.Numero, p.[Data], a.Nome as Animal
 	FROM PETDB_Prescricao as p 
-	JOIN PETDB_Animal as a ON p.Animal = a.Numero;
+	JOIN PETDB_Animal as a ON p.Animal = a.Numero
+	ORDER BY p.[Data] DESC;
 END 
 GO 
 
@@ -89,7 +96,8 @@ BEGIN
 	SELECT Codigo, Descricao
 	FROM PETDB_ConsultaTratamento as ct
 	JOIN PETDB_Tratamento as t ON ct.CodigoTratamento = t.Codigo
-	WHERE ct.IdConsulta = @appointmentID;
+	WHERE ct.IdConsulta = @appointmentID
+	ORDER BY Descricao;
 END 
 GO 
 
@@ -103,7 +111,8 @@ BEGIN
 	JOIN PETDB_MetodoPagamento as m ON p.MetodoPagamento = m.Codigo
 	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
-	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV;
+	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
+	ORDER BY p.[Data] DESC;
 END 
 GO
 
@@ -116,6 +125,7 @@ BEGIN
 	FROM PETDB_Consulta as c
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
+	ORDER BY c.[Data] DESC;
 END 
 GO 
 
@@ -125,6 +135,7 @@ BEGIN
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_ClinicaVeterinaria
+	ORDER BY Nome;
 END
 GO
 
@@ -137,6 +148,7 @@ BEGIN
 	FROM PETDB_MedicoVeterinario as v
 	JOIN PETDB_Especialidade as e ON v.Especialidade = e.Codigo
 	JOIN PETDB_ClinicaVeterinaria as c ON v.Clinica = c.NIF
+	ORDER BY v.Nome;
 END
 GO
 
@@ -148,7 +160,8 @@ BEGIN
 	SELECT a.Numero, a.Nome, a.DataNascimento, a.Peso, a.Sexo, e.Descricao as Especie, d.Nome as Dono
 	FROM PETDB_Animal as a
 	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
-	JOIN PETDB_Dono as d ON d.NIF = a.Dono;
+	JOIN PETDB_Dono as d ON d.NIF = a.Dono
+	ORDER BY a.Nome;
 END
 GO
 
@@ -159,6 +172,7 @@ BEGIN
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_Dono
+	ORDER BY Nome;
 END 
 GO
 
@@ -198,7 +212,8 @@ BEGIN
 	FROM PETDB_Animal as A
 	JOIN PETDB_Consulta ON Numero=Animal
 	JOIN PETDB_MedicoVeterinario ON Medico=NumOMV
-	WHERE Clinica=@ClinicNIF;
+	WHERE Clinica=@ClinicNIF
+	ORDER BY A.Nome;
 END
 GO
 
@@ -209,7 +224,8 @@ BEGIN
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_Consulta
-	WHERE Animal=@PetNum;
+	WHERE Animal=@PetNum
+	ORDER BY [Data] DESC;
 END
 GO
 
@@ -220,7 +236,8 @@ BEGIN
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_Consulta
-	WHERE Medico=@VetOMV;
+	WHERE Medico=@VetOMV
+	ORDER BY [Data] DESC; 
 END 
 GO
 
@@ -231,7 +248,8 @@ BEGIN
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_Prescricao
-	WHERE Animal=@PetNum;
+	WHERE Animal=@PetNum
+	ORDER BY [Data] DESC; 
 END 
 GO
 
@@ -245,7 +263,8 @@ BEGIN
 	FROM PETDB_Pagamento AS P
 	JOIN PETDB_Consulta AS C ON C.Id=Consulta
 	JOIN PETDB_Animal ON Numero=C.Animal
-	WHERE Dono=@OwnerNIF;
+	WHERE Dono=@OwnerNIF
+	ORDER BY P.[Data] DESC;
 END
 GO
 
@@ -253,7 +272,8 @@ CREATE PROCEDURE SP_GetSpecialtyTable
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SELECT * FROM PETDB_Especialidade;
+	SELECT * FROM PETDB_Especialidade
+	ORDER BY Descricao;
 END
 GO
 
