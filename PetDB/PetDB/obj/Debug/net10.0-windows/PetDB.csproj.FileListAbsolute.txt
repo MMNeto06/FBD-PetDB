@@ -134,3 +134,5 @@ C:\Users\diosi\Documents\GitHub\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.PopUpForm.resources
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_ListStrings.resources
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_ShowReport.resources
+C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_AnimalCard.resources
+C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_AnimalInfo.resources

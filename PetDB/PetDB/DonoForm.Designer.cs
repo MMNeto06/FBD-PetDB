@@ -30,17 +30,18 @@
         {
             menuStrip1 = new MenuStrip();
             toolStripMenuItem1 = new ToolStripMenuItem();
-            outrosToolStripMenuItem = new ToolStripMenuItem();
-            showNameLabel = new Label();
-            showNifLabel = new Label();
+            animaisToolStripMenuItem = new ToolStripMenuItem();
+            pagamentosToolStripMenuItem = new ToolStripMenuItem();
+            perfilToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
+            cardsFlowLayoutPanel = new FlowLayoutPanel();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, outrosToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, animaisToolStripMenuItem, pagamentosToolStripMenuItem, perfilToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 28);
@@ -54,47 +55,47 @@
             toolStripMenuItem1.Text = "<-";
             toolStripMenuItem1.Click += backBtn_Click;
             // 
-            // outrosToolStripMenuItem
+            // animaisToolStripMenuItem
             // 
-            outrosToolStripMenuItem.Name = "outrosToolStripMenuItem";
-            outrosToolStripMenuItem.Size = new Size(67, 24);
-            outrosToolStripMenuItem.Text = "Outros";
+            animaisToolStripMenuItem.Name = "animaisToolStripMenuItem";
+            animaisToolStripMenuItem.Size = new Size(76, 24);
+            animaisToolStripMenuItem.Text = "Animais";
             // 
-            // showNameLabel
+            // pagamentosToolStripMenuItem
             // 
-            showNameLabel.AutoSize = true;
-            showNameLabel.Location = new Point(485, 236);
-            showNameLabel.Name = "showNameLabel";
-            showNameLabel.Size = new Size(198, 20);
-            showNameLabel.TabIndex = 8;
-            showNameLabel.Text = "Nome para ver que funciona";
+            pagamentosToolStripMenuItem.Name = "pagamentosToolStripMenuItem";
+            pagamentosToolStripMenuItem.Size = new Size(104, 24);
+            pagamentosToolStripMenuItem.Text = "Pagamentos";
             // 
-            // showNifLabel
+            // perfilToolStripMenuItem
             // 
-            showNifLabel.AutoSize = true;
-            showNifLabel.Location = new Point(127, 309);
-            showNifLabel.Name = "showNifLabel";
-            showNifLabel.Size = new Size(177, 20);
-            showNifLabel.TabIndex = 7;
-            showNifLabel.Text = "Nif para ver que funciona";
+            perfilToolStripMenuItem.Name = "perfilToolStripMenuItem";
+            perfilToolStripMenuItem.Size = new Size(56, 24);
+            perfilToolStripMenuItem.Text = "Perfil";
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 20F);
-            label1.Location = new Point(53, 128);
+            label1.Location = new Point(52, 37);
             label1.Name = "label1";
-            label1.Size = new Size(694, 46);
+            label1.Size = new Size(255, 46);
             label1.TabIndex = 6;
-            label1.Text = "Esta página do Dono está sobre construção :)";
+            label1.Text = "Os seus animais";
+            // 
+            // cardsFlowLayoutPanel
+            // 
+            cardsFlowLayoutPanel.Location = new Point(52, 86);
+            cardsFlowLayoutPanel.Name = "cardsFlowLayoutPanel";
+            cardsFlowLayoutPanel.Size = new Size(719, 324);
+            cardsFlowLayoutPanel.TabIndex = 7;
             // 
             // DonoForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(showNameLabel);
-            Controls.Add(showNifLabel);
+            Controls.Add(cardsFlowLayoutPanel);
             Controls.Add(label1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -110,9 +111,10 @@
 
         private MenuStrip menuStrip1;
         private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem outrosToolStripMenuItem;
-        private Label showNameLabel;
-        private Label showNifLabel;
+        private ToolStripMenuItem animaisToolStripMenuItem;
         private Label label1;
+        private FlowLayoutPanel cardsFlowLayoutPanel;
+        private ToolStripMenuItem perfilToolStripMenuItem;
+        private ToolStripMenuItem pagamentosToolStripMenuItem;
     }
 }

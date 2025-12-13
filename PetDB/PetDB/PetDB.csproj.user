@@ -19,6 +19,12 @@
     <Compile Update="MedicoForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="UC_AnimalCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UC_AnimalInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UC_ListStrings.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -294,7 +294,7 @@ namespace PetDB
                         }
                         else
                         {
-                            DonoForm donoPage = new DonoForm(this, Int32.Parse(reader["NIF"].ToString()), reader["Nome"].ToString());
+                            DonoForm donoPage = new DonoForm(this, Int32.Parse(reader["NIF"].ToString()));
                             donoPage.Show();
                             this.showInitialPage();
                             this.Hide();

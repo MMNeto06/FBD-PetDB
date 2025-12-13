@@ -30,6 +30,17 @@ BEGIN
 END 
 GO
 
+CREATE PROCEDURE SP_GetSpecieName @specieID int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT Descricao FROM PETDB_Especie
+	WHERE Codigo=@specieID
+	ORDER BY Descricao;
+END 
+GO
+
 CREATE PROCEDURE SP_GetSpecialityInfo
 AS 
 BEGIN 
@@ -125,6 +136,20 @@ BEGIN
 	FROM PETDB_Consulta as c
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
+	ORDER BY c.[Data] DESC;
+END 
+GO 
+
+CREATE PROCEDURE SP_GetAppointmentInfoByAnimal @AnimalId int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT c.Id, c.[Data], a.Nome as Animal, v.Nome as Medico
+	FROM PETDB_Consulta as c
+	JOIN PETDB_Animal as a ON c.Animal = a.Numero
+	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
+	WHERE a.Numero=@AnimalId
 	ORDER BY c.[Data] DESC;
 END 
 GO 

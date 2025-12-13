@@ -19,6 +19,11 @@ namespace PetDB
             content.Dock = DockStyle.Fill;
             panelContainer.Controls.Clear();
             panelContainer.Controls.Add(content);
+
+            content.PerformLayout();
+
+            // Resize the form to fit the UserControl
+            this.ClientSize = content.PreferredSize;
         }
     }
 }

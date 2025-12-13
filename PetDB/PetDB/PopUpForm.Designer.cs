@@ -33,20 +33,25 @@
             // 
             // panelContainer
             // 
-            panelContainer.Location = new Point(1, 0);
+            panelContainer.AutoSize = true;
+            panelContainer.Dock = DockStyle.Fill;
+            panelContainer.Location = new Point(0, 0);
+            panelContainer.Margin = new Padding(3, 4, 3, 4);
             panelContainer.Name = "panelContainer";
-            panelContainer.Size = new Size(417, 247);
+            panelContainer.Size = new Size(478, 328);
             panelContainer.TabIndex = 0;
             // 
             // PopUpForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(418, 246);
+            ClientSize = new Size(478, 328);
             Controls.Add(panelContainer);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "PopUpForm";
             Text = "Form1";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
