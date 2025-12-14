@@ -284,12 +284,14 @@ AS
 BEGIN
 	SET NOCOUNT ON; 
 
-	SELECT P.Id, P.[Data], P.Custo, P.Estado, P.MetodoPagamento, P.Consulta
-	FROM PETDB_Pagamento AS P
-	JOIN PETDB_Consulta AS C ON C.Id=Consulta
-	JOIN PETDB_Animal ON Numero=C.Animal
+	SELECT p.Id, p.[Data], p.Custo, p.Estado, m.Descricao as MetodoPagamento, a.Nome, v.Nome as Medico, p.Consulta
+	FROM PETDB_Pagamento as p
+	JOIN PETDB_MetodoPagamento as m ON p.MetodoPagamento = m.Codigo
+	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
+	JOIN PETDB_Animal as a ON c.Animal = a.Numero
+	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
 	WHERE Dono=@OwnerNIF
-	ORDER BY P.[Data] DESC;
+	ORDER BY p.[Data] DESC;
 END
 GO
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Windows.Forms;
 
@@ -19,8 +20,8 @@ namespace PetDB
             InitializeComponent();
             this.loginPage = loginPage;
             this.nif = nif;
-            //this.nome = nome;
-            loadFlowoutPanel();
+            this.Text = "Bem Vindo Dono";
+            animaisToolStripMenuItem_Click(null, null);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -55,7 +56,7 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            cardsFlowLayoutPanel.Controls.Clear();
             SqlCommand cmd = new SqlCommand("EXEC SP_GetPetsByOwner " + this.nif, cn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -83,11 +84,148 @@ namespace PetDB
         public void showAnimalPopup(UC_AnimalCard card)
         {
             UC_AnimalInfo uc = new UC_AnimalInfo(card._animal);
-            
+
             PopUpForm popup = new PopUpForm(uc, "Detalhes sobre o animal");
             //popup.ClientSize = new Size(1000, 1000);
-            popup.ShowDialog();        
+            popup.ShowDialog();
         }
 
+        public void loadPaymentTable()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            BindingList<Payment> payments = new BindingList<Payment>();
+            dataGridView1.DataSource = payments;
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetPaymentsByOwner " + this.nif, cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Payment payment = new Payment();
+                //payment.Id = reader[""].ToString();
+                payment.Valor = reader["Custo"].ToString();
+                payment.Data = reader["Data"].ToString();
+                payment.Estado = reader["Estado"].ToString();
+                payment.Metodo = reader["MetodoPagamento"].ToString();
+                payment.Animal = reader["Nome"].ToString();
+                payment.Medico = reader["Medico"].ToString();
+                payments.Add(payment);
+            }
+            cn.Close();
+            dataGridView1.Columns["Id"].Visible = false;
+            dataGridView1.Refresh();
+        }
+
+        private void donoBaseControls()
+        {
+            donoNomeText.Enabled = false;
+            donoTelefoneText.Enabled = false;
+            donoEmailText.Enabled = false;
+            donoEnderecoText.Enabled = false;
+            editBtn.Visible = true;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
+        }
+
+        private void donoEditControls()
+        {
+            donoNomeText.Enabled = true;
+            donoTelefoneText.Enabled = true;
+            donoEmailText.Enabled = true;
+            donoEnderecoText.Enabled = true;
+            editBtn.Visible = false;
+            okBtn.Visible = true;
+            cancelBtn.Visible = true;
+        }
+
+        private void animaisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            titleLabel.Text = "Os seus Animais";
+            cardsFlowLayoutPanel.Visible = true;
+            dataGridView1.Visible = false;
+            perfilPanel.Visible = false;
+            loadFlowoutPanel();
+        }
+
+        private void pagamentosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            titleLabel.Text = "Os seus Pagamentos";
+            cardsFlowLayoutPanel.Visible = false;
+            dataGridView1.Visible = true;
+            perfilPanel.Visible = false;
+            loadPaymentTable();
+        }
+
+        private void perfilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            titleLabel.Text = "Os seus Perfil";
+            cardsFlowLayoutPanel.Visible = false;
+            dataGridView1.Visible = false;
+            perfilPanel.Visible = true;
+            donoBaseControls();
+
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetOwnerByNIF " + this.nif, cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read()) // Don't assume we have any rows.
+            {
+                donoNomeText.Text = reader["Nome"].ToString();
+                donoEmailText.Text = reader["Email"].ToString();
+                donoEnderecoText.Text = reader["Endereco"].ToString();
+                donoTelefoneText.Text = reader["Telefone"].ToString();
+            }
+            cn.Close();
+        }
+        private bool ExecuteInsertSP(SqlCommand cmd)
+        {
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException e)
+            {
+                MessageBox.Show(e.Message, "Erro na Base de Dados", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+        private void DonoTuples(String sp, String msgShow)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OwnerNIF", this.nif);
+            cmd.Parameters.AddWithValue("@OwnerName", donoNomeText.Text);
+            cmd.Parameters.AddWithValue("@OwnerPhone", donoTelefoneText.Text);
+            cmd.Parameters.AddWithValue("@OwnerEmail", donoEmailText.Text);
+            cmd.Parameters.AddWithValue("@OwnerAddress", donoEnderecoText.Text);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show(msgShow);
+            }
+
+            cn.Close();
+        }
+
+        private void okBtn_Click(object sender, EventArgs e)
+        {
+            DonoTuples("SP_UpdateOwner", "Informações atualizadas com sucesso!");
+            donoBaseControls();
+        }
+
+        private void editBtn_Click(object sender, EventArgs e)
+        {
+            donoEditControls();
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            donoBaseControls();
+        }
     }
 }
