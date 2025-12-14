@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -13,7 +14,7 @@ namespace PetDB
         private SqlConnection cn;
         private int currentListIndex;
         private Login loginPage;
-        private String option = "Add";
+        private String option = "";
         private String entity = "";
         public AdminForm(Login loginPage)
         {
@@ -131,6 +132,8 @@ namespace PetDB
             medicoEmailText.Text = "";
             medicoEspecialidadeText.Text = "";
             medicoClinicaText.Text = "";
+            medicoEspecialidadeComboBox.SelectedIndex = -1;
+            medicoClinicaComboBox.SelectedIndex = -1;
         }
 
         private void donoBaseControls()
@@ -172,6 +175,10 @@ namespace PetDB
             animalDataNascimentoText.Enabled = false;
             animalEspecieText.Enabled = false;
             animalDonoText.Enabled = false;
+            animalSexoComboBox.Visible = false;
+            animalDateTimePicker.Visible = false;
+            animalEspecieComboBox.Visible = false;
+            animalDonoComboBox.Visible = false;
             generalBaseControls();
         }
 
@@ -180,20 +187,23 @@ namespace PetDB
             animalNomeText.Enabled = true;
             animalSexoText.Enabled = true;
             animalPesoText.Enabled = true;
-            animalDataNascimentoText.Enabled = true;
-            animalEspecieText.Enabled = true;
-            animalDonoText.Enabled = true;
+            animalSexoComboBox.Visible = true;
+            animalDateTimePicker.Visible = true;
+            animalEspecieComboBox.Visible = true;
+            animalDonoComboBox.Visible = true;
             generalEditControls();
         }
 
-        // TODO
-        /*private void animalAddControls()
+        private void animalAddControls()
         {
+            animalEditControls();
             animalNumeroText.Text = "Automático";
-            ideias: 
-                mudar coisas para dropdowns; 
-                calendário para data de nascimento;
-        }*/
+            animalNomeText.Text = "";
+            animalPesoText.Text = "";
+            animalEspecieComboBox.SelectedIndex = -1;
+            animalSexoComboBox.SelectedIndex = -1;
+            animalDonoComboBox.SelectedIndex = -1;
+        }
 
         private void medicamentoBaseControls()
         {
@@ -207,12 +217,13 @@ namespace PetDB
         {
             medicamentoNomeText.Enabled = true;
             medicamentoDoseText.Enabled = true;
-            medicamentoNomeText.Enabled = true;
             generalEditControls();
         }
 
         private void medicamentoAddControls()
         {
+            medicamentoEditControls();
+            medicamentoCodigoText.Enabled = true;
             medicamentoCodigoText.Text = "";
             medicamentoDoseText.Text = "";
             medicamentoNomeText.Text = "";
@@ -229,6 +240,10 @@ namespace PetDB
 
         private void pagamentoBaseControls()
         {
+            pagamentoAnimalLabel.Visible = true;
+            pagamentoMedicoLabel.Visible = true;
+            pagamentoAnimalText.Visible = true;
+            pagamentoMedicoText.Visible = true;
             pagamentoIdText.Enabled = false;
             pagamentoValorText.Enabled = false;
             pagamentoDataText.Enabled = false;
@@ -236,26 +251,41 @@ namespace PetDB
             pagamentoMetodoText.Enabled = false;
             pagamentoAnimalText.Enabled = false;
             pagamentoMedicoText.Enabled = false;
+            pagamentoDateTimePicker.Visible = false; 
+            pagamentoEstadoComboBox.Visible = false; 
+            pagamentoMetodoComboBox.Visible = false;
+            pagamentoConsultaLabel.Visible = false; 
+            pagamentoConsultaComboBox.Visible = false;
             generalBaseControls();
         }
 
-        // falta corrigir, por dropdowns
+        
         private void pagamentoEditControls()
         {
+            pagamentoAnimalLabel.Visible = false;
+            pagamentoMedicoLabel.Visible = false;
+            pagamentoAnimalText.Visible = false;
+            pagamentoMedicoText.Visible = false;
             pagamentoValorText.Enabled = true;
             pagamentoDataText.Enabled = true;
-            pagamentoEstadoText.Enabled = true;
-            pagamentoMetodoText.Enabled = true;
-            pagamentoAnimalText.Enabled = true;
-            pagamentoMedicoText.Enabled = true;
+            pagamentoDateTimePicker.Visible = true; 
+            pagamentoEstadoComboBox.Visible = true;
+            pagamentoMetodoComboBox.Visible = true;
+            pagamentoConsultaLabel.Visible = true; 
+            pagamentoConsultaComboBox.Visible = true;
             generalEditControls();
         }
 
-        // TODO 
-        /*private void pagamentoAddControls()
+        
+        private void pagamentoAddControls()
         {
-
-        }*/
+            pagamentoEditControls();
+            pagamentoValorText.Text = "";
+            pagamentoDataText.Text = "";
+            pagamentoEstadoComboBox.SelectedIndex = -1;
+            pagamentoMetodoComboBox.SelectedIndex = -1;
+            pagamentoConsultaComboBox.SelectedIndex = -1;
+        }
 
         private void prescricaoBaseControls()
         {
@@ -447,6 +477,8 @@ namespace PetDB
                 clinicas.Add(CV);
             }
 
+            cn.Close();
+
             return clinicas;
         }
 
@@ -472,16 +504,16 @@ namespace PetDB
             currentListIndex = 0;
             ShowClinicaVeterinaria();
         }
-        private void medicoVeterinarioTab_Click(object sender, EventArgs e)
+
+        private List<Vet> GetMedicos()
         {
             if (!verifySGBDConnection())
-                return;
+                return null;
 
-            entity = "Medico";
-            medicoBaseControls();
+            List<Vet> vets = new List<Vet>(); 
+
             SqlCommand cmd = new SqlCommand("EXEC SP_GetVetInfo", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            listBox1.Items.Clear();
 
             while (reader.Read())
             {
@@ -492,14 +524,55 @@ namespace PetDB
                 vet.Email = reader["Email"].ToString();
                 vet.Especialidade = reader["Especialidade"].ToString();
                 vet.Clinica = reader["Clinica"].ToString();
-                listBox1.Items.Add(vet);
+                vets.Add(vet);
             }
 
             cn.Close();
 
+            return vets;
+        }
+
+        private void medicoVeterinarioTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Medico";
+            medicoBaseControls();
+            listBox1.Items.Clear();
+
+            List<Vet> vets = GetMedicos();
+
+            foreach (var v in vets)
+                listBox1.Items.Add(v);
+
+            cn.Close();
 
             currentListIndex = 0;
             ShowVet();
+        }
+
+        private List<Owner> GetDonos()
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<Owner> owners = new List<Owner>();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetOwnerTable", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Owner owner = new Owner();
+                owner.NIF = reader["NIF"].ToString();
+                owner.Nome = reader["Nome"].ToString();
+                owner.Telefone = reader["Telefone"].ToString();
+                owner.Email = reader["Email"].ToString();
+                owner.Endereco = reader["Endereco"].ToString();
+                owners.Add(owner);
+            }
+
+            return owners;
         }
 
         private void donoTab_Click(object sender, EventArgs e)
@@ -509,38 +582,26 @@ namespace PetDB
 
             entity = "Dono";
             donoBaseControls();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetOwnerTable", cn);
-            SqlDataReader reader = cmd.ExecuteReader();
+            List<Owner> owners = GetDonos();
             listBox1.Items.Clear();
 
-            while (reader.Read())
-            {
-                Owner Owner = new Owner();
-                Owner.NIF = reader["NIF"].ToString();
-                Owner.Nome = reader["Nome"].ToString();
-                Owner.Telefone = reader["Telefone"].ToString();
-                Owner.Email = reader["Email"].ToString();
-                Owner.Endereco = reader["Endereco"].ToString();
-                listBox1.Items.Add(Owner);
-            }
+            foreach (var owner in owners)
+                listBox1.Items.Add(owner);
 
             cn.Close();
-
 
             currentListIndex = 0;
             ShowOwner();
         }
 
-        private void animalTab_Click(object sender, EventArgs e)
+        private List<Pet> GetAnimais()
         {
             if (!verifySGBDConnection())
-                return;
+                return null;
 
-            entity = "Animal";
-            animalBaseControls();
+            List<Pet> pets = new List<Pet>();
             SqlCommand cmd = new SqlCommand("EXEC SP_GetPetInfo", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            listBox1.Items.Clear();
 
             while (reader.Read())
             {
@@ -552,8 +613,27 @@ namespace PetDB
                 pet.Peso = reader["Peso"].ToString();
                 pet.Especie = reader["Especie"].ToString();
                 pet.Dono = reader["Dono"].ToString();
-                listBox1.Items.Add(pet);
+                pets.Add(pet);
             }
+
+            cn.Close();
+
+            return pets;
+        }
+
+        private void animalTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Animal";
+            animalBaseControls();
+            listBox1.Items.Clear();
+
+            List<Pet> pets = GetAnimais();
+
+            foreach (var p in pets)
+                listBox1.Items.Add(p);
 
             cn.Close();
 
@@ -589,16 +669,15 @@ namespace PetDB
             ShowMed();
         }
 
-        private void consultaTab_Click(object sender, EventArgs e)
+        private List<Appointment> GetConsultas()
         {
             if (!verifySGBDConnection())
-                return;
+                return null;
+            
+            List<Appointment> consultas = new List<Appointment>();
 
-            entity = "Consulta";
-            consultaBaseControls();
             SqlCommand cmd = new SqlCommand("EXEC SP_GetAppointmentInfo", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            listBox1.Items.Clear();
 
             while (reader.Read())
             {
@@ -607,11 +686,29 @@ namespace PetDB
                 ap.Data = reader["Data"].ToString();
                 ap.Animal = reader["Animal"].ToString();
                 ap.Medico = reader["Medico"].ToString();
-                listBox1.Items.Add(ap);
+                consultas.Add(ap);
             }
 
             cn.Close();
 
+            return consultas; 
+        }
+
+        private void consultaTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Consulta";
+            consultaBaseControls();
+            listBox1.Items.Clear();
+
+            List<Appointment> consultas = GetConsultas();
+
+            foreach (var c in consultas)
+                listBox1.Items.Add(c);
+
+            cn.Close();
 
             currentListIndex = 0;
             ShowConsulta();
@@ -674,7 +771,7 @@ namespace PetDB
             ShowPrescription();
         }
 
-        private List<Especialidade> getEspecialidades()
+        private List<Especialidade> GetEspecialidades()
         {
             if (!verifySGBDConnection())
                 return null;
@@ -703,7 +800,7 @@ namespace PetDB
 
             entity = "Especialidade";
             especialidadeBaseControls();
-            List<Especialidade> especialidades = getEspecialidades();
+            List<Especialidade> especialidades = GetEspecialidades();
 
             listBox1.Items.Clear();
 
@@ -716,6 +813,26 @@ namespace PetDB
             ShowEspecialidade();
         }
 
+        private List<Especie> GetEspecies()
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<Especie> especies = new List<Especie>();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecieInfo", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Especie especie = new Especie();
+                especie.Codigo = reader["Codigo"].ToString();
+                especie.Descricao = reader["Descricao"].ToString();
+                especies.Add(especie);
+            }
+
+            return especies;
+        }
+
         private void especieTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
@@ -723,23 +840,40 @@ namespace PetDB
 
             entity = "Especie";
             especieBaseControls();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecieInfo", cn);
-            SqlDataReader reader = cmd.ExecuteReader();
+            List<Especie> especies = GetEspecies();
+
             listBox1.Items.Clear();
 
-            while (reader.Read())
-            {
-                Especie especie = new Especie();
-                especie.Codigo = reader["Codigo"].ToString();
-                especie.Descricao = reader["Descricao"].ToString();
+            foreach (var especie in especies)
                 listBox1.Items.Add(especie);
-            }
 
             cn.Close();
 
             currentListIndex = 0;
             ShowEspecie();
         }
+
+        private List<PaymentMethod> GetMetodosPagamento()
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<PaymentMethod> methods = new List<PaymentMethod>();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetPaymentMethods", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                PaymentMethod pm = new PaymentMethod();
+                pm.Codigo = reader["Codigo"].ToString();
+                pm.Descricao = reader["Descricao"].ToString();
+                methods.Add(pm);
+            }
+
+            return methods;
+
+        }
+        // IDEIA: private void metodoPagamentoTab_Click(object sender, EventArgs e)
 
         private void ShowClinicaVeterinaria()
         {
@@ -832,7 +966,7 @@ namespace PetDB
             pagamentoEstadoText.Text = payment.Estado;
             pagamentoMetodoText.Text = payment.Metodo;
             pagamentoAnimalText.Text = payment.Animal;
-            pagamentoMedicoText.Text = payment.Medico;
+            pagamentoMedicoText.Text = payment.Medico; 
         }
 
         private void ShowPrescription()
@@ -918,20 +1052,25 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            List<Especialidade> especialidades = getEspecialidades();
+            medicoEspecialidadeComboBox.Items.Clear();
+
+            List<Especialidade> especialidades = GetEspecialidades();
 
             foreach (var e in especialidades)
             {
                 medicoEspecialidadeComboBox.Items.Add(e);
             }
 
-            for (int i = 0; i < medicoEspecialidadeComboBox.Items.Count; i++)
+            if (option == "Edit")
             {
-                Especialidade e = (Especialidade)medicoEspecialidadeComboBox.Items[i];
-                if (e.Descricao == medicoEspecialidadeText.Text)
+                for (int i = 0; i < medicoEspecialidadeComboBox.Items.Count; i++)
                 {
-                    medicoEspecialidadeComboBox.SelectedIndex = i;
-                    break;
+                    Especialidade e = (Especialidade)medicoEspecialidadeComboBox.Items[i];
+                    if (e.Descricao == medicoEspecialidadeText.Text)
+                    {
+                        medicoEspecialidadeComboBox.SelectedIndex = i;
+                        break;
+                    }
                 }
             }
 
@@ -943,6 +1082,8 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            medicoClinicaComboBox.Items.Clear();
+
             List<CliVet> clinicas = GetClinicasVeterinarias();
 
             foreach (var CV in clinicas)
@@ -950,13 +1091,268 @@ namespace PetDB
                 medicoClinicaComboBox.Items.Add(CV);
             }
 
-            for (int i = 0; i < medicoClinicaComboBox.Items.Count; i++)
+            if (option == "Edit")
             {
-                CliVet c = (CliVet)medicoClinicaComboBox.Items[i];
-                if (c.Nome == medicoClinicaText.Text)
+                for (int i = 0; i < medicoClinicaComboBox.Items.Count; i++)
                 {
-                    medicoClinicaComboBox.SelectedIndex = i;
-                    break;
+                    CliVet c = (CliVet)medicoClinicaComboBox.Items[i];
+                    if (c.Nome == medicoClinicaText.Text)
+                    {
+                        medicoClinicaComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            cn.Close();
+        }
+
+        private void LoadSexoComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            animalSexoComboBox.Items.Clear();
+            animalSexoComboBox.Items.Add('M');
+            animalSexoComboBox.Items.Add('F');
+
+            if (option == "Edit")
+            {
+                for (int i = 0; i < animalSexoComboBox.Items.Count; i++)
+                {
+                    if (animalSexoComboBox.Items[i].ToString() == animalSexoText.Text)
+                    {
+                        animalSexoComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            cn.Close();
+        }
+
+        private void LoadEspeciesComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            animalEspecieComboBox.Items.Clear();
+
+            List<Especie> especies = GetEspecies();
+
+            foreach (var e in especies)
+            {
+                animalEspecieComboBox.Items.Add(e);
+            }
+
+            if (option == "Edit")
+            {
+                for (int i = 0; i < animalEspecieComboBox.Items.Count; i++)
+                {
+                    Especie e = (Especie)animalEspecieComboBox.Items[i];
+                    if (e.Descricao == animalEspecieText.Text)
+                    {
+                        animalEspecieComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            cn.Close();
+        }
+
+        private void LoadDonosComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            animalDonoComboBox.Items.Clear();
+
+            List<Owner> owners = GetDonos();
+
+            foreach (var o in owners)
+            {
+                animalDonoComboBox.Items.Add(o);
+            }
+
+            if (option == "Edit")
+            {
+                for (int i = 0; i < animalDonoComboBox.Items.Count; i++)
+                {
+                    Owner o = (Owner)animalDonoComboBox.Items[i];
+                    if (o.Nome == animalDonoText.Text)
+                    {
+                        animalDonoComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            cn.Close();
+        }
+
+        private void LoadAnimaisComboBox(ComboBox cb, TextBox animalName)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            cb.Items.Clear();
+
+            List<Pet> pets = GetAnimais();
+
+            foreach (var p in pets)
+            {
+                cb.Items.Add(p);
+            }
+
+            if (option == "Edit")
+            {
+                for (int i = 0; i < cb.Items.Count; i++)
+                {
+                    Pet p = (Pet)cb.Items[i];
+                    if (p.Nome == animalName.Text) 
+                    { 
+                        cb.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            cn.Close();
+        }
+        // TODO
+        private void LoadMedicosComboBox(ComboBox cb, TextBox medicoName)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            cb.Items.Clear();
+
+            List<Vet> vets = GetMedicos();
+
+            foreach (var v in vets)
+            {
+                cb.Items.Add(v);
+            }
+
+            if (option == "Edit")
+            {
+                for (int i = 0; i < cb.Items.Count; i++)
+                {
+                    Pet p = (Pet)cb.Items[i];
+                    if (p.Nome == medicoName.Text)
+                    { 
+                        cb.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            cn.Close();
+        }
+        
+        private int GetPaymentAppointmentId(int paymentId)
+        {
+            int appointmentId = -1;
+
+            if (!verifySGBDConnection())
+                return appointmentId;
+
+            SqlCommand cmd = new SqlCommand("SP_GetPaymentAppointment", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PaymentId", paymentId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                appointmentId = int.Parse(reader["Consulta"].ToString());
+            }
+
+            reader.Close();
+            cn.Close();
+
+            return appointmentId;
+        }
+
+        private void LoadConsultasComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            pagamentoConsultaComboBox.Items.Clear();
+
+            List<Appointment> consultas = GetConsultas();
+
+            foreach (var c in consultas)
+            {
+                pagamentoConsultaComboBox.Items.Add(c);
+            }
+
+            int appointmentId = GetPaymentAppointmentId(int.Parse(pagamentoIdText.Text));
+
+            if (option == "Edit")
+            {
+                for (int i = 0; i < pagamentoConsultaComboBox.Items.Count; i++)
+                {
+                    Appointment ap = (Appointment)pagamentoConsultaComboBox.Items[i];
+                    if (int.Parse(ap.Id) == appointmentId)
+                    {
+                        pagamentoConsultaComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            cn.Close();
+        }
+
+        private void LoadEstadoComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+            pagamentoEstadoComboBox.Items.Clear();
+            pagamentoEstadoComboBox.Items.Add("Pendente");
+            pagamentoEstadoComboBox.Items.Add("Pago");
+
+            if (option == "Edit")
+            {
+                for (int i = 0; i < pagamentoEstadoComboBox.Items.Count; i++)
+                {
+                    if (pagamentoEstadoComboBox.Items[i].ToString() == pagamentoEstadoText.Text)
+                    {
+                        pagamentoEstadoComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            cn.Close();
+        }
+
+        private void LoadMetodoComboBox()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            pagamentoMetodoComboBox.Items.Clear();
+
+            List<PaymentMethod> methods = GetMetodosPagamento();
+
+            foreach (var m in methods)
+            {
+                pagamentoMetodoComboBox.Items.Add(m);
+            }
+
+            if (option == "Edit")
+            {
+                for (int i = 0; i < pagamentoMetodoComboBox.Items.Count; i++)
+                {
+                    PaymentMethod pm = (PaymentMethod)pagamentoMetodoComboBox.Items[i];
+                    if (pm.Descricao == pagamentoMetodoText.Text)
+                    {
+                        pagamentoMetodoComboBox.SelectedIndex = i;
+                        break;
+                    }
                 }
             }
 
@@ -981,6 +1377,9 @@ namespace PetDB
                     break;
                 case "Animal":
                     animalEditControls();
+                    LoadSexoComboBox();
+                    LoadEspeciesComboBox();
+                    LoadDonosComboBox();
                     break;
                 case "Medicamento":
                     medicamentoEditControls();
@@ -990,6 +1389,9 @@ namespace PetDB
                     break;
                 case "Pagamento":
                     pagamentoEditControls();
+                    LoadEstadoComboBox();
+                    LoadMetodoComboBox();
+                    LoadConsultasComboBox();
                     break;
                 case "Prescricao":
                     //prescricaoEditControls();
@@ -1072,10 +1474,9 @@ namespace PetDB
             }
         }
 
-
-
         private void addBtn_Click(object sender, EventArgs e)
         {
+            option = "Add";
             switch (entity)
             {
                 case "Clinica":
@@ -1090,7 +1491,10 @@ namespace PetDB
                     donoAddControls();
                     break;
                 case "Animal":
-                    //animalAddControls();
+                    animalAddControls();
+                    LoadSexoComboBox();
+                    LoadEspeciesComboBox();
+                    LoadDonosComboBox();
                     break;
                 case "Medicamento":
                     medicamentoAddControls();
@@ -1099,7 +1503,10 @@ namespace PetDB
                     //consultaAddControls();
                     break;
                 case "Pagamento":
-                    //pagamentoAddControls();
+                    pagamentoAddControls();
+                    LoadEstadoComboBox();
+                    LoadMetodoComboBox();
+                    LoadConsultasComboBox(); 
                     break;
                 case "Prescricao":
                     //prescricaoAddControls();
@@ -1202,11 +1609,109 @@ namespace PetDB
             cmd.CommandType = CommandType.StoredProcedure;
             if (sp.Equals("SP_UpdatePet"))
             {
-                cmd.Parameters.AddWithValue("@PetNumero", animalNumeroText.Text);
+                cmd.Parameters.AddWithValue("@PetID", animalNumeroText.Text);
             }
             cmd.Parameters.AddWithValue("@PetName", animalNomeText.Text);
+            cmd.Parameters.AddWithValue("@PetBirthDate", animalDateTimePicker.Value.Date);
+            double peso;
+            bool ok = double.TryParse(
+                animalPesoText.Text.Replace('.', ','),
+                NumberStyles.Any,
+                CultureInfo.CurrentCulture,
+                out peso
+            );
+            cmd.Parameters.AddWithValue("@PetWeight", peso);
+            cmd.Parameters.AddWithValue("@PetSex", animalSexoComboBox.SelectedItem.ToString());
+            Especie e = (Especie)animalEspecieComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@PetSpecie", e.Codigo);
+            Owner o = (Owner)animalDonoComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@PetOwner", o.NIF);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show(msgShow);
+            }
+
+            cn.Close();
+        }
+
+        private void MedicamentoTuples(String sp, String msgShow)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@MedicineCode", Int32.Parse(medicamentoCodigoText.Text));
+            cmd.Parameters.AddWithValue("@MedicineDescription", medicamentoNomeText.Text);
+            String dose = medicamentoDoseText.Text;
+            if (!(dose.Contains("mg") || dose.Contains("g") || dose.Contains("kg")))
+            {
+                MessageBox.Show(
+                    "Dose inválida.\nUse unidades válidas: mg, g ou kg.",
+                    "Erro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+            cmd.Parameters.AddWithValue("@MedicineDose", dose);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show(msgShow);
+            }
+
+            cn.Close();
+        }
+
+        //TODO
+
+        private void ConsultaTuples(String sp, String msgShow)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OwnerNIF", int.Parse(donoNifText.Text));
+            cmd.Parameters.AddWithValue("@OwnerName", donoNomeText.Text);
             cmd.Parameters.AddWithValue("@OwnerPhone", donoTelefoneText.Text);
             cmd.Parameters.AddWithValue("@OwnerEmail", donoEmailText.Text);
+            cmd.Parameters.AddWithValue("@OwnerAddress", donoEnderecoText.Text);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show(msgShow);
+            }
+
+            cn.Close();
+        }
+
+        private void PagamentoTuples(String sp, String msgShow)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (sp.Equals("SP_UpdatePet"))
+            {
+                cmd.Parameters.AddWithValue("@PaymentID", pagamentoIdText.Text);
+            }
+            cmd.Parameters.AddWithValue("@PaymentDate", pagamentoDateTimePicker.Value);
+            double valor;
+            bool ok = double.TryParse(
+                pagamentoValorText.Text.Replace('.', ','),
+                NumberStyles.Any,
+                CultureInfo.CurrentCulture,
+                out valor
+            );
+            cmd.Parameters.AddWithValue("@PaymentValue", valor);
+            cmd.Parameters.AddWithValue("@PaymentStatus", pagamentoEstadoComboBox.SelectedItem.ToString());
+            
+            cmd.Parameters.AddWithValue("@PaymentMethod", pagamentoMetodoComboBox.SelectedItem);
             cmd.Parameters.AddWithValue("@OwnerAddress", donoEnderecoText.Text);
 
             if (ExecuteInsertSP(cmd))
@@ -1252,7 +1757,32 @@ namespace PetDB
                 case ("Edit", "Animal"):
                     AnimalTuples("SP_UpdatePet", "Informações atualizadas com sucesso");
                     animalTab_Click(sender, e);
-                    break; 
+                    break;
+                case ("Add", "Medicamento"):
+                    MedicamentoTuples("SP_AddMedicine", "Medicamento adicionado com sucesso!");
+                    medTab_Click(sender, e);
+                    break;
+                case ("Edit", "Medicamento"):
+                    MedicamentoTuples("SP_UpdateMedicine", "Informações atualizadas com sucesso!");
+                    medTab_Click(sender, e);
+                    break;
+                case ("Add", "Consulta"):
+                    ConsultaTuples("SP_AddAppointment", "Consulta adicionada com sucesso!");
+                    consultaTab_Click(sender, e);
+                    break;
+                case ("Edit", "Consulta"):
+                    ConsultaTuples("SP_UpdateAppointment", "Informações atualizadas com sucesso!");
+                    consultaTab_Click(sender, e);
+                    break;
+                case ("Add", "Pagamento"):
+                    PagamentoTuples("SP_AddPayment", "Pagamento adicionado com sucesso!");
+                    pagamentoTab_Click(sender, e);
+                    break;
+                case ("Edit", "Pagamento"):
+                    PagamentoTuples("SP_UpdatePayment", "Informações atualizadas com sucesso!");
+                    pagamentoTab_Click(sender, e);
+                    break;
+
 
 
             }
@@ -1309,6 +1839,11 @@ namespace PetDB
             PopUpForm popup = new PopUpForm(uc, "Tratamentos da Consulta");
             popup.ShowDialog();
 
+        }
+
+        private void btnEditarTratamentos_Click(object sender, EventArgs e)
+        {
+            
         }
 
         private void btnConsultarRelatorio_Click(object sender, EventArgs e)
@@ -1382,5 +1917,7 @@ namespace PetDB
             okBtn.Visible = false;
             cancelBtn.Visible = false;
         }
+
+
     }
 }

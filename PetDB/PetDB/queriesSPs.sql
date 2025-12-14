@@ -328,3 +328,21 @@ BEGIN
 	SELECT * FROM PETDB_Dono WHERE NIF=@OwnerNIF;
 END
 GO
+
+CREATE PROCEDURE SP_GetPaymentAppointment
+	@PaymentId int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+	SELECT Consulta FROM PETDB_Pagamento WHERE Id = @PaymentId; 
+END 
+GO
+
+CREATE PROCEDURE SP_GetPaymentMethods
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+	SELECT * FROM PETDB_MetodoPagamento; 
+END 
+GO 
+	

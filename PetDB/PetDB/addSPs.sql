@@ -132,6 +132,12 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
+	IF EXISTS (SELECT 1 FROM PETDB_Dono WHERE NIF = @OwnerNIF)
+    BEGIN
+        RAISERROR('Já existe um dono com esse NIF!', 16, 1);
+        RETURN;
+    END
+
 	IF LEN(@OwnerName) = 0 OR LEN(@OwnerName) > 64
 	BEGIN 
 		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 

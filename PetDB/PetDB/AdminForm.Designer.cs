@@ -78,6 +78,10 @@ namespace PetDB
             donoEmailText = new TextBox();
             donoTelefoneText = new TextBox();
             animalTabPage = new TabPage();
+            animalSexoComboBox = new ComboBox();
+            animalDonoComboBox = new ComboBox();
+            animalEspecieComboBox = new ComboBox();
+            animalDateTimePicker = new DateTimePicker();
             animalDonoLabel = new Label();
             animalEspecieLabel = new Label();
             animalPesoLabel = new Label();
@@ -100,6 +104,10 @@ namespace PetDB
             medicamentoCodigoText = new TextBox();
             medicamentCodigoLabel = new Label();
             consultaTabPage = new TabPage();
+            consultaDateTimePicker = new DateTimePicker();
+            consultaMedicoComboBox = new ComboBox();
+            consultaAnimaisComboBox = new ComboBox();
+            btnEditarTratamentos = new Button();
             btnConsultarRelatorio = new Button();
             btnVerTratamentos = new Button();
             consultaMedicoText = new TextBox();
@@ -111,6 +119,9 @@ namespace PetDB
             consultaIdText = new TextBox();
             consultaIdLabel = new Label();
             pagamentoTabPage = new TabPage();
+            pagamentoMetodoComboBox = new ComboBox();
+            pagamentoEstadoComboBox = new ComboBox();
+            pagamentoDateTimePicker = new DateTimePicker();
             pagamentoMedicoText = new TextBox();
             pagamentoMedicoLabel = new Label();
             pagamentoAnimalText = new TextBox();
@@ -153,6 +164,8 @@ namespace PetDB
             consultarConsultasVetTabPage = new TabPage();
             consultarPrescricoesAnimalTabPage = new TabPage();
             consultarPagamentosDonoTabPage = new TabPage();
+            pagamentoConsultaLabel = new Label();
+            pagamentoConsultaComboBox = new ComboBox();
             menuStrip1.SuspendLayout();
             registarTabControl.SuspendLayout();
             clinicaTabPage.SuspendLayout();
@@ -353,7 +366,7 @@ namespace PetDB
             clinicaTabPage.Controls.Add(clinicaTelefoneText);
             clinicaTabPage.Location = new Point(4, 64);
             clinicaTabPage.Name = "clinicaTabPage";
-            clinicaTabPage.Padding = new Padding(3, 3, 3, 3);
+            clinicaTabPage.Padding = new Padding(3);
             clinicaTabPage.Size = new Size(318, 143);
             clinicaTabPage.TabIndex = 0;
             clinicaTabPage.Text = "Clinica";
@@ -414,7 +427,7 @@ namespace PetDB
             medicoTabPage.Controls.Add(medicoClinicaLabel);
             medicoTabPage.Location = new Point(4, 64);
             medicoTabPage.Name = "medicoTabPage";
-            medicoTabPage.Padding = new Padding(3, 3, 3, 3);
+            medicoTabPage.Padding = new Padding(3);
             medicoTabPage.Size = new Size(318, 143);
             medicoTabPage.TabIndex = 1;
             medicoTabPage.Text = "Medico";
@@ -556,11 +569,11 @@ namespace PetDB
             donoTabPage.Controls.Add(donoEmailLabel);
             donoTabPage.Controls.Add(donoEmailText);
             donoTabPage.Controls.Add(donoTelefoneText);
-            donoTabPage.Location = new Point(4, 44);
+            donoTabPage.Location = new Point(4, 64);
             donoTabPage.Margin = new Padding(2);
             donoTabPage.Name = "donoTabPage";
             donoTabPage.Padding = new Padding(2);
-            donoTabPage.Size = new Size(318, 163);
+            donoTabPage.Size = new Size(318, 143);
             donoTabPage.TabIndex = 2;
             donoTabPage.Text = "Dono";
             donoTabPage.UseVisualStyleBackColor = true;
@@ -657,6 +670,10 @@ namespace PetDB
             // 
             // animalTabPage
             // 
+            animalTabPage.Controls.Add(animalSexoComboBox);
+            animalTabPage.Controls.Add(animalDonoComboBox);
+            animalTabPage.Controls.Add(animalEspecieComboBox);
+            animalTabPage.Controls.Add(animalDateTimePicker);
             animalTabPage.Controls.Add(animalDonoLabel);
             animalTabPage.Controls.Add(animalEspecieLabel);
             animalTabPage.Controls.Add(animalPesoLabel);
@@ -671,15 +688,50 @@ namespace PetDB
             animalTabPage.Controls.Add(animalPesoText);
             animalTabPage.Controls.Add(animalSexoText);
             animalTabPage.Controls.Add(animalNumeroText);
-            animalTabPage.Location = new Point(4, 44);
+            animalTabPage.Location = new Point(4, 64);
             animalTabPage.Margin = new Padding(2);
             animalTabPage.Name = "animalTabPage";
             animalTabPage.Padding = new Padding(2);
-            animalTabPage.Size = new Size(318, 163);
+            animalTabPage.Size = new Size(318, 143);
             animalTabPage.TabIndex = 3;
             animalTabPage.Text = "Animal";
             animalTabPage.UseVisualStyleBackColor = true;
             animalTabPage.Click += animalTab_Click;
+            // 
+            // animalSexoComboBox
+            // 
+            animalSexoComboBox.FormattingEnabled = true;
+            animalSexoComboBox.Location = new Point(5, 63);
+            animalSexoComboBox.Name = "animalSexoComboBox";
+            animalSexoComboBox.Size = new Size(65, 23);
+            animalSexoComboBox.TabIndex = 24;
+            // 
+            // animalDonoComboBox
+            // 
+            animalDonoComboBox.FormattingEnabled = true;
+            animalDonoComboBox.Location = new Point(154, 114);
+            animalDonoComboBox.Name = "animalDonoComboBox";
+            animalDonoComboBox.Size = new Size(159, 23);
+            animalDonoComboBox.TabIndex = 23;
+            animalDonoComboBox.Visible = false;
+            // 
+            // animalEspecieComboBox
+            // 
+            animalEspecieComboBox.FormattingEnabled = true;
+            animalEspecieComboBox.Location = new Point(5, 114);
+            animalEspecieComboBox.Name = "animalEspecieComboBox";
+            animalEspecieComboBox.Size = new Size(136, 23);
+            animalEspecieComboBox.TabIndex = 22;
+            animalEspecieComboBox.Visible = false;
+            // 
+            // animalDateTimePicker
+            // 
+            animalDateTimePicker.Format = DateTimePickerFormat.Short;
+            animalDateTimePicker.Location = new Point(154, 64);
+            animalDateTimePicker.Name = "animalDateTimePicker";
+            animalDateTimePicker.Size = new Size(159, 23);
+            animalDateTimePicker.TabIndex = 21;
+            animalDateTimePicker.Visible = false;
             // 
             // animalDonoLabel
             // 
@@ -801,11 +853,11 @@ namespace PetDB
             medicamentoTabPage.Controls.Add(medicamentoDoseLabel);
             medicamentoTabPage.Controls.Add(medicamentoCodigoText);
             medicamentoTabPage.Controls.Add(medicamentCodigoLabel);
-            medicamentoTabPage.Location = new Point(4, 44);
+            medicamentoTabPage.Location = new Point(4, 64);
             medicamentoTabPage.Margin = new Padding(2);
             medicamentoTabPage.Name = "medicamentoTabPage";
             medicamentoTabPage.Padding = new Padding(2);
-            medicamentoTabPage.Size = new Size(318, 163);
+            medicamentoTabPage.Size = new Size(318, 143);
             medicamentoTabPage.TabIndex = 4;
             medicamentoTabPage.Text = "Medicamento";
             medicamentoTabPage.UseVisualStyleBackColor = true;
@@ -860,6 +912,10 @@ namespace PetDB
             // 
             // consultaTabPage
             // 
+            consultaTabPage.Controls.Add(consultaDateTimePicker);
+            consultaTabPage.Controls.Add(consultaMedicoComboBox);
+            consultaTabPage.Controls.Add(consultaAnimaisComboBox);
+            consultaTabPage.Controls.Add(btnEditarTratamentos);
             consultaTabPage.Controls.Add(btnConsultarRelatorio);
             consultaTabPage.Controls.Add(btnVerTratamentos);
             consultaTabPage.Controls.Add(consultaMedicoText);
@@ -870,14 +926,47 @@ namespace PetDB
             consultaTabPage.Controls.Add(consultaDataLabel);
             consultaTabPage.Controls.Add(consultaIdText);
             consultaTabPage.Controls.Add(consultaIdLabel);
-            consultaTabPage.Location = new Point(4, 44);
+            consultaTabPage.Location = new Point(4, 64);
             consultaTabPage.Margin = new Padding(2);
             consultaTabPage.Name = "consultaTabPage";
             consultaTabPage.Padding = new Padding(2);
-            consultaTabPage.Size = new Size(318, 163);
+            consultaTabPage.Size = new Size(318, 143);
             consultaTabPage.TabIndex = 5;
             consultaTabPage.Text = "Consulta";
             consultaTabPage.UseVisualStyleBackColor = true;
+            // 
+            // consultaDateTimePicker
+            // 
+            consultaDateTimePicker.Location = new Point(149, 19);
+            consultaDateTimePicker.Name = "consultaDateTimePicker";
+            consultaDateTimePicker.Size = new Size(164, 23);
+            consultaDateTimePicker.TabIndex = 13;
+            // 
+            // consultaMedicoComboBox
+            // 
+            consultaMedicoComboBox.FormattingEnabled = true;
+            consultaMedicoComboBox.Location = new Point(147, 63);
+            consultaMedicoComboBox.Name = "consultaMedicoComboBox";
+            consultaMedicoComboBox.Size = new Size(166, 23);
+            consultaMedicoComboBox.TabIndex = 12;
+            // 
+            // consultaAnimaisComboBox
+            // 
+            consultaAnimaisComboBox.FormattingEnabled = true;
+            consultaAnimaisComboBox.Location = new Point(8, 63);
+            consultaAnimaisComboBox.Name = "consultaAnimaisComboBox";
+            consultaAnimaisComboBox.Size = new Size(133, 23);
+            consultaAnimaisComboBox.TabIndex = 11;
+            // 
+            // btnEditarTratamentos
+            // 
+            btnEditarTratamentos.Location = new Point(8, 102);
+            btnEditarTratamentos.Name = "btnEditarTratamentos";
+            btnEditarTratamentos.Size = new Size(133, 23);
+            btnEditarTratamentos.TabIndex = 10;
+            btnEditarTratamentos.Text = "Editar Tratamentos";
+            btnEditarTratamentos.UseVisualStyleBackColor = true;
+            btnEditarTratamentos.Click += btnEditarTratamentos_Click;
             // 
             // btnConsultarRelatorio
             // 
@@ -965,6 +1054,11 @@ namespace PetDB
             // 
             // pagamentoTabPage
             // 
+            pagamentoTabPage.Controls.Add(pagamentoConsultaComboBox);
+            pagamentoTabPage.Controls.Add(pagamentoConsultaLabel);
+            pagamentoTabPage.Controls.Add(pagamentoMetodoComboBox);
+            pagamentoTabPage.Controls.Add(pagamentoEstadoComboBox);
+            pagamentoTabPage.Controls.Add(pagamentoDateTimePicker);
             pagamentoTabPage.Controls.Add(pagamentoMedicoText);
             pagamentoTabPage.Controls.Add(pagamentoMedicoLabel);
             pagamentoTabPage.Controls.Add(pagamentoAnimalText);
@@ -988,17 +1082,42 @@ namespace PetDB
             pagamentoTabPage.Text = "Pagamento";
             pagamentoTabPage.UseVisualStyleBackColor = true;
             // 
+            // pagamentoMetodoComboBox
+            // 
+            pagamentoMetodoComboBox.FormattingEnabled = true;
+            pagamentoMetodoComboBox.Location = new Point(143, 62);
+            pagamentoMetodoComboBox.Name = "pagamentoMetodoComboBox";
+            pagamentoMetodoComboBox.Size = new Size(170, 23);
+            pagamentoMetodoComboBox.TabIndex = 16;
+            // 
+            // pagamentoEstadoComboBox
+            // 
+            pagamentoEstadoComboBox.FormattingEnabled = true;
+            pagamentoEstadoComboBox.Location = new Point(5, 62);
+            pagamentoEstadoComboBox.Name = "pagamentoEstadoComboBox";
+            pagamentoEstadoComboBox.Size = new Size(131, 23);
+            pagamentoEstadoComboBox.TabIndex = 15;
+            // 
+            // pagamentoDateTimePicker
+            // 
+            pagamentoDateTimePicker.Format = DateTimePickerFormat.Short;
+            pagamentoDateTimePicker.Location = new Point(143, 18);
+            pagamentoDateTimePicker.Name = "pagamentoDateTimePicker";
+            pagamentoDateTimePicker.ShowUpDown = true;
+            pagamentoDateTimePicker.Size = new Size(170, 23);
+            pagamentoDateTimePicker.TabIndex = 14;
+            // 
             // pagamentoMedicoText
             // 
-            pagamentoMedicoText.Location = new Point(148, 106);
+            pagamentoMedicoText.Location = new Point(143, 106);
             pagamentoMedicoText.Name = "pagamentoMedicoText";
-            pagamentoMedicoText.Size = new Size(165, 23);
+            pagamentoMedicoText.Size = new Size(170, 23);
             pagamentoMedicoText.TabIndex = 13;
             // 
             // pagamentoMedicoLabel
             // 
             pagamentoMedicoLabel.AutoSize = true;
-            pagamentoMedicoLabel.Location = new Point(148, 89);
+            pagamentoMedicoLabel.Location = new Point(143, 88);
             pagamentoMedicoLabel.Name = "pagamentoMedicoLabel";
             pagamentoMedicoLabel.Size = new Size(47, 15);
             pagamentoMedicoLabel.TabIndex = 12;
@@ -1183,11 +1302,11 @@ namespace PetDB
             especialidadeTabPage.Controls.Add(especialidadeDescricaoLabel);
             especialidadeTabPage.Controls.Add(especialidadeCodigoText);
             especialidadeTabPage.Controls.Add(especialidadeCodigoLabel);
-            especialidadeTabPage.Location = new Point(4, 44);
+            especialidadeTabPage.Location = new Point(4, 64);
             especialidadeTabPage.Margin = new Padding(2);
             especialidadeTabPage.Name = "especialidadeTabPage";
             especialidadeTabPage.Padding = new Padding(2);
-            especialidadeTabPage.Size = new Size(318, 163);
+            especialidadeTabPage.Size = new Size(318, 143);
             especialidadeTabPage.TabIndex = 8;
             especialidadeTabPage.Text = "Especialidade";
             especialidadeTabPage.UseVisualStyleBackColor = true;
@@ -1241,11 +1360,11 @@ namespace PetDB
             especieTabPage.Controls.Add(especieDescricaoLabel);
             especieTabPage.Controls.Add(especieCodigoText);
             especieTabPage.Controls.Add(especieCodigoLabel);
-            especieTabPage.Location = new Point(4, 44);
+            especieTabPage.Location = new Point(4, 64);
             especieTabPage.Margin = new Padding(2);
             especieTabPage.Name = "especieTabPage";
             especieTabPage.Padding = new Padding(2);
-            especieTabPage.Size = new Size(318, 163);
+            especieTabPage.Size = new Size(318, 143);
             especieTabPage.TabIndex = 9;
             especieTabPage.Text = "Espécie";
             especieTabPage.UseVisualStyleBackColor = true;
@@ -1302,7 +1421,7 @@ namespace PetDB
             consultarTabControl.Controls.Add(consultarPrescricoesAnimalTabPage);
             consultarTabControl.Controls.Add(consultarPagamentosDonoTabPage);
             consultarTabControl.Location = new Point(298, 25);
-            consultarTabControl.Margin = new Padding(2, 2, 2, 2);
+            consultarTabControl.Margin = new Padding(2);
             consultarTabControl.Multiline = true;
             consultarTabControl.Name = "consultarTabControl";
             consultarTabControl.SelectedIndex = 0;
@@ -1312,9 +1431,9 @@ namespace PetDB
             // consultarVetCliTabPage
             // 
             consultarVetCliTabPage.Location = new Point(4, 64);
-            consultarVetCliTabPage.Margin = new Padding(2, 2, 2, 2);
+            consultarVetCliTabPage.Margin = new Padding(2);
             consultarVetCliTabPage.Name = "consultarVetCliTabPage";
-            consultarVetCliTabPage.Padding = new Padding(2, 2, 2, 2);
+            consultarVetCliTabPage.Padding = new Padding(2);
             consultarVetCliTabPage.Size = new Size(346, 207);
             consultarVetCliTabPage.TabIndex = 0;
             consultarVetCliTabPage.Text = "Medicos por Clinica";
@@ -1323,9 +1442,9 @@ namespace PetDB
             // consultarAnimaisDonoTabPage
             // 
             consultarAnimaisDonoTabPage.Location = new Point(4, 64);
-            consultarAnimaisDonoTabPage.Margin = new Padding(2, 2, 2, 2);
+            consultarAnimaisDonoTabPage.Margin = new Padding(2);
             consultarAnimaisDonoTabPage.Name = "consultarAnimaisDonoTabPage";
-            consultarAnimaisDonoTabPage.Padding = new Padding(2, 2, 2, 2);
+            consultarAnimaisDonoTabPage.Padding = new Padding(2);
             consultarAnimaisDonoTabPage.Size = new Size(346, 207);
             consultarAnimaisDonoTabPage.TabIndex = 1;
             consultarAnimaisDonoTabPage.Text = "Animais por Dono";
@@ -1334,9 +1453,9 @@ namespace PetDB
             // consultarAnimaisClinicaTabPage
             // 
             consultarAnimaisClinicaTabPage.Location = new Point(4, 64);
-            consultarAnimaisClinicaTabPage.Margin = new Padding(2, 2, 2, 2);
+            consultarAnimaisClinicaTabPage.Margin = new Padding(2);
             consultarAnimaisClinicaTabPage.Name = "consultarAnimaisClinicaTabPage";
-            consultarAnimaisClinicaTabPage.Padding = new Padding(2, 2, 2, 2);
+            consultarAnimaisClinicaTabPage.Padding = new Padding(2);
             consultarAnimaisClinicaTabPage.Size = new Size(346, 207);
             consultarAnimaisClinicaTabPage.TabIndex = 2;
             consultarAnimaisClinicaTabPage.Text = "Animais por Clinica";
@@ -1345,9 +1464,9 @@ namespace PetDB
             // consultarConsultasAnimalTabPage
             // 
             consultarConsultasAnimalTabPage.Location = new Point(4, 64);
-            consultarConsultasAnimalTabPage.Margin = new Padding(2, 2, 2, 2);
+            consultarConsultasAnimalTabPage.Margin = new Padding(2);
             consultarConsultasAnimalTabPage.Name = "consultarConsultasAnimalTabPage";
-            consultarConsultasAnimalTabPage.Padding = new Padding(2, 2, 2, 2);
+            consultarConsultasAnimalTabPage.Padding = new Padding(2);
             consultarConsultasAnimalTabPage.Size = new Size(346, 207);
             consultarConsultasAnimalTabPage.TabIndex = 3;
             consultarConsultasAnimalTabPage.Text = "Consultas por Animal";
@@ -1356,9 +1475,9 @@ namespace PetDB
             // consultarConsultasVetTabPage
             // 
             consultarConsultasVetTabPage.Location = new Point(4, 64);
-            consultarConsultasVetTabPage.Margin = new Padding(2, 2, 2, 2);
+            consultarConsultasVetTabPage.Margin = new Padding(2);
             consultarConsultasVetTabPage.Name = "consultarConsultasVetTabPage";
-            consultarConsultasVetTabPage.Padding = new Padding(2, 2, 2, 2);
+            consultarConsultasVetTabPage.Padding = new Padding(2);
             consultarConsultasVetTabPage.Size = new Size(346, 207);
             consultarConsultasVetTabPage.TabIndex = 4;
             consultarConsultasVetTabPage.Text = "Consultas por MV";
@@ -1367,9 +1486,9 @@ namespace PetDB
             // consultarPrescricoesAnimalTabPage
             // 
             consultarPrescricoesAnimalTabPage.Location = new Point(4, 64);
-            consultarPrescricoesAnimalTabPage.Margin = new Padding(2, 2, 2, 2);
+            consultarPrescricoesAnimalTabPage.Margin = new Padding(2);
             consultarPrescricoesAnimalTabPage.Name = "consultarPrescricoesAnimalTabPage";
-            consultarPrescricoesAnimalTabPage.Padding = new Padding(2, 2, 2, 2);
+            consultarPrescricoesAnimalTabPage.Padding = new Padding(2);
             consultarPrescricoesAnimalTabPage.Size = new Size(346, 207);
             consultarPrescricoesAnimalTabPage.TabIndex = 5;
             consultarPrescricoesAnimalTabPage.Text = "Prescrições por Animal";
@@ -1378,13 +1497,30 @@ namespace PetDB
             // consultarPagamentosDonoTabPage
             // 
             consultarPagamentosDonoTabPage.Location = new Point(4, 64);
-            consultarPagamentosDonoTabPage.Margin = new Padding(2, 2, 2, 2);
+            consultarPagamentosDonoTabPage.Margin = new Padding(2);
             consultarPagamentosDonoTabPage.Name = "consultarPagamentosDonoTabPage";
-            consultarPagamentosDonoTabPage.Padding = new Padding(2, 2, 2, 2);
+            consultarPagamentosDonoTabPage.Padding = new Padding(2);
             consultarPagamentosDonoTabPage.Size = new Size(346, 207);
             consultarPagamentosDonoTabPage.TabIndex = 6;
             consultarPagamentosDonoTabPage.Text = "Pagamentos por Dono";
             consultarPagamentosDonoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // pagamentoConsultaLabel
+            // 
+            pagamentoConsultaLabel.AutoSize = true;
+            pagamentoConsultaLabel.Location = new Point(5, 88);
+            pagamentoConsultaLabel.Name = "pagamentoConsultaLabel";
+            pagamentoConsultaLabel.Size = new Size(54, 15);
+            pagamentoConsultaLabel.TabIndex = 17;
+            pagamentoConsultaLabel.Text = "Consulta";
+            // 
+            // pagamentoConsultaComboBox
+            // 
+            pagamentoConsultaComboBox.FormattingEnabled = true;
+            pagamentoConsultaComboBox.Location = new Point(5, 106);
+            pagamentoConsultaComboBox.Name = "pagamentoConsultaComboBox";
+            pagamentoConsultaComboBox.Size = new Size(236, 23);
+            pagamentoConsultaComboBox.TabIndex = 18;
             // 
             // AdminForm
             // 
@@ -1566,5 +1702,18 @@ namespace PetDB
         private TabPage consultarConsultasVetTabPage;
         private TabPage consultarPrescricoesAnimalTabPage;
         private TabPage consultarPagamentosDonoTabPage;
+        private ComboBox animalDonoComboBox;
+        private ComboBox animalEspecieComboBox;
+        private DateTimePicker animalDateTimePicker;
+        private ComboBox animalSexoComboBox;
+        private Button btnEditarTratamentos;
+        private DateTimePicker pagamentoDateTimePicker;
+        private ComboBox pagamentoMetodoComboBox;
+        private ComboBox pagamentoEstadoComboBox;
+        private DateTimePicker consultaDateTimePicker;
+        private ComboBox consultaMedicoComboBox;
+        private ComboBox consultaAnimaisComboBox;
+        private ComboBox pagamentoConsultaComboBox;
+        private Label pagamentoConsultaLabel;
     }
 }

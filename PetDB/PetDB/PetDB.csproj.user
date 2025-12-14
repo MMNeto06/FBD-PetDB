@@ -28,6 +28,12 @@
     <Compile Update="UC_ListStrings.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UC_ListTreatments.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UC_NewTreatment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UC_ShowReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
