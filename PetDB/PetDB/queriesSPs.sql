@@ -112,6 +112,15 @@ BEGIN
 END 
 GO 
 
+CREATE PROCEDURE SP_GetAppointmentDateById
+	@appointmentID int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+	SELECT [Data] FROM PETDB_Consulta WHERE Id = @appointmentID;
+END
+GO
+
 CREATE PROCEDURE SP_GetPaymentInfo
 AS 
 BEGIN 
@@ -347,4 +356,30 @@ BEGIN
 	SELECT * FROM PETDB_MetodoPagamento; 
 END 
 GO 
-	
+
+CREATE PROCEDURE SP_GetPaymentDate
+	@PaymentId int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+	SELECT [Data] FROM PETDB_Pagamento WHERE Id = @PaymentId;
+END 
+GO
+
+CREATE PROCEDURE SP_GetTreatments
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+	SELECT * FROM PETDB_Tratamento;
+END 
+GO
+
+CREATE PROCEDURE SP_GetMostRecentAppointmentId
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	SELECT TOP 1 Id FROM PETDB_Consulta
+	ORDER BY Id DESC; 
+END 
+GO

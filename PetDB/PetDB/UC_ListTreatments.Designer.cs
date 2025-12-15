@@ -30,7 +30,6 @@
         {
             treatmentsListBox = new ListBox();
             btnAddTreatment = new Button();
-            btnEditTreatment = new Button();
             btnRemoveTreatment = new Button();
             SuspendLayout();
             // 
@@ -44,7 +43,7 @@
             // 
             // btnAddTreatment
             // 
-            btnAddTreatment.Location = new Point(28, 203);
+            btnAddTreatment.Location = new Point(75, 203);
             btnAddTreatment.Name = "btnAddTreatment";
             btnAddTreatment.Size = new Size(92, 23);
             btnAddTreatment.TabIndex = 1;
@@ -52,19 +51,9 @@
             btnAddTreatment.UseVisualStyleBackColor = true;
             btnAddTreatment.Click += btnAddTreatment_Click;
             // 
-            // btnEditTreatment
-            // 
-            btnEditTreatment.Location = new Point(162, 203);
-            btnEditTreatment.Name = "btnEditTreatment";
-            btnEditTreatment.Size = new Size(83, 23);
-            btnEditTreatment.TabIndex = 2;
-            btnEditTreatment.Text = "Editar";
-            btnEditTreatment.UseVisualStyleBackColor = true;
-            btnEditTreatment.Click += btnEditTreatment_Click;
-            // 
             // btnRemoveTreatment
             // 
-            btnRemoveTreatment.Location = new Point(285, 203);
+            btnRemoveTreatment.Location = new Point(223, 203);
             btnRemoveTreatment.Name = "btnRemoveTreatment";
             btnRemoveTreatment.Size = new Size(83, 23);
             btnRemoveTreatment.TabIndex = 3;
@@ -77,7 +66,6 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(btnRemoveTreatment);
-            Controls.Add(btnEditTreatment);
             Controls.Add(btnAddTreatment);
             Controls.Add(treatmentsListBox);
             Name = "UC_ListTreatments";
@@ -89,7 +77,6 @@
 
         private ListBox treatmentsListBox;
         private Button btnAddTreatment;
-        private Button btnEditTreatment;
         private Button btnRemoveTreatment;
     }
 }

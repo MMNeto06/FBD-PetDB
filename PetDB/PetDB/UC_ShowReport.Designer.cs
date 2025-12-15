@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             reportText = new TextBox();
+            showReportBtnOK = new Button();
             SuspendLayout();
             // 
             // reportText
@@ -39,13 +40,24 @@
             reportText.Size = new Size(434, 285);
             reportText.TabIndex = 0;
             // 
+            // showReportBtnOK
+            // 
+            showReportBtnOK.Location = new Point(353, 291);
+            showReportBtnOK.Name = "showReportBtnOK";
+            showReportBtnOK.Size = new Size(75, 23);
+            showReportBtnOK.TabIndex = 1;
+            showReportBtnOK.Text = "OK";
+            showReportBtnOK.UseVisualStyleBackColor = true;
+            showReportBtnOK.Click += showReportBtnOK_Click;
+            // 
             // UC_ShowReport
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(showReportBtnOK);
             Controls.Add(reportText);
             Name = "UC_ShowReport";
-            Size = new Size(434, 285);
+            Size = new Size(431, 323);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -53,5 +65,6 @@
         #endregion
 
         private TextBox reportText;
+        private Button showReportBtnOK;
     }
 }

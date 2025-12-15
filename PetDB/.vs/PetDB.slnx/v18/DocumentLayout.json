@@ -7,16 +7,44 @@
       "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\uc_showreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\uc_showreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\uc_newtreatment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\uc_newtreatment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\uc_newtreatment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\uc_newtreatment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\iappointmentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\iappointmentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\uc_showreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\uc_showreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\paymentmethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\paymentmethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\uc_listtreatments.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\uc_listtreatments.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\uc_listtreatments.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\uc_listtreatments.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,11 +54,113 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AdminForm.cs",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs",
+              "RelativeDocumentMoniker": "PetDB\\AdminForm.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs",
+              "RelativeToolTip": "PetDB\\AdminForm.cs",
+              "ViewState": "AgIAAOcAAAAAAAAAAAASwPAAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T14:31:20.419Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UC_NewTreatment.cs",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_NewTreatment.cs",
+              "RelativeDocumentMoniker": "PetDB\\UC_NewTreatment.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_NewTreatment.cs",
+              "RelativeToolTip": "PetDB\\UC_NewTreatment.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T16:47:24.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "UC_ShowReport.cs",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_ShowReport.cs",
+              "RelativeDocumentMoniker": "PetDB\\UC_ShowReport.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_ShowReport.cs",
+              "RelativeToolTip": "PetDB\\UC_ShowReport.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowDYAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:23:47.308Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UC_ShowReport.cs [Projeto]",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_ShowReport.cs",
+              "RelativeDocumentMoniker": "PetDB\\UC_ShowReport.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_ShowReport.cs [Projeto]",
+              "RelativeToolTip": "PetDB\\UC_ShowReport.cs [Projeto]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:23:36.488Z",
+              "EditorCaption": " [Projeto]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IAppointmentForm.cs",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\IAppointmentForm.cs",
+              "RelativeDocumentMoniker": "PetDB\\IAppointmentForm.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\IAppointmentForm.cs",
+              "RelativeToolTip": "PetDB\\IAppointmentForm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T17:33:03.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UC_NewTreatment.cs [Projeto]",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_NewTreatment.cs",
+              "RelativeDocumentMoniker": "PetDB\\UC_NewTreatment.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_NewTreatment.cs [Projeto]",
+              "RelativeToolTip": "PetDB\\UC_NewTreatment.cs [Projeto]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T17:28:28.156Z",
+              "EditorCaption": " [Projeto]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UC_ListTreatments.cs",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_ListTreatments.cs",
+              "RelativeDocumentMoniker": "PetDB\\UC_ListTreatments.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_ListTreatments.cs",
+              "RelativeToolTip": "PetDB\\UC_ListTreatments.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAlwBUAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T16:34:55.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UC_ListTreatments.cs [Projeto]",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_ListTreatments.cs",
+              "RelativeDocumentMoniker": "PetDB\\UC_ListTreatments.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\UC_ListTreatments.cs [Projeto]",
+              "RelativeToolTip": "PetDB\\UC_ListTreatments.cs [Projeto]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T16:29:26.731Z",
+              "EditorCaption": " [Projeto]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Payment.cs",
               "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\Payment.cs",
               "RelativeDocumentMoniker": "PetDB\\Payment.cs",
@@ -43,7 +173,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "PaymentMethod.cs",
               "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\PaymentMethod.cs",
               "RelativeDocumentMoniker": "PetDB\\PaymentMethod.cs",
@@ -52,19 +182,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-14T21:56:12.229Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AdminForm.cs",
-              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs",
-              "RelativeDocumentMoniker": "PetDB\\AdminForm.cs",
-              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs",
-              "RelativeToolTip": "PetDB\\AdminForm.cs",
-              "ViewState": "AgIAAAABAAAAAAAAAAAowBEBAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-14T14:31:20.419Z",
               "EditorCaption": ""
             },
             {

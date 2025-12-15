@@ -345,5 +345,62 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_AddTreatmentToAppointment
+	@AppointmentID int, 
+	@TreatmentID int
+AS
+BEGIN
+	SET NOCOUNT ON; 
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Consulta WHERE Id = @AppointmentID)
+	BEGIN 
+		RAISERROR('Não existe essa consulta!', 16, 1); 
+		RETURN; 
+	END
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Tratamento WHERE Codigo = @TreatmentID)
+	BEGIN 
+		RAISERROR('Não existe esse tratamento!', 16, 1); 
+		RETURN; 
+	END
+
+	BEGIN TRY
+		BEGIN TRANSACTION SCHEDULEINSERT 
+			INSERT INTO PETDB_ConsultaTratamento VALUES (@AppointmentID, @TreatmentID)
+		COMMIT TRANSACTION SCHEDULEINSERT
+	END TRY
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEINSERT
+	END CATCH
+END 
+GO 
+
+CREATE PROCEDURE SP_AddReportToAppointment
+		@AppointmentID int, 
+		@reportContent varchar(MAX) 
+AS
+BEGIN 
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Consulta WHERE Id = @AppointmentID) 
+	BEGIN 
+		RAISERROR('Não existe essa consulta!', 16, 1); 
+	END
+
+	IF LEN(@reportContent) < 0 
+	BEGIN 
+		RAISERROR('Conteúdo inválido!', 16, 1); 
+	END
+
+	BEGIN TRY
+		BEGIN TRANSACTION SCHEDULEINSERT
+			INSERT INTO PETDB_Relatorio(Consulta, Conteudo)
+			VALUES (@AppointmentID, @reportContent); 
+		COMMIT TRANSACTION SCHEDULEINSERT
+	END TRY 
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEINSERT
+	END CATCH 
+END 
+GO 
+
 
 

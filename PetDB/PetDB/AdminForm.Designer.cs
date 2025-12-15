@@ -104,10 +104,11 @@ namespace PetDB
             medicamentoCodigoText = new TextBox();
             medicamentCodigoLabel = new Label();
             consultaTabPage = new TabPage();
+            consultaBtnEditarRelatorio = new Button();
             consultaDateTimePicker = new DateTimePicker();
             consultaMedicoComboBox = new ComboBox();
             consultaAnimaisComboBox = new ComboBox();
-            btnEditarTratamentos = new Button();
+            consultaBtnEditarTratamentos = new Button();
             btnConsultarRelatorio = new Button();
             btnVerTratamentos = new Button();
             consultaMedicoText = new TextBox();
@@ -119,6 +120,8 @@ namespace PetDB
             consultaIdText = new TextBox();
             consultaIdLabel = new Label();
             pagamentoTabPage = new TabPage();
+            pagamentoConsultaComboBox = new ComboBox();
+            pagamentoConsultaLabel = new Label();
             pagamentoMetodoComboBox = new ComboBox();
             pagamentoEstadoComboBox = new ComboBox();
             pagamentoDateTimePicker = new DateTimePicker();
@@ -164,8 +167,6 @@ namespace PetDB
             consultarConsultasVetTabPage = new TabPage();
             consultarPrescricoesAnimalTabPage = new TabPage();
             consultarPagamentosDonoTabPage = new TabPage();
-            pagamentoConsultaLabel = new Label();
-            pagamentoConsultaComboBox = new ComboBox();
             menuStrip1.SuspendLayout();
             registarTabControl.SuspendLayout();
             clinicaTabPage.SuspendLayout();
@@ -912,10 +913,11 @@ namespace PetDB
             // 
             // consultaTabPage
             // 
+            consultaTabPage.Controls.Add(consultaBtnEditarRelatorio);
             consultaTabPage.Controls.Add(consultaDateTimePicker);
             consultaTabPage.Controls.Add(consultaMedicoComboBox);
             consultaTabPage.Controls.Add(consultaAnimaisComboBox);
-            consultaTabPage.Controls.Add(btnEditarTratamentos);
+            consultaTabPage.Controls.Add(consultaBtnEditarTratamentos);
             consultaTabPage.Controls.Add(btnConsultarRelatorio);
             consultaTabPage.Controls.Add(btnVerTratamentos);
             consultaTabPage.Controls.Add(consultaMedicoText);
@@ -934,6 +936,16 @@ namespace PetDB
             consultaTabPage.TabIndex = 5;
             consultaTabPage.Text = "Consulta";
             consultaTabPage.UseVisualStyleBackColor = true;
+            // 
+            // consultaBtnEditarRelatorio
+            // 
+            consultaBtnEditarRelatorio.Location = new Point(147, 102);
+            consultaBtnEditarRelatorio.Name = "consultaBtnEditarRelatorio";
+            consultaBtnEditarRelatorio.Size = new Size(166, 23);
+            consultaBtnEditarRelatorio.TabIndex = 14;
+            consultaBtnEditarRelatorio.Text = "Editar Relatório";
+            consultaBtnEditarRelatorio.UseVisualStyleBackColor = true;
+            consultaBtnEditarRelatorio.Click += consultaBtnEditarRelatorio_Click;
             // 
             // consultaDateTimePicker
             // 
@@ -958,15 +970,15 @@ namespace PetDB
             consultaAnimaisComboBox.Size = new Size(133, 23);
             consultaAnimaisComboBox.TabIndex = 11;
             // 
-            // btnEditarTratamentos
+            // consultaBtnEditarTratamentos
             // 
-            btnEditarTratamentos.Location = new Point(8, 102);
-            btnEditarTratamentos.Name = "btnEditarTratamentos";
-            btnEditarTratamentos.Size = new Size(133, 23);
-            btnEditarTratamentos.TabIndex = 10;
-            btnEditarTratamentos.Text = "Editar Tratamentos";
-            btnEditarTratamentos.UseVisualStyleBackColor = true;
-            btnEditarTratamentos.Click += btnEditarTratamentos_Click;
+            consultaBtnEditarTratamentos.Location = new Point(8, 102);
+            consultaBtnEditarTratamentos.Name = "consultaBtnEditarTratamentos";
+            consultaBtnEditarTratamentos.Size = new Size(133, 23);
+            consultaBtnEditarTratamentos.TabIndex = 10;
+            consultaBtnEditarTratamentos.Text = "Editar Tratamentos";
+            consultaBtnEditarTratamentos.UseVisualStyleBackColor = true;
+            consultaBtnEditarTratamentos.Click += btnEditarTratamentos_Click;
             // 
             // btnConsultarRelatorio
             // 
@@ -1081,6 +1093,23 @@ namespace PetDB
             pagamentoTabPage.TabIndex = 6;
             pagamentoTabPage.Text = "Pagamento";
             pagamentoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // pagamentoConsultaComboBox
+            // 
+            pagamentoConsultaComboBox.FormattingEnabled = true;
+            pagamentoConsultaComboBox.Location = new Point(5, 106);
+            pagamentoConsultaComboBox.Name = "pagamentoConsultaComboBox";
+            pagamentoConsultaComboBox.Size = new Size(236, 23);
+            pagamentoConsultaComboBox.TabIndex = 18;
+            // 
+            // pagamentoConsultaLabel
+            // 
+            pagamentoConsultaLabel.AutoSize = true;
+            pagamentoConsultaLabel.Location = new Point(5, 88);
+            pagamentoConsultaLabel.Name = "pagamentoConsultaLabel";
+            pagamentoConsultaLabel.Size = new Size(54, 15);
+            pagamentoConsultaLabel.TabIndex = 17;
+            pagamentoConsultaLabel.Text = "Consulta";
             // 
             // pagamentoMetodoComboBox
             // 
@@ -1505,23 +1534,6 @@ namespace PetDB
             consultarPagamentosDonoTabPage.Text = "Pagamentos por Dono";
             consultarPagamentosDonoTabPage.UseVisualStyleBackColor = true;
             // 
-            // pagamentoConsultaLabel
-            // 
-            pagamentoConsultaLabel.AutoSize = true;
-            pagamentoConsultaLabel.Location = new Point(5, 88);
-            pagamentoConsultaLabel.Name = "pagamentoConsultaLabel";
-            pagamentoConsultaLabel.Size = new Size(54, 15);
-            pagamentoConsultaLabel.TabIndex = 17;
-            pagamentoConsultaLabel.Text = "Consulta";
-            // 
-            // pagamentoConsultaComboBox
-            // 
-            pagamentoConsultaComboBox.FormattingEnabled = true;
-            pagamentoConsultaComboBox.Location = new Point(5, 106);
-            pagamentoConsultaComboBox.Name = "pagamentoConsultaComboBox";
-            pagamentoConsultaComboBox.Size = new Size(236, 23);
-            pagamentoConsultaComboBox.TabIndex = 18;
-            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -1706,7 +1718,7 @@ namespace PetDB
         private ComboBox animalEspecieComboBox;
         private DateTimePicker animalDateTimePicker;
         private ComboBox animalSexoComboBox;
-        private Button btnEditarTratamentos;
+        private Button consultaBtnEditarTratamentos;
         private DateTimePicker pagamentoDateTimePicker;
         private ComboBox pagamentoMetodoComboBox;
         private ComboBox pagamentoEstadoComboBox;
@@ -1715,5 +1727,6 @@ namespace PetDB
         private ComboBox consultaAnimaisComboBox;
         private ComboBox pagamentoConsultaComboBox;
         private Label pagamentoConsultaLabel;
+        private Button consultaBtnEditarRelatorio;
     }
 }

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 namespace PetDB
 {
-    public partial class AdminForm : Form
+    public partial class AdminForm : Form, IAppointmentForm
     {
         private SqlConnection cn;
         private int currentListIndex;
@@ -231,11 +231,47 @@ namespace PetDB
 
         private void consultaBaseControls()
         {
+            consultaDataText.Visible = true;
+            consultaAnimalText.Visible = true;
+            consultaMedicoText.Visible = true;
+            btnVerTratamentos.Visible = true;
+            btnConsultarRelatorio.Visible = true;
             consultaIdText.Enabled = false;
             consultaDataText.Enabled = false;
             consultaAnimalText.Enabled = false;
             consultaMedicoText.Enabled = false;
+            consultaDateTimePicker.Visible = false;
+            consultaAnimaisComboBox.Visible = false;
+            consultaMedicoComboBox.Visible = false;
+            consultaBtnEditarRelatorio.Visible = false;
+            consultaBtnEditarTratamentos.Visible = false;
             generalBaseControls();
+        }
+
+        private void consultaEditControls()
+        {
+            consultaDataText.Visible = false;
+            consultaAnimalText.Visible = false;
+            consultaMedicoText.Visible = false;
+            btnVerTratamentos.Visible = false;
+            btnConsultarRelatorio.Visible = false;
+            consultaDateTimePicker.Visible = true;
+            consultaDateTimePicker.Format = DateTimePickerFormat.Custom;
+            consultaDateTimePicker.CustomFormat = "dd/MM/yyyy HH:mm";
+            consultaDateTimePicker.ShowUpDown = true;
+            consultaAnimaisComboBox.Visible = true;
+            consultaMedicoComboBox.Visible = true;
+            consultaBtnEditarRelatorio.Visible = true;
+            consultaBtnEditarTratamentos.Visible = true;
+            generalEditControls();
+        }
+
+        private void consultaAddControls()
+        {
+            consultaEditControls();
+            consultaIdText.Text = "Automático";
+            consultaBtnEditarRelatorio.Enabled = false;
+            consultaBtnEditarTratamentos.Enabled = false;
         }
 
         private void pagamentoBaseControls()
@@ -251,15 +287,15 @@ namespace PetDB
             pagamentoMetodoText.Enabled = false;
             pagamentoAnimalText.Enabled = false;
             pagamentoMedicoText.Enabled = false;
-            pagamentoDateTimePicker.Visible = false; 
-            pagamentoEstadoComboBox.Visible = false; 
+            pagamentoDateTimePicker.Visible = false;
+            pagamentoEstadoComboBox.Visible = false;
             pagamentoMetodoComboBox.Visible = false;
-            pagamentoConsultaLabel.Visible = false; 
+            pagamentoConsultaLabel.Visible = false;
             pagamentoConsultaComboBox.Visible = false;
             generalBaseControls();
         }
 
-        
+
         private void pagamentoEditControls()
         {
             pagamentoAnimalLabel.Visible = false;
@@ -268,18 +304,22 @@ namespace PetDB
             pagamentoMedicoText.Visible = false;
             pagamentoValorText.Enabled = true;
             pagamentoDataText.Enabled = true;
-            pagamentoDateTimePicker.Visible = true; 
+            pagamentoDateTimePicker.Visible = true;
+            pagamentoDateTimePicker.Format = DateTimePickerFormat.Custom;
+            pagamentoDateTimePicker.CustomFormat = "dd/MM/yyyy HH:mm";
+            pagamentoDateTimePicker.ShowUpDown = true;
             pagamentoEstadoComboBox.Visible = true;
             pagamentoMetodoComboBox.Visible = true;
-            pagamentoConsultaLabel.Visible = true; 
+            pagamentoConsultaLabel.Visible = true;
             pagamentoConsultaComboBox.Visible = true;
             generalEditControls();
         }
 
-        
+
         private void pagamentoAddControls()
         {
             pagamentoEditControls();
+            pagamentoIdText.Text = "Auto";
             pagamentoValorText.Text = "";
             pagamentoDataText.Text = "";
             pagamentoEstadoComboBox.SelectedIndex = -1;
@@ -351,48 +391,7 @@ namespace PetDB
             this.Close();
         }
 
-        private List<String> getAppointmentTreatmentsById(int appointmentId)
-        {
-            if (!verifySGBDConnection())
-                return null;
 
-            List<String> treatments = new List<String>();
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentTreatmentsById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                treatments.Add(reader["Descricao"].ToString());
-            }
-
-            cn.Close();
-
-            return treatments;
-
-        }
-
-        private String getAppointmentReportById(int appointmentId)
-        {
-            if (!verifySGBDConnection())
-                return null;
-
-            String reportContent = "Inválido!";
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentReportById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                reportContent = reader["Conteudo"].ToString();
-            }
-
-            cn.Close();
-
-            return reportContent;
-        }
 
         private List<String> getPrescriptionMedsById(int appointmentId)
         {
@@ -510,7 +509,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return null;
 
-            List<Vet> vets = new List<Vet>(); 
+            List<Vet> vets = new List<Vet>();
 
             SqlCommand cmd = new SqlCommand("EXEC SP_GetVetInfo", cn);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -673,7 +672,7 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return null;
-            
+
             List<Appointment> consultas = new List<Appointment>();
 
             SqlCommand cmd = new SqlCommand("EXEC SP_GetAppointmentInfo", cn);
@@ -691,7 +690,7 @@ namespace PetDB
 
             cn.Close();
 
-            return consultas; 
+            return consultas;
         }
 
         private void consultaTab_Click(object sender, EventArgs e)
@@ -870,10 +869,34 @@ namespace PetDB
                 methods.Add(pm);
             }
 
+            cn.Close();
+
             return methods;
 
         }
         // IDEIA: private void metodoPagamentoTab_Click(object sender, EventArgs e)
+        public List<Treatment> GetTreatments()
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<Treatment> treatments = new List<Treatment>();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetTreatments", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Treatment t = new Treatment();
+                t.Codigo = reader["Codigo"].ToString();
+                t.Descricao = reader["Descricao"].ToString();
+                treatments.Add(t);
+            }
+
+            cn.Close();
+
+            return treatments;
+        }
+        // IDEIA: private void tratamentoTab_Click(object sender, EventArgs e)
 
         private void ShowClinicaVeterinaria()
         {
@@ -966,7 +989,7 @@ namespace PetDB
             pagamentoEstadoText.Text = payment.Estado;
             pagamentoMetodoText.Text = payment.Metodo;
             pagamentoAnimalText.Text = payment.Animal;
-            pagamentoMedicoText.Text = payment.Medico; 
+            pagamentoMedicoText.Text = payment.Medico;
         }
 
         private void ShowPrescription()
@@ -1210,8 +1233,8 @@ namespace PetDB
                 for (int i = 0; i < cb.Items.Count; i++)
                 {
                     Pet p = (Pet)cb.Items[i];
-                    if (p.Nome == animalName.Text) 
-                    { 
+                    if (p.Nome == animalName.Text)
+                    {
                         cb.SelectedIndex = i;
                         break;
                     }
@@ -1220,29 +1243,29 @@ namespace PetDB
 
             cn.Close();
         }
-        // TODO
-        private void LoadMedicosComboBox(ComboBox cb, TextBox medicoName)
+
+        private void LoadMedicosComboBox()
         {
             if (!verifySGBDConnection())
                 return;
 
-            cb.Items.Clear();
+            consultaMedicoComboBox.Items.Clear();
 
             List<Vet> vets = GetMedicos();
 
             foreach (var v in vets)
             {
-                cb.Items.Add(v);
+                consultaMedicoComboBox.Items.Add(v);
             }
 
             if (option == "Edit")
             {
-                for (int i = 0; i < cb.Items.Count; i++)
+                for (int i = 0; i < consultaMedicoComboBox.Items.Count; i++)
                 {
-                    Pet p = (Pet)cb.Items[i];
-                    if (p.Nome == medicoName.Text)
-                    { 
-                        cb.SelectedIndex = i;
+                    Vet v = (Vet)consultaMedicoComboBox.Items[i];
+                    if (v.Nome == consultaMedicoText.Text)
+                    {
+                        consultaMedicoComboBox.SelectedIndex = i;
                         break;
                     }
                 }
@@ -1250,7 +1273,7 @@ namespace PetDB
 
             cn.Close();
         }
-        
+
         private int GetPaymentAppointmentId(int paymentId)
         {
             int appointmentId = -1;
@@ -1288,10 +1311,9 @@ namespace PetDB
                 pagamentoConsultaComboBox.Items.Add(c);
             }
 
-            int appointmentId = GetPaymentAppointmentId(int.Parse(pagamentoIdText.Text));
-
             if (option == "Edit")
             {
+                int appointmentId = GetPaymentAppointmentId(int.Parse(pagamentoIdText.Text));
                 for (int i = 0; i < pagamentoConsultaComboBox.Items.Count; i++)
                 {
                     Appointment ap = (Appointment)pagamentoConsultaComboBox.Items[i];
@@ -1359,6 +1381,30 @@ namespace PetDB
             cn.Close();
         }
 
+        private DateTime GetDateTimeById(String sp, String arg, int searchId)
+        {
+            DateTime date = DateTime.UtcNow;
+
+            if (!verifySGBDConnection())
+                return date;
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue(arg, searchId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if ((DateTime)reader["Data"] != null)
+                    date = (DateTime)reader["Data"];
+            }
+
+            reader.Close();
+            cn.Close();
+
+            return date;
+        }
+
         private void editBtn_Click(object sender, EventArgs e)
         {
             option = "Edit";
@@ -1385,10 +1431,14 @@ namespace PetDB
                     medicamentoEditControls();
                     break;
                 case "Consulta":
-                    //consultaEditControls();
+                    consultaEditControls();
+                    consultaDateTimePicker.Value = GetDateTimeById("SP_GetAppointmentDateById", "@appointmentID", int.Parse(consultaIdText.Text));
+                    LoadAnimaisComboBox(consultaAnimaisComboBox, consultaAnimalText);
+                    LoadMedicosComboBox();
                     break;
                 case "Pagamento":
                     pagamentoEditControls();
+                    pagamentoDateTimePicker.Value = GetDateTimeById("SP_GetPaymentDate", "@PaymentId", int.Parse(pagamentoIdText.Text));
                     LoadEstadoComboBox();
                     LoadMetodoComboBox();
                     LoadConsultasComboBox();
@@ -1500,13 +1550,17 @@ namespace PetDB
                     medicamentoAddControls();
                     break;
                 case "Consulta":
-                    //consultaAddControls();
+                    consultaAddControls();
+                    consultaDateTimePicker.Value = DateTime.UtcNow;
+                    LoadAnimaisComboBox(consultaAnimaisComboBox, consultaAnimalText);
+                    LoadMedicosComboBox();
                     break;
                 case "Pagamento":
                     pagamentoAddControls();
+                    pagamentoDateTimePicker.Value = DateTime.UtcNow;
                     LoadEstadoComboBox();
                     LoadMetodoComboBox();
-                    LoadConsultasComboBox(); 
+                    LoadConsultasComboBox();
                     break;
                 case "Prescricao":
                     //prescricaoAddControls();
@@ -1665,7 +1719,7 @@ namespace PetDB
             cn.Close();
         }
 
-        //TODO
+
 
         private void ConsultaTuples(String sp, String msgShow)
         {
@@ -1674,15 +1728,37 @@ namespace PetDB
 
             SqlCommand cmd = new SqlCommand(sp, cn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@OwnerNIF", int.Parse(donoNifText.Text));
-            cmd.Parameters.AddWithValue("@OwnerName", donoNomeText.Text);
-            cmd.Parameters.AddWithValue("@OwnerPhone", donoTelefoneText.Text);
-            cmd.Parameters.AddWithValue("@OwnerEmail", donoEmailText.Text);
-            cmd.Parameters.AddWithValue("@OwnerAddress", donoEnderecoText.Text);
+            if (sp == "SP_UpdateAppointment")
+            {
+                cmd.Parameters.AddWithValue("@AppointmentID", int.Parse(consultaIdText.Text));
+            }
+            cmd.Parameters.AddWithValue("@AppointmentDate", consultaDateTimePicker.Value);
+            Pet p = (Pet)consultaAnimaisComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@AppointmentPet", p.Numero);
+            Vet v = (Vet)consultaMedicoComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@AppointmentVet", v.NumOMV);
 
             if (ExecuteInsertSP(cmd))
             {
                 MessageBox.Show(msgShow);
+            }
+
+            if (sp != "SP_UpdateAppointment")
+            {
+                SqlCommand fetchAppointmentId = new SqlCommand("SP_GetMostRecentAppointmentId", cn);
+                fetchAppointmentId.CommandType = CommandType.StoredProcedure;
+                SqlDataReader reader = fetchAppointmentId.ExecuteReader();
+                int appointmentId = 0;
+                if (reader.Read())
+                    appointmentId = int.Parse(reader["Id"].ToString());
+
+                reader.Close(); 
+
+                SqlCommand insertReport = new SqlCommand("SP_AddReportToAppointment", cn);
+                insertReport.CommandType = CommandType.StoredProcedure;
+                insertReport.Parameters.AddWithValue("@AppointmentID", appointmentId);
+                insertReport.Parameters.AddWithValue("@reportContent", "");
+                ExecuteInsertSP(insertReport);
             }
 
             cn.Close();
@@ -1710,9 +1786,10 @@ namespace PetDB
             );
             cmd.Parameters.AddWithValue("@PaymentValue", valor);
             cmd.Parameters.AddWithValue("@PaymentStatus", pagamentoEstadoComboBox.SelectedItem.ToString());
-            
-            cmd.Parameters.AddWithValue("@PaymentMethod", pagamentoMetodoComboBox.SelectedItem);
-            cmd.Parameters.AddWithValue("@OwnerAddress", donoEnderecoText.Text);
+            PaymentMethod pm = (PaymentMethod)pagamentoMetodoComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@PaymentMethod", pm.Codigo);
+            Appointment ap = (Appointment)pagamentoConsultaComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@PaymentAppointment", ap.Id);
 
             if (ExecuteInsertSP(cmd))
             {
@@ -1827,23 +1904,100 @@ namespace PetDB
             }
         }
 
+        private List<Treatment> getAppointmentTreatmentsById(int appointmentId)
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<Treatment> treatments = new List<Treatment>();
+            SqlCommand cmd = new SqlCommand("SP_GetAppointmentTreatmentsById", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Treatment t = new Treatment();
+                t.Codigo = reader["Codigo"].ToString();
+                t.Descricao = reader["Descricao"].ToString();
+                treatments.Add(t);
+            }
+
+            cn.Close();
+
+            return treatments;
+
+        }
+
+        private String getAppointmentReportById(int appointmentId)
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            String reportContent = "";
+            SqlCommand cmd = new SqlCommand("SP_GetAppointmentReportById", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                reportContent = reader["Conteudo"].ToString();
+            }
+
+            cn.Close();
+
+            return reportContent;
+        }
+
         private void btnVerTratamentos_Click(object sender, EventArgs e)
         {
             int idConsulta = Int32.Parse(consultaIdText.Text);
 
-            List<String> treatments = getAppointmentTreatmentsById(idConsulta);
+            List<Treatment> treatments = getAppointmentTreatmentsById(idConsulta);
 
-            UC_ListStrings uc = new UC_ListStrings();
-            uc.setStrings(treatments);
+            UC_ListTreatments uc = new UC_ListTreatments();
+            uc.SetMode("View");
+            uc.SetTreatments(treatments);
 
             PopUpForm popup = new PopUpForm(uc, "Tratamentos da Consulta");
             popup.ShowDialog();
 
         }
 
+        public void AddTreatmentToAppointment(Treatment treatment, UC_ListTreatments uc)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            int appointmentId = int.Parse(consultaIdText.Text);
+
+            SqlCommand cmd = new SqlCommand("SP_AddTreatmentToAppointment", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@AppointmentID", appointmentId);
+            cmd.Parameters.AddWithValue("@TreatmentID", int.Parse(treatment.Codigo));
+            ExecuteInsertSP(cmd);
+
+            uc.SetTreatments(getAppointmentTreatmentsById(appointmentId));
+
+            cn.Close();
+        }
+
+        //public void EditTreatmentFromAppointment(Treatment treatment)
+
         private void btnEditarTratamentos_Click(object sender, EventArgs e)
         {
-            
+            int idConsulta = Int32.Parse(consultaIdText.Text);
+
+            List<Treatment> treatments = getAppointmentTreatmentsById(idConsulta);
+
+            UC_ListTreatments uc = new UC_ListTreatments();
+            uc.SetMode("Edit");
+            uc.SetForm(this);
+            uc.SetTreatments(treatments);
+
+            PopUpForm popup = new PopUpForm(uc, "Tratamentos da Consulta");
+            popup.ShowDialog();
         }
 
         private void btnConsultarRelatorio_Click(object sender, EventArgs e)
@@ -1854,8 +2008,38 @@ namespace PetDB
 
             UC_ShowReport uc = new UC_ShowReport();
             uc.setReportText(reportContent);
+            uc.SetMethod("View");
 
             PopUpForm popup = new PopUpForm(uc, "Relatório da Consulta");
+            popup.ShowDialog();
+        }
+
+        public void UpdateReport(String reportContent)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            int appointmentId = int.Parse(consultaIdText.Text);
+
+            SqlCommand cmd = new SqlCommand("SP_UpdateReport", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@AppointmentID", appointmentId);
+            cmd.Parameters.AddWithValue("@reportContent", reportContent);
+            ExecuteInsertSP(cmd);
+
+            cn.Close();
+        }
+
+        private void consultaBtnEditarRelatorio_Click(object sender, EventArgs e)
+        {
+            int idConsulta = Int32.Parse(consultaIdText.Text);
+            UC_ShowReport uc = new UC_ShowReport();
+
+            uc.SetMainForm(this);
+            uc.setReportText(getAppointmentReportById(idConsulta));
+            uc.SetMethod("Edit");
+
+            PopUpForm popup = new PopUpForm(uc, "Editar Relatório");
             popup.ShowDialog();
         }
 

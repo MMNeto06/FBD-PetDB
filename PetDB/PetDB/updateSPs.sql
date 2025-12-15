@@ -280,5 +280,35 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_UpdateReport
+	@AppointmentID int,
+	@reportContent varchar(MAX) 
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Relatorio WHERE Consulta = @AppointmentID) 
+	BEGIN 
+		RAISERROR('Não existe um relatório para essa consulta!', 16, 1); 
+	END
+
+	IF LEN(@reportContent) <= 0 
+	BEGIN 
+		RAISERROR('O conteúdo do relatório é inválido!', 16, 1); 
+	END
+
+	BEGIN TRY
+		BEGIN TRANSACTION SCHEDULEUPDATE
+			UPDATE PETDB_Relatorio 
+			SET Conteudo = @reportContent
+			WHERE Consulta = @AppointmentID; 
+		COMMIT TRANSACTION SCHEDULEUPDATE
+	END TRY
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEUPDATE
+	END CATCH 
+END
+GO
+
 
 
