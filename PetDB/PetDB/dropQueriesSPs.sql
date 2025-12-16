@@ -33,4 +33,6 @@ DROP PROCEDURE SP_GetPaymentDate;
 DROP PROCEDURE SP_GetTreatments;
 DROP PROCEDURE SP_GetMostRecentAppointmentId;
 DROP PROCEDURE SP_GetPrescriptionDate;
+DROP PROCEDURE SP_GetPaymentsByMethod;
+DROP PROCEDURE SP_GetAppointmentsByTreatment;
 GO

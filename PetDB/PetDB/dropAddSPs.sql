@@ -12,3 +12,4 @@ DROP PROCEDURE SP_AddVetToPrescription;
 DROP PROCEDURE SP_AddPrescription;
 DROP PROCEDURE SP_AddTreatmentToAppointment;
 DROP PROCEDURE SP_AddMedToPrescription;
+DROP PROCEDURE SP_AddPaymentMethod;

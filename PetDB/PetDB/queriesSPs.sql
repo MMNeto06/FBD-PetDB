@@ -395,3 +395,32 @@ BEGIN
 	WHERE Numero = @PrescriptionId;
 END
 GO
+
+CREATE PROCEDURE SP_GetPaymentsByMethod
+	@MethodId int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+	SELECT p.Id, p.[Data], p.Custo, p.Estado, m.Descricao as Metodo, a.Nome as Animal, v.Nome as Medico
+	FROM PETDB_Pagamento as p
+	JOIN PETDB_MetodoPagamento as m ON p.MetodoPagamento = m.Codigo
+	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
+	JOIN PETDB_Animal as a ON c.Animal = a.Numero
+	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
+	WHERE m.Codigo = @MethodId
+	ORDER BY p.[Data] DESC;
+END
+GO 
+
+CREATE PROCEDURE SP_GetAppointmentsByTreatment
+	@TreatmentId int
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+
+	SELECT c.Id, c.[Data], a.Nome as Animal, c.Medico FROM PETDB_ConsultaTratamento as ct 
+	JOIN PETDB_Consulta as c ON c.Id = ct.IdConsulta
+	JOIN PETDB_Animal as a ON a.Numero = c.Animal
+	WHERE ct.CodigoTratamento = @TreatmentId;
+END
+GO

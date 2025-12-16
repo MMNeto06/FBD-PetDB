@@ -14,7 +14,7 @@ BEGIN
         RETURN;
     END
 
-	IF LEN(@ClinicName) = 0 OR LEN(@ClinicName) > 64
+	IF LEN(@ClinicName) <= 0 OR LEN(@ClinicName) > 64
 	BEGIN 
 		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
 		RETURN;
@@ -32,7 +32,7 @@ BEGIN
 		RETURN; 
 	END
 
-	IF LEN(@ClinicAddress) = 0 OR LEN(@ClinicAddress) > 64
+	IF LEN(@ClinicAddress) <= 0 OR LEN(@ClinicAddress) > 64
 	BEGIN 
 		RAISERROR('Endereço inválido, muito curto ou demasiado longo!', 16, 1); 
 		RETURN;
@@ -68,7 +68,7 @@ BEGIN
     END
 
 
-	IF LEN(@VetName) = 0 OR LEN(@VetName) > 64
+	IF LEN(@VetName) <= 0 OR LEN(@VetName) > 64
 	BEGIN 
 		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
 		RETURN;
@@ -104,7 +104,7 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
-	IF LEN(@SpecialtyDescription) = 0 OR LEN(@SpecialtyDescription) > 64
+	IF LEN(@SpecialtyDescription) <= 0 OR LEN(@SpecialtyDescription) > 64
 	BEGIN 
 		RAISERROR('Descrição inválida, muito curta ou demasiado longa!', 16, 1); 
 		RETURN;
@@ -138,7 +138,7 @@ BEGIN
         RETURN;
     END
 
-	IF LEN(@OwnerName) = 0 OR LEN(@OwnerName) > 64
+	IF LEN(@OwnerName) <= 0 OR LEN(@OwnerName) > 64
 	BEGIN 
 		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
 		RETURN;
@@ -156,7 +156,7 @@ BEGIN
 		RETURN; 
 	END
 
-	IF LEN(@OwnerAddress) = 0 OR LEN(@OwnerAddress) > 64
+	IF LEN(@OwnerAddress) <= 0 OR LEN(@OwnerAddress) > 64
 	BEGIN 
 		RAISERROR('Endereço inválido, muito curto ou demasiado longo!', 16, 1); 
 		RETURN;
@@ -185,7 +185,7 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
-	IF LEN(@PetName) = 0 OR LEN(@PetName) > 64
+	IF LEN(@PetName) <= 0 OR LEN(@PetName) > 64
 	BEGIN 
 		RAISERROR('Nome inválido, muito curto ou demasiado longo!', 16, 1); 
 		RETURN;
@@ -215,7 +215,7 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
-	IF LEN(@SpecieDescription) = 0 OR LEN(@SpecieDescription) > 64
+	IF LEN(@SpecieDescription) <= 0 OR LEN(@SpecieDescription) > 64
 	BEGIN 
 		RAISERROR('Descrição inválida, muito curta ou demasiado longa!', 16, 1); 
 		RETURN;
@@ -247,13 +247,13 @@ BEGIN
 		RETURN; 
 	END
 
-	IF LEN(@MedicineDescription) = 0 OR LEN(@MedicineDescription) > 64
+	IF LEN(@MedicineDescription) <= 0 OR LEN(@MedicineDescription) > 64
 	BEGIN 
 		RAISERROR('Descrição inválida, muito curta ou demasiado longa!', 16, 1); 
 		RETURN;
 	END
 
-	IF LEN(@MedicineDose) = 0 OR LEN(@MedicineDose) > 10
+	IF LEN(@MedicineDose) <= 0 OR LEN(@MedicineDose) > 10
 	BEGIN 
 		RAISERROR('Dose inválida, muito curta ou demasiado longa!', 16, 1); 
 		RETURN;
@@ -306,6 +306,16 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Animal WHERE Numero = @AppointmentPet)
+	BEGIN 
+		RAISERROR('Não existe esse animal!', 16, 1); 
+	END
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_MedicoVeterinario WHERE NumOMV = @AppointmentVet) 
+	BEGIN 
+		RAISERROR('Não existe esse método!', 16, 1); 
+	END 
+
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
 			INSERT INTO PETDB_Consulta([Data], Animal, Medico)
@@ -337,6 +347,11 @@ BEGIN
 	BEGIN 
 		RAISERROR('Valor Inválido!', 16, 1); 
 		RETURN; 
+	END
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Consulta WHERE Id = @PaymentAppointment) 
+	BEGIN 
+		RAISERROR('Não existe essa consulta!', 16, 1);
 	END
 
 	BEGIN TRY 
@@ -386,6 +401,16 @@ CREATE PROCEDURE SP_AddVetToPrescription
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Prescricao WHERE Numero = @PrescriptionID) 
+	BEGIN 
+		RAISERROR('Não existe essa prescrição!', 16, 1); 
+	END
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_MedicoVeterinario WHERE NumOMV = @VetOMV) 
+	BEGIN 
+		RAISERROR('Não existe esse médico!', 16, 1); 
+	END
 
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
@@ -467,6 +492,28 @@ BEGIN
 	END CATCH
 END 
 GO 
+
+CREATE PROCEDURE SP_AddPaymentMethod
+	@MethodDescription varchar(64)
+AS 
+BEGIN 
+	SET NOCOUNT ON ; 
+
+	IF LEN(@MethodDescription) <= 0 
+	BEGIN 
+		RAISERROR('Descrição do Método tem um tamanho inválido!', 16, 1); 
+	END
+
+	BEGIN TRY
+		BEGIN TRANSACTION SCHEDULEINSERT
+			INSERT INTO PETDB_MetodoPagamento(Descricao) VALUES (@MethodDescription); 
+		COMMIT TRANSACTION SCHEDULEINSERT
+	END TRY
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEINSERT
+	END CATCH 
+END 
+GO
 
 
 

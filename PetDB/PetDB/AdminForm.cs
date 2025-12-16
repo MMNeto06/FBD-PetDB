@@ -48,6 +48,24 @@ namespace PetDB
             return cn.State == ConnectionState.Open;
         }
 
+        private void registarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            consultarTabControl.Visible = false;
+            registarTabControl.Visible = true;
+            generalBaseControls();
+        }
+
+        private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            consultarTabControl.Visible = true;
+            registarTabControl.Visible = false;
+            addBtn.Visible = false;
+            editBtn.Visible = false;
+            remBtn.Visible = false;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
+        }
+
         private void generalBaseControls()
         {
             addBtn.Visible = true;
@@ -369,16 +387,16 @@ namespace PetDB
             especialidadeCodigoText.Enabled = false;
             especialidadeDescricaoText.Enabled = false;
             generalBaseControls();
-            editBtn.Visible = false; 
+            editBtn.Visible = false;
         }
 
 
         private void especialidadeAddControls()
-        { 
+        {
             especialidadeCodigoText.Text = "Automático";
             especialidadeDescricaoText.Text = "";
             especialidadeDescricaoText.Enabled = true;
-            generalEditControls(); 
+            generalEditControls();
         }
 
         private void especieBaseControls()
@@ -386,7 +404,7 @@ namespace PetDB
             especieCodigoText.Enabled = false;
             especieDescricaoText.Enabled = false;
             generalBaseControls();
-            editBtn.Visible = false; 
+            editBtn.Visible = false;
         }
 
         private void especieAddControls()
@@ -394,7 +412,41 @@ namespace PetDB
             especieCodigoText.Text = "Automático";
             especieDescricaoText.Enabled = true;
             especieDescricaoText.Text = "";
-            generalEditControls(); 
+            generalEditControls();
+            editBtn.Visible = false;
+        }
+
+        private void metodoPagamentoBaseControls()
+        {
+            metodoPagamentoCodigoText.Enabled = false;
+            metodoPagamentoDescricaoText.Enabled = false;
+            generalBaseControls();
+            editBtn.Visible = false;
+        }
+
+        private void metodoPagamentoAddControls()
+        {
+            metodoPagamentoCodigoText.Text = "Automático";
+            metodoPagamentoDescricaoText.Enabled = true;
+            metodoPagamentoDescricaoText.Text = "";
+            generalEditControls();
+            editBtn.Visible = false;
+        }
+
+        private void tratamentoBaseControls()
+        {
+            tratamentoCodigoText.Enabled = false;
+            tratamentoDescricaoText.Enabled = false;
+            generalBaseControls();
+            editBtn.Visible = false;
+        }
+
+        private void tratamentoAddControls()
+        {
+            tratamentoCodigoText.Text = "Automático";
+            tratamentoDescricaoText.Enabled = true;
+            tratamentoDescricaoText.Text = "";
+            generalEditControls();
             editBtn.Visible = false;
         }
 
@@ -908,7 +960,27 @@ namespace PetDB
             return methods;
 
         }
-        // IDEIA: private void metodoPagamentoTab_Click(object sender, EventArgs e)
+
+        private void metodoPagamentoTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "MetodoPagamento";
+            metodoPagamentoBaseControls();
+            List<PaymentMethod> methods = GetMetodosPagamento();
+
+            listBox1.Items.Clear();
+
+            foreach (var method in methods)
+                listBox1.Items.Add(method);
+
+            cn.Close();
+
+            currentListIndex = 0;
+            ShowMetodoPagamento();
+        }
+
         public List<Treatment> GetTreatments()
         {
             if (!verifySGBDConnection())
@@ -930,11 +1002,31 @@ namespace PetDB
 
             return treatments;
         }
-        // IDEIA: private void tratamentoTab_Click(object sender, EventArgs e)
+
+        private void tratamentoTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            entity = "Tratamento";
+            tratamentoBaseControls();
+            List<Treatment> treatments = GetTreatments();
+
+            listBox1.Items.Clear();
+
+            foreach (var t in treatments)
+                listBox1.Items.Add(t);
+
+            cn.Close();
+
+            currentListIndex = 0;
+            ShowTratamento();
+        }
+
 
         private void ShowClinicaVeterinaria()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
             CliVet cv = new CliVet();
             cv = (CliVet)listBox1.Items[currentListIndex];
@@ -948,7 +1040,7 @@ namespace PetDB
 
         private void ShowVet()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
             Vet vet = new Vet();
             vet = (Vet)listBox1.Items[currentListIndex];
@@ -962,7 +1054,7 @@ namespace PetDB
 
         private void ShowOwner()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
             Owner owner = new Owner();
             owner = (Owner)listBox1.Items[currentListIndex];
@@ -975,7 +1067,7 @@ namespace PetDB
 
         private void ShowPet()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
             Pet pet = new Pet();
             pet = (Pet)listBox1.Items[currentListIndex];
@@ -990,7 +1082,7 @@ namespace PetDB
 
         private void ShowMed()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
             Med med = new Med();
             med = (Med)listBox1.Items[currentListIndex];
@@ -1001,7 +1093,7 @@ namespace PetDB
 
         private void ShowConsulta()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
             Appointment ap = new Appointment();
             ap = (Appointment)listBox1.Items[currentListIndex];
@@ -1013,7 +1105,7 @@ namespace PetDB
 
         private void ShowPayment()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
             Payment payment = new Payment();
             payment = (Payment)listBox1.Items[currentListIndex];
@@ -1028,7 +1120,7 @@ namespace PetDB
 
         private void ShowPrescription()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
 
             Prescription prescription = new Prescription();
@@ -1041,7 +1133,7 @@ namespace PetDB
 
         private void ShowEspecialidade()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
 
             Especialidade especialidade = new Especialidade();
@@ -1052,13 +1144,35 @@ namespace PetDB
 
         private void ShowEspecie()
         {
-            if (listBox1.Items.Count == 0 | currentListIndex < 0)
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
 
             Especie especie = new Especie();
             especie = (Especie)listBox1.Items[currentListIndex];
             especieCodigoText.Text = especie.Codigo;
             especieDescricaoText.Text = especie.Descricao;
+        }
+
+        private void ShowMetodoPagamento()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+
+            PaymentMethod pm = new PaymentMethod();
+            pm = (PaymentMethod)listBox1.Items[currentListIndex];
+            metodoPagamentoCodigoText.Text = pm.Codigo;
+            metodoPagamentoDescricaoText.Text = pm.Descricao;
+        }
+
+        private void ShowTratamento()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+
+            Treatment t = new Treatment();
+            t = (Treatment)listBox1.Items[currentListIndex];
+            tratamentoCodigoText.Text = t.Codigo;
+            tratamentoDescricaoText.Text = t.Descricao;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -1098,7 +1212,12 @@ namespace PetDB
                     case "Especie":
                         ShowEspecie();
                         break;
-
+                    case "MetodoPagamento":
+                        ShowMetodoPagamento();
+                        break;
+                    case "Tratamento":
+                        ShowTratamento();
+                        break;
                     default:
                         break;
                 }
@@ -1484,12 +1603,6 @@ namespace PetDB
                     LoadAnimaisComboBox(prescricaoAnimalComboBox, prescricaoAnimalText);
                     LoadMedicosComboBox(prescricaoMedicoComboBox, prescricaoMedicoText);
                     break;
-                case "Especialidade":
-                    //especialidadeEditControls();
-                    break;
-                case "Especie":
-                    //especieEditControls();
-                    break;
                 default: break;
             }
         }
@@ -1557,6 +1670,14 @@ namespace PetDB
                     especieBaseControls();
                     ShowEspecie();
                     break;
+                case "MetodoPagamento":
+                    metodoPagamentoBaseControls();
+                    ShowMetodoPagamento();
+                    break;
+                case "Tratamento":
+                    tratamentoBaseControls();
+                    ShowTratamento();
+                    break;
 
                 default: break;
             }
@@ -1610,7 +1731,13 @@ namespace PetDB
                     especialidadeAddControls();
                     break;
                 case "Especie":
-                    especieAddControls(); 
+                    especieAddControls();
+                    break;
+                case "MetodoPagamento":
+                    metodoPagamentoAddControls();
+                    break;
+                case "Tratamento":
+                    tratamentoAddControls();
                     break;
                 default: break;
             }
@@ -1939,7 +2066,14 @@ namespace PetDB
                     SimpleAddTuples("SP_AddSpecie", "Especie adicionada com sucesso!", "@SpecieDescription", especieDescricaoText);
                     especieTab_Click(sender, e);
                     break;
-
+                case ("Add", "MetodoPagamento"):
+                    SimpleAddTuples("SP_AddPaymentMethod", "Método de Pagamento adicionado com sucesso!", "@MethodDescription", metodoPagamentoDescricaoText);
+                    break;
+                case ("Add", "Tratamento"):
+                    SimpleAddTuples("SP_AddTreatment", "Tratamento adicionado com sucesso!", "@TreatmentDescription", tratamentoDescricaoText);
+                    break;
+                default:
+                    break;
 
             }
         }
@@ -1978,6 +2112,12 @@ namespace PetDB
                     break;
                 case 9: // Especie
                     especieTab_Click(sender, e);
+                    break;
+                case 10: // Metodo Pagamento
+                    metodoPagamentoTab_Click(sender, e);
+                    break;
+                case 11: // Tratamento
+                    tratamentoTab_Click(sender, e);
                     break;
                 default: break;
             }
@@ -2201,24 +2341,87 @@ namespace PetDB
 
         }
 
-        private void registarToolStripMenuItem_Click(object sender, EventArgs e)
+        private List<String> GetPaymentsByMethod(int paymentMethodId)
         {
-            consultarTabControl.Visible = false;
-            registarTabControl.Visible = true;
-            generalBaseControls();
+            if (!verifySGBDConnection())
+                return null;
+
+            List<String> payments = new List<String>();
+            SqlCommand cmd = new SqlCommand("SP_GetPaymentsByMethod", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@MethodId", paymentMethodId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Payment payment = new Payment();
+                payment.Id = reader["Id"].ToString();
+                payment.Valor = reader["Custo"].ToString();
+                payment.Data = reader["Data"].ToString();
+                payment.Estado = reader["Estado"].ToString();
+                payment.Metodo = reader["Metodo"].ToString();
+                payment.Animal = reader["Animal"].ToString();
+                payment.Medico = reader["Medico"].ToString();
+                payments.Add(payment.ToString());
+            }
+            reader.Close();
+            cn.Close();
+
+            return payments;
         }
 
-        private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
+        private void metodoPagamentoBtnPagamentos_Click(object sender, EventArgs e)
         {
-            consultarTabControl.Visible = true;
-            registarTabControl.Visible = false;
-            addBtn.Visible = false;
-            editBtn.Visible = false;
-            remBtn.Visible = false;
-            okBtn.Visible = false;
-            cancelBtn.Visible = false;
+            int paymentMethodId = int.Parse(metodoPagamentoCodigoText.Text);
+
+            List<String> payments = GetPaymentsByMethod(paymentMethodId);
+
+
+            UC_ListStrings uc = new UC_ListStrings();
+            uc.SetStrings(payments);
+
+            PopUpForm popup = new PopUpForm(uc, "Pagamentos");
+            popup.ShowDialog();
         }
 
+        private List<String> GetAppointmentsByTreatment(int treatmentId)
+        {
+            if (!verifySGBDConnection())
+                return null;
 
+            List<String> appointments = new List<String>();
+            SqlCommand cmd = new SqlCommand("SP_GetAppointmentsByTreatment", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@TreatmentId", treatmentId);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Appointment ap = new Appointment();
+                ap.Id = reader["Id"].ToString();
+                ap.Data = reader["Data"].ToString();
+                ap.Animal = reader["Animal"].ToString();
+                ap.Medico = reader["Medico"].ToString();
+                appointments.Add(ap.ToString());
+            }
+            reader.Close();
+            cn.Close();
+
+            return appointments;
+        }
+
+        private void tratamentoBtnConsultas_Click(object sender, EventArgs e)
+        {
+            int treatmentId = int.Parse(tratamentoCodigoText.Text);
+
+            List<String> appointments = GetAppointmentsByTreatment(treatmentId);
+
+
+            UC_ListStrings uc = new UC_ListStrings();
+            uc.SetStrings(appointments);
+
+            PopUpForm popup = new PopUpForm(uc, "Consultas");
+            popup.ShowDialog();
+        }
     }
 }
