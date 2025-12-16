@@ -15,13 +15,14 @@ namespace PetDB
             InitializeComponent();
         }
 
-        public void setStrings(List<String> strings)
+        public void SetStrings(List<String> strings)
         {
-            listBoxStrings.Items.Clear();
-
-            foreach (var s in strings)
+            if (strings != null)
             {
-                listBoxStrings.Items.Add(s);
+                listBox1.Items.Clear();
+
+                foreach (var s in strings)
+                    listBox1.Items.Add(s);
             }
         }
     }

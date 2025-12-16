@@ -140,3 +140,5 @@ C:\Users\diosi\Documents\GitHub\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\
 C:\Users\diosi\Documents\GitHub\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_AnimalInfo.resources
 C:\Users\diosi\Documents\GitHub\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_ListTreatments.resources
 C:\Users\diosi\Documents\GitHub\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_NewTreatment.resources
+C:\Users\diosi\Documents\GitHub\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_ListMeds.resources
+C:\Users\diosi\Documents\GitHub\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_NewMed.resources

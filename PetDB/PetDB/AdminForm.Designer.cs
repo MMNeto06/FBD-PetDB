@@ -140,7 +140,13 @@ namespace PetDB
             pagamentoIdText = new TextBox();
             pagamentoIdLabel = new Label();
             prescricaoTabPage = new TabPage();
-            btnVerMedicamentos = new Button();
+            prescricaoMedicoComboBox = new ComboBox();
+            prescricaoAnimalComboBox = new ComboBox();
+            prescricaoDateTimePicker = new DateTimePicker();
+            prescricaoBtnEditarMedicamentos = new Button();
+            prescricaoMedicoText = new TextBox();
+            prescricaoMedicoLabel = new Label();
+            prescricaoBtnVerMedicamentos = new Button();
             prescricaoAnimalText = new TextBox();
             prescricaoAnimalLabel = new Label();
             prescricaoDataText = new TextBox();
@@ -1250,7 +1256,13 @@ namespace PetDB
             // 
             // prescricaoTabPage
             // 
-            prescricaoTabPage.Controls.Add(btnVerMedicamentos);
+            prescricaoTabPage.Controls.Add(prescricaoMedicoComboBox);
+            prescricaoTabPage.Controls.Add(prescricaoAnimalComboBox);
+            prescricaoTabPage.Controls.Add(prescricaoDateTimePicker);
+            prescricaoTabPage.Controls.Add(prescricaoBtnEditarMedicamentos);
+            prescricaoTabPage.Controls.Add(prescricaoMedicoText);
+            prescricaoTabPage.Controls.Add(prescricaoMedicoLabel);
+            prescricaoTabPage.Controls.Add(prescricaoBtnVerMedicamentos);
             prescricaoTabPage.Controls.Add(prescricaoAnimalText);
             prescricaoTabPage.Controls.Add(prescricaoAnimalLabel);
             prescricaoTabPage.Controls.Add(prescricaoDataText);
@@ -1266,19 +1278,69 @@ namespace PetDB
             prescricaoTabPage.Text = "Prescrição";
             prescricaoTabPage.UseVisualStyleBackColor = true;
             // 
-            // btnVerMedicamentos
+            // prescricaoMedicoComboBox
             // 
-            btnVerMedicamentos.Location = new Point(174, 94);
-            btnVerMedicamentos.Name = "btnVerMedicamentos";
-            btnVerMedicamentos.Size = new Size(119, 23);
-            btnVerMedicamentos.TabIndex = 6;
-            btnVerMedicamentos.Text = "Ver Medicamentos";
-            btnVerMedicamentos.UseVisualStyleBackColor = true;
-            btnVerMedicamentos.Click += btnVerMedicamentos_Click;
+            prescricaoMedicoComboBox.FormattingEnabled = true;
+            prescricaoMedicoComboBox.Location = new Point(156, 64);
+            prescricaoMedicoComboBox.Name = "prescricaoMedicoComboBox";
+            prescricaoMedicoComboBox.Size = new Size(157, 23);
+            prescricaoMedicoComboBox.TabIndex = 12;
+            // 
+            // prescricaoAnimalComboBox
+            // 
+            prescricaoAnimalComboBox.FormattingEnabled = true;
+            prescricaoAnimalComboBox.Location = new Point(5, 64);
+            prescricaoAnimalComboBox.Name = "prescricaoAnimalComboBox";
+            prescricaoAnimalComboBox.Size = new Size(136, 23);
+            prescricaoAnimalComboBox.TabIndex = 11;
+            // 
+            // prescricaoDateTimePicker
+            // 
+            prescricaoDateTimePicker.Format = DateTimePickerFormat.Short;
+            prescricaoDateTimePicker.Location = new Point(156, 20);
+            prescricaoDateTimePicker.Name = "prescricaoDateTimePicker";
+            prescricaoDateTimePicker.Size = new Size(157, 23);
+            prescricaoDateTimePicker.TabIndex = 10;
+            // 
+            // prescricaoBtnEditarMedicamentos
+            // 
+            prescricaoBtnEditarMedicamentos.Location = new Point(87, 106);
+            prescricaoBtnEditarMedicamentos.Name = "prescricaoBtnEditarMedicamentos";
+            prescricaoBtnEditarMedicamentos.Size = new Size(142, 23);
+            prescricaoBtnEditarMedicamentos.TabIndex = 9;
+            prescricaoBtnEditarMedicamentos.Text = "Editar Medicamentos";
+            prescricaoBtnEditarMedicamentos.UseVisualStyleBackColor = true;
+            prescricaoBtnEditarMedicamentos.Click += prescricaoBtnEditarMedicamentos_Click;
+            // 
+            // prescricaoMedicoText
+            // 
+            prescricaoMedicoText.Location = new Point(156, 64);
+            prescricaoMedicoText.Name = "prescricaoMedicoText";
+            prescricaoMedicoText.Size = new Size(157, 23);
+            prescricaoMedicoText.TabIndex = 8;
+            // 
+            // prescricaoMedicoLabel
+            // 
+            prescricaoMedicoLabel.AutoSize = true;
+            prescricaoMedicoLabel.Location = new Point(156, 46);
+            prescricaoMedicoLabel.Name = "prescricaoMedicoLabel";
+            prescricaoMedicoLabel.Size = new Size(47, 15);
+            prescricaoMedicoLabel.TabIndex = 7;
+            prescricaoMedicoLabel.Text = "Médico";
+            // 
+            // prescricaoBtnVerMedicamentos
+            // 
+            prescricaoBtnVerMedicamentos.Location = new Point(99, 106);
+            prescricaoBtnVerMedicamentos.Name = "prescricaoBtnVerMedicamentos";
+            prescricaoBtnVerMedicamentos.Size = new Size(119, 23);
+            prescricaoBtnVerMedicamentos.TabIndex = 6;
+            prescricaoBtnVerMedicamentos.Text = "Ver Medicamentos";
+            prescricaoBtnVerMedicamentos.UseVisualStyleBackColor = true;
+            prescricaoBtnVerMedicamentos.Click += btnVerMedicamentos_Click;
             // 
             // prescricaoAnimalText
             // 
-            prescricaoAnimalText.Location = new Point(5, 94);
+            prescricaoAnimalText.Location = new Point(5, 64);
             prescricaoAnimalText.Name = "prescricaoAnimalText";
             prescricaoAnimalText.Size = new Size(136, 23);
             prescricaoAnimalText.TabIndex = 5;
@@ -1286,7 +1348,7 @@ namespace PetDB
             // prescricaoAnimalLabel
             // 
             prescricaoAnimalLabel.AutoSize = true;
-            prescricaoAnimalLabel.Location = new Point(5, 76);
+            prescricaoAnimalLabel.Location = new Point(5, 46);
             prescricaoAnimalLabel.Name = "prescricaoAnimalLabel";
             prescricaoAnimalLabel.Size = new Size(45, 15);
             prescricaoAnimalLabel.TabIndex = 4;
@@ -1687,7 +1749,7 @@ namespace PetDB
         private TextBox pagamentoEstadoText;
         private Button btnVerTratamentos;
         private Button btnConsultarRelatorio;
-        private Button btnVerMedicamentos;
+        private Button prescricaoBtnVerMedicamentos;
         private TextBox prescricaoAnimalText;
         private Label prescricaoAnimalLabel;
         private TextBox prescricaoDataText;
@@ -1728,5 +1790,11 @@ namespace PetDB
         private ComboBox pagamentoConsultaComboBox;
         private Label pagamentoConsultaLabel;
         private Button consultaBtnEditarRelatorio;
+        private Label prescricaoMedicoLabel;
+        private Button prescricaoBtnEditarMedicamentos;
+        private TextBox prescricaoMedicoText;
+        private DateTimePicker prescricaoDateTimePicker;
+        private ComboBox prescricaoMedicoComboBox;
+        private ComboBox prescricaoAnimalComboBox;
     }
 }

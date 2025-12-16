@@ -81,9 +81,11 @@ AS
 BEGIN 
 	SET NOCOUNT ON; 
 
-	SELECT p.Numero, p.[Data], a.Nome as Animal
+	SELECT p.Numero, p.[Data], a.Nome as Animal, m.Nome as Medico
 	FROM PETDB_Prescricao as p 
 	JOIN PETDB_Animal as a ON p.Animal = a.Numero
+	JOIN PETDB_PrescricaoMedico as pm ON p.Numero = pm.NumeroPrescricao
+	JOIN PETDB_MedicoVeterinario as m ON pm.NumeroOMVMedico = m.NumOMV
 	ORDER BY p.[Data] DESC;
 END 
 GO 
@@ -382,4 +384,14 @@ BEGIN
 	SELECT TOP 1 Id FROM PETDB_Consulta
 	ORDER BY Id DESC; 
 END 
+GO
+
+CREATE PROCEDURE SP_GetPrescriptionDate
+	@PrescriptionId int
+AS 
+BEGIN 
+	SET NOCOUNT ON;	
+	SELECT [Data] FROM PETDB_Prescricao
+	WHERE Numero = @PrescriptionId;
+END
 GO

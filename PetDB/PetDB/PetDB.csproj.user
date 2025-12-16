@@ -25,10 +25,16 @@
     <Compile Update="UC_AnimalInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UC_ListMeds.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UC_ListStrings.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="UC_ListTreatments.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UC_NewMed.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="UC_NewTreatment.cs">

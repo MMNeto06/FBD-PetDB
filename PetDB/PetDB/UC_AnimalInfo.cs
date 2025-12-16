@@ -145,7 +145,7 @@ namespace PetDB
             List<String> meds = getPrescriptionMedsById(idPrescricao);
 
             UC_ListStrings uc = new UC_ListStrings();
-            uc.setStrings(meds);
+            uc.SetStrings(meds);
 
             PopUpForm popup = new PopUpForm(uc, "Medicamentos da Prescrição");
             popup.ShowDialog();
@@ -177,7 +177,7 @@ namespace PetDB
             List<String> treatments = getAppointmentTreatmentsById(idConsulta);
 
             UC_ListStrings uc = new UC_ListStrings();
-            uc.setStrings(treatments);
+            uc.SetStrings(treatments);
 
             PopUpForm popup = new PopUpForm(uc, "Tratamentos da Consulta");
             popup.ShowDialog();

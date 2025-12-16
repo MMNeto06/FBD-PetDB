@@ -9,3 +9,5 @@ DROP PROCEDURE SP_AddAppointment;
 DROP PROCEDURE SP_AddPayment;
 DROP PROCEDURE SP_AddPrescription;
 DROP PROCEDURE SP_AddTreatmentToAppointment;
+DROP PROCEDURE SP_AddReportToAppointment;
+DROP PROCEDURE SP_AddMedToPrescription;

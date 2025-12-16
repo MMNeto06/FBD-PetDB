@@ -261,7 +261,8 @@ GO
 CREATE PROCEDURE SP_UpdatePrescription
 		@PrescriptionNumber int, 
 		@PrescriptionDate date, 
-		@PrescriptionPet int
+		@PrescriptionPet int, 
+		@PrescriptionVet int
 AS
 BEGIN 
 	SET NOCOUNT ON; 
@@ -271,7 +272,7 @@ BEGIN
 			UPDATE PETDB_Prescricao
 			SET [Data]=@PrescriptionDate, 
 				Animal=@PrescriptionPet
-			WHERE Numero=@PrescriptionNumber;
+			WHERE Numero=@PrescriptionNumber; 
 		COMMIT TRANSACTION SCHEDULEUPDATE
 	END TRY
 	BEGIN CATCH 

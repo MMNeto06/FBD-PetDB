@@ -137,3 +137,12 @@ CREATE TABLE PETDB_PrescricaoMedicamento(
 	FOREIGN KEY (CodigoMedicamento) REFERENCES PETDB_Medicamento(Codigo)
 );
 GO
+
+CREATE TABLE PETDB_PrescricaoMedico (
+	NumeroPrescricao int, 
+	NumeroOMVMedico int, 
+	PRIMARY KEY (NumeroPrescricao, NumeroOMVMedico), 
+	FOREIGN KEY (NumeroPrescricao) REFERENCES PETDB_Prescricao(Numero), 
+	FOREIGN KEY (NumeroOMVMedico) REFERENCES PETDB_MedicoVeterinario(NumOMV)
+); 
+GO

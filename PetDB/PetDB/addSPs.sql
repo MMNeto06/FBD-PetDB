@@ -402,5 +402,33 @@ BEGIN
 END 
 GO 
 
+CREATE PROCEDURE SP_AddMedToPrescription
+	@PrescriptionID int, 
+	@MedID int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Prescricao WHERE Numero = @PrescriptionID)
+	BEGIN 
+		RAISERROR('Não existe essa prescrição!', 16, 1); 
+	END
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Medicamento WHERE Codigo = @MedID)
+	BEGIN 
+		RAISERROR('Não existe esse medicamento!', 16, 1); 
+	END
+
+	BEGIN TRY
+		BEGIN TRANSACTION SCHEDULEINSERT
+			INSERT INTO PETDB_PrescricaoMedicamento VALUES (@PrescriptionID, @MedID); 
+		COMMIT TRANSACTION SCHEDULEINSERT
+	END TRY 
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEINSERT
+	END CATCH 
+END 
+GO
+
 
 
