@@ -263,6 +263,8 @@ namespace PetDB
             consultaMedicoComboBox.Visible = true;
             consultaBtnEditarRelatorio.Visible = true;
             consultaBtnEditarTratamentos.Visible = true;
+            consultaBtnEditarRelatorio.Enabled = true;
+            consultaBtnEditarTratamentos.Enabled = true;
             generalEditControls();
         }
 
@@ -367,20 +369,16 @@ namespace PetDB
             especialidadeCodigoText.Enabled = false;
             especialidadeDescricaoText.Enabled = false;
             generalBaseControls();
+            editBtn.Visible = false; 
         }
 
-        private void especialidadeEditControls()
-        {
-            especialidadeDescricaoText.Enabled = true;
-            generalEditControls();
-        }
 
         private void especialidadeAddControls()
-        {
-            especialidadeEditControls();
-            especialidadeCodigoText.Enabled = true; 
-            especialidadeCodigoText.Text = "";
-            especialidadeDescricaoText.Text = ""; 
+        { 
+            especialidadeCodigoText.Text = "Automático";
+            especialidadeDescricaoText.Text = "";
+            especialidadeDescricaoText.Enabled = true;
+            generalEditControls(); 
         }
 
         private void especieBaseControls()
@@ -388,19 +386,17 @@ namespace PetDB
             especieCodigoText.Enabled = false;
             especieDescricaoText.Enabled = false;
             generalBaseControls();
+            editBtn.Visible = false; 
         }
 
-        /*TODO
-        private void especieEditControls()
-        {
-
-        }*/
-
-        /* TODO
         private void especieAddControls()
         {
-
-        }*/
+            especieCodigoText.Text = "Automático";
+            especieDescricaoText.Enabled = true;
+            especieDescricaoText.Text = "";
+            generalEditControls(); 
+            editBtn.Visible = false;
+        }
 
         private void backBtn_Click(object sender, EventArgs e)
         {
@@ -1611,10 +1607,10 @@ namespace PetDB
                     LoadMedicosComboBox(prescricaoMedicoComboBox, consultaMedicoText);
                     break;
                 case "Especialidade":
-                    //especialidadeAddControls(); 
+                    especialidadeAddControls();
                     break;
                 case "Especie":
-                    //especieAddControls(); 
+                    especieAddControls(); 
                     break;
                 default: break;
             }
@@ -1788,24 +1784,6 @@ namespace PetDB
                 MessageBox.Show(msgShow);
             }
 
-            if (sp != "SP_UpdateAppointment")
-            {
-                SqlCommand fetchAppointmentId = new SqlCommand("SP_GetMostRecentAppointmentId", cn);
-                fetchAppointmentId.CommandType = CommandType.StoredProcedure;
-                SqlDataReader reader = fetchAppointmentId.ExecuteReader();
-                int appointmentId = 0;
-                if (reader.Read())
-                    appointmentId = int.Parse(reader["Id"].ToString());
-
-                reader.Close();
-
-                SqlCommand insertReport = new SqlCommand("SP_AddReportToAppointment", cn);
-                insertReport.CommandType = CommandType.StoredProcedure;
-                insertReport.Parameters.AddWithValue("@AppointmentID", appointmentId);
-                insertReport.Parameters.AddWithValue("@reportContent", "");
-                ExecuteInsertSP(insertReport);
-            }
-
             cn.Close();
         }
 
@@ -1859,6 +1837,23 @@ namespace PetDB
             Vet v = (Vet)prescricaoMedicoComboBox.SelectedItem;
             if (v != null)
                 cmd.Parameters.AddWithValue("@PrescriptionVet", v.NumOMV);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show(msgShow);
+            }
+
+            cn.Close();
+        }
+
+        private void SimpleAddTuples(String sp, String msgShow, String param, TextBox content)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue(param, content.Text);
 
             if (ExecuteInsertSP(cmd))
             {
@@ -1935,7 +1930,15 @@ namespace PetDB
                 case ("Edit", "Prescricao"):
                     PrescricaoTuples("SP_UpdatePrescription", "Informações atualizadas com sucesso!");
                     prescricaoTab_Click(sender, e);
-                    break; 
+                    break;
+                case ("Add", "Especialidade"):
+                    SimpleAddTuples("SP_AddSpecialty", "Especialidade adicionada com sucesso!", "@SpecialtyDescription", especialidadeDescricaoText);
+                    especialidadeTab_Click(sender, e);
+                    break;
+                case ("Add", "Especie"):
+                    SimpleAddTuples("SP_AddSpecie", "Especie adicionada com sucesso!", "@SpecieDescription", especieDescricaoText);
+                    especieTab_Click(sender, e);
+                    break;
 
 
             }

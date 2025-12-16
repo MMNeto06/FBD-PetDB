@@ -165,6 +165,8 @@ namespace PetDB
             especieDescricaoLabel = new Label();
             especieCodigoText = new TextBox();
             especieCodigoLabel = new Label();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
             consultarTabControl = new TabControl();
             consultarVetCliTabPage = new TabPage();
             consultarAnimaisDonoTabPage = new TabPage();
@@ -351,6 +353,8 @@ namespace PetDB
             registarTabControl.Controls.Add(prescricaoTabPage);
             registarTabControl.Controls.Add(especialidadeTabPage);
             registarTabControl.Controls.Add(especieTabPage);
+            registarTabControl.Controls.Add(tabPage1);
+            registarTabControl.Controls.Add(tabPage2);
             registarTabControl.Location = new Point(299, 25);
             registarTabControl.Multiline = true;
             registarTabControl.Name = "registarTabControl";
@@ -955,6 +959,7 @@ namespace PetDB
             // 
             // consultaDateTimePicker
             // 
+            consultaDateTimePicker.Format = DateTimePickerFormat.Custom;
             consultaDateTimePicker.Location = new Point(149, 19);
             consultaDateTimePicker.Name = "consultaDateTimePicker";
             consultaDateTimePicker.Size = new Size(164, 23);
@@ -1502,6 +1507,26 @@ namespace PetDB
             especieCodigoLabel.TabIndex = 5;
             especieCodigoLabel.Text = "Código";
             // 
+            // tabPage1
+            // 
+            tabPage1.Location = new Point(4, 64);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(318, 143);
+            tabPage1.TabIndex = 10;
+            tabPage1.Text = "tabPage1";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            tabPage2.Location = new Point(4, 64);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(318, 143);
+            tabPage2.TabIndex = 11;
+            tabPage2.Text = "tabPage2";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
             // consultarTabControl
             // 
             consultarTabControl.Controls.Add(consultarVetCliTabPage);
@@ -1796,5 +1821,7 @@ namespace PetDB
         private DateTimePicker prescricaoDateTimePicker;
         private ComboBox prescricaoMedicoComboBox;
         private ComboBox prescricaoAnimalComboBox;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
     }
 }

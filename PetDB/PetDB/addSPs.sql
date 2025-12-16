@@ -271,6 +271,33 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_AddReportToAppointment
+		@AppointmentID int, 
+		@reportContent varchar(MAX) 
+AS
+BEGIN 
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Consulta WHERE Id = @AppointmentID) 
+	BEGIN 
+		RAISERROR('Não existe essa consulta!', 16, 1); 
+	END
+
+	IF LEN(@reportContent) < 0 
+	BEGIN 
+		RAISERROR('Conteúdo inválido!', 16, 1); 
+	END
+
+	BEGIN TRY
+		BEGIN TRANSACTION SCHEDULEINSERT
+			INSERT INTO PETDB_Relatorio(Consulta, Conteudo)
+			VALUES (@AppointmentID, @reportContent); 
+		COMMIT TRANSACTION SCHEDULEINSERT
+	END TRY 
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEINSERT
+	END CATCH 
+END 
+GO 
+
 CREATE PROCEDURE SP_AddAppointment
 		@AppointmentDate datetime, 
 		@AppointmentPet int, 
@@ -283,6 +310,11 @@ BEGIN
 		BEGIN TRANSACTION SCHEDULEINSERT
 			INSERT INTO PETDB_Consulta([Data], Animal, Medico)
 			VALUES (@AppointmentDate, @AppointmentPet, @AppointmentVet);
+
+			DECLARE @AppointmentID INT
+			SET @AppointmentID = SCOPE_IDENTITY(); 
+
+			EXEC SP_AddReportToAppointment @AppointmentID = @AppointmentID, @reportContent = " ";
 		COMMIT TRANSACTION SCHEDULEINSERT
 	END TRY
 	BEGIN CATCH 
@@ -319,10 +351,59 @@ BEGIN
 END
 GO
 
+
+CREATE PROCEDURE SP_AddMedToPrescription
+	@PrescriptionID int, 
+	@MedID int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Prescricao WHERE Numero = @PrescriptionID)
+	BEGIN 
+		RAISERROR('Não existe essa prescrição!', 16, 1); 
+	END
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Medicamento WHERE Codigo = @MedID)
+	BEGIN 
+		RAISERROR('Não existe esse medicamento!', 16, 1); 
+	END
+
+	BEGIN TRY
+		BEGIN TRANSACTION SCHEDULEINSERT
+			INSERT INTO PETDB_PrescricaoMedicamento VALUES (@PrescriptionID, @MedID); 
+		COMMIT TRANSACTION SCHEDULEINSERT
+	END TRY 
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEINSERT
+	END CATCH 
+END 
+GO
+
+CREATE PROCEDURE SP_AddVetToPrescription 
+	@PrescriptionID int,
+	@VetOMV int
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	BEGIN TRY 
+		BEGIN TRANSACTION SCHEDULEINSERT
+			INSERT INTO PETDB_PrescricaoMedico
+			VALUES (@PrescriptionID, @VetOMV); 
+		COMMIT TRANSACTION SCHEDULEINSERT
+	END TRY
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEINSERT
+	END CATCH 
+END 
+GO
+
 CREATE PROCEDURE SP_AddPrescription
 		@PrescriptionNumber int, 
 		@PrescriptionDate date, 
-		@PrescriptionPet int
+		@PrescriptionPet int, 
+		@PrescriptionVet int
 AS
 BEGIN 
 	SET NOCOUNT ON; 
@@ -333,10 +414,22 @@ BEGIN
 		RETURN; 
 	END
 
+	IF NOT EXISTS (SELECT 1 FROM PETDB_Animal WHERE Numero = @PrescriptionPet)
+	BEGIN 
+		RAISERROR('Não existe esse animal!', 16, 1); 
+	END
+
+	IF NOT EXISTS (SELECT 1 FROM PETDB_MedicoVeterinario WHERE NumOMV = @PrescriptionVet) 
+	BEGIN 
+		RAISERROR('Não existe esse médico!', 16, 1); 
+	END
+
 	BEGIN TRY 
 		BEGIN TRANSACTION SCHEDULEINSERT
 			INSERT INTO PETDB_Prescricao(Numero, [Data], Animal)
 			VALUES (@PrescriptionNumber, @PrescriptionDate, @PrescriptionPet);
+
+			EXEC SP_AddVetToPrescription @PrescriptionID = @PrescriptionNumber, @VetOMV = @PrescriptionVet;
 		COMMIT TRANSACTION SCHEDULEINSERT
 	END TRY
 	BEGIN CATCH 
@@ -375,60 +468,8 @@ BEGIN
 END 
 GO 
 
-CREATE PROCEDURE SP_AddReportToAppointment
-		@AppointmentID int, 
-		@reportContent varchar(MAX) 
-AS
-BEGIN 
-	IF NOT EXISTS (SELECT 1 FROM PETDB_Consulta WHERE Id = @AppointmentID) 
-	BEGIN 
-		RAISERROR('Não existe essa consulta!', 16, 1); 
-	END
 
-	IF LEN(@reportContent) < 0 
-	BEGIN 
-		RAISERROR('Conteúdo inválido!', 16, 1); 
-	END
 
-	BEGIN TRY
-		BEGIN TRANSACTION SCHEDULEINSERT
-			INSERT INTO PETDB_Relatorio(Consulta, Conteudo)
-			VALUES (@AppointmentID, @reportContent); 
-		COMMIT TRANSACTION SCHEDULEINSERT
-	END TRY 
-	BEGIN CATCH 
-		ROLLBACK TRANSACTION SCHEDULEINSERT
-	END CATCH 
-END 
-GO 
-
-CREATE PROCEDURE SP_AddMedToPrescription
-	@PrescriptionID int, 
-	@MedID int
-AS 
-BEGIN 
-	SET NOCOUNT ON; 
-
-	IF NOT EXISTS (SELECT 1 FROM PETDB_Prescricao WHERE Numero = @PrescriptionID)
-	BEGIN 
-		RAISERROR('Não existe essa prescrição!', 16, 1); 
-	END
-
-	IF NOT EXISTS (SELECT 1 FROM PETDB_Medicamento WHERE Codigo = @MedID)
-	BEGIN 
-		RAISERROR('Não existe esse medicamento!', 16, 1); 
-	END
-
-	BEGIN TRY
-		BEGIN TRANSACTION SCHEDULEINSERT
-			INSERT INTO PETDB_PrescricaoMedicamento VALUES (@PrescriptionID, @MedID); 
-		COMMIT TRANSACTION SCHEDULEINSERT
-	END TRY 
-	BEGIN CATCH 
-		ROLLBACK TRANSACTION SCHEDULEINSERT
-	END CATCH 
-END 
-GO
 
 
 
