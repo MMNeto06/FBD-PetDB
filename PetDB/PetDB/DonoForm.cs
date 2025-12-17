@@ -57,7 +57,9 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
             cardsFlowLayoutPanel.Controls.Clear();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPetsByOwner " + this.nif, cn);
+            SqlCommand cmd = new SqlCommand("SP_GetPetInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OwnerNIF", this.nif);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -97,7 +99,9 @@ namespace PetDB
 
             BindingList<Payment> payments = new BindingList<Payment>();
             dataGridView1.DataSource = payments;
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPaymentsByOwner " + this.nif, cn);
+            SqlCommand cmd = new SqlCommand("SP_GetPaymentInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OwnerNIF", this.nif);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -106,8 +110,8 @@ namespace PetDB
                 payment.Valor = reader["Custo"].ToString();
                 payment.Data = reader["Data"].ToString();
                 payment.Estado = reader["Estado"].ToString();
-                payment.Metodo = reader["MetodoPagamento"].ToString();
-                payment.Animal = reader["Nome"].ToString();
+                payment.Metodo = reader["Metodo"].ToString();
+                payment.Animal = reader["Animal"].ToString();
                 payment.Medico = reader["Medico"].ToString();
                 payments.Add(payment);
             }
@@ -167,7 +171,9 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetOwnerByNIF " + this.nif, cn);
+            SqlCommand cmd = new SqlCommand("SP_GetOwnerTable", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OwnerNIF", this.nif);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read()) // Don't assume we have any rows.
             {

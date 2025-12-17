@@ -23,13 +23,6 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecieName " + this._animal.Especie, cn);
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                this.especieLabel.Text = reader["Descricao"].ToString();
-            }
-            cn.Close();
             this.Click += Card_Click;
             foreach (Control c in Controls)
             {

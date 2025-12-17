@@ -55,14 +55,14 @@ namespace PetDB
             medicoClinicaComboBox = new ComboBox();
             medicoEspecialidadeComboBox = new ComboBox();
             medicoClinicaText = new TextBox();
-            medicoEspecialidadeLabel = new Label();
             medicoEspecialidadeText = new TextBox();
             medicoOMVLabel = new Label();
-            medicoOMVText = new TextBox();
             medicoNomeLabel = new Label();
-            medicoNomeText = new TextBox();
             medicoTelefoneLabel = new Label();
             medicoEmailLabel = new Label();
+            medicoEspecialidadeLabel = new Label();
+            medicoOMVText = new TextBox();
+            medicoNomeText = new TextBox();
             medicoEmailText = new TextBox();
             medicoTelefoneText = new TextBox();
             medicoClinicaLabel = new Label();
@@ -179,12 +179,81 @@ namespace PetDB
             tratamentoCodigoLabel = new Label();
             consultarTabControl = new TabControl();
             consultarVetCliTabPage = new TabPage();
+            consultarMedicosClinicaEmailText = new TextBox();
+            label3 = new Label();
+            consultarMedicosClinicaTelefoneText = new TextBox();
+            label4 = new Label();
+            consultarMedicosClinicaEspecialidadeText = new TextBox();
+            label2 = new Label();
+            consultarMedicosClinicaOMVText = new TextBox();
+            consultarMedicosClinicaNumOMVLabel = new Label();
+            consultarMedicosClinicaLabel = new Label();
+            consultarMedicosClinicaComboBox = new ComboBox();
             consultarAnimaisDonoTabPage = new TabPage();
+            consultarAnimaisDonoEspecieText = new TextBox();
+            consultarAnimaisDonoDataNascimentoText = new TextBox();
+            consultarAnimaisDonoPesoText = new TextBox();
+            label6 = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            label9 = new Label();
+            label10 = new Label();
+            consultarAnimaisDonoSexoText = new TextBox();
+            consultarAnimaisDonoNumero = new TextBox();
+            label5 = new Label();
+            consultarAnimaisDonoComboBox = new ComboBox();
             consultarAnimaisClinicaTabPage = new TabPage();
+            consultarAnimaisClinicaDonoText = new TextBox();
+            label17 = new Label();
+            consultarAnimaisClinicaEspecieText = new TextBox();
+            consultarAnimaisClinicaDataNascimentoText = new TextBox();
+            consultarAnimaisClinicaPesoText = new TextBox();
+            label11 = new Label();
+            label12 = new Label();
+            label13 = new Label();
+            label14 = new Label();
+            label15 = new Label();
+            consultarAnimaisClinicaSexoText = new TextBox();
+            consultarAnimaisClinicaNumeroText = new TextBox();
+            label16 = new Label();
+            consultarAnimaisClinicaComboBox = new ComboBox();
             consultarConsultasAnimalTabPage = new TabPage();
+            consultarConsultasAnimalBtnVerRelatório = new Button();
+            consultarConsultasAnimalBtnVerTratamentos = new Button();
+            consultarConsultasAnimalMedicoText = new TextBox();
+            label21 = new Label();
+            label22 = new Label();
+            consultarConsultasAnimalIdText = new TextBox();
+            label23 = new Label();
+            consultarConsultasAnimalComboBox = new ComboBox();
             consultarConsultasVetTabPage = new TabPage();
+            consultarConsultasMedicoBtnVerRelatorio = new Button();
+            consultarConsultasMedicoBtnVerTratamentos = new Button();
+            consultarConsultasMedicoAnimalText = new TextBox();
+            label24 = new Label();
+            label25 = new Label();
+            consultarConsultasMedicoIdText = new TextBox();
+            label26 = new Label();
+            consultarConsultasMedicoComboBox = new ComboBox();
             consultarPrescricoesAnimalTabPage = new TabPage();
+            consultarPrescricaoAnimalBtnVerMedicamentos = new Button();
+            consultarPrescricaoAnimalMedicoText = new TextBox();
+            label18 = new Label();
+            label19 = new Label();
+            consultarPrescricaoAnimalNumeroText = new TextBox();
+            label20 = new Label();
+            consultarPrescricaoAnimalComboBox = new ComboBox();
             consultarPagamentosDonoTabPage = new TabPage();
+            consultarPagamentosDonoMetodoText = new TextBox();
+            label30 = new Label();
+            label31 = new Label();
+            consultarPagamentosDonoValorText = new TextBox();
+            consultarPagamentosDonoEstadoText = new TextBox();
+            label27 = new Label();
+            label28 = new Label();
+            consultarPagamentosDonoNumeroText = new TextBox();
+            label29 = new Label();
+            consultarPagamentosDonoComboBox = new ComboBox();
             menuStrip1.SuspendLayout();
             registarTabControl.SuspendLayout();
             clinicaTabPage.SuspendLayout();
@@ -200,6 +269,13 @@ namespace PetDB
             metodoPagamentoTab.SuspendLayout();
             tratamentoTab.SuspendLayout();
             consultarTabControl.SuspendLayout();
+            consultarVetCliTabPage.SuspendLayout();
+            consultarAnimaisDonoTabPage.SuspendLayout();
+            consultarAnimaisClinicaTabPage.SuspendLayout();
+            consultarConsultasAnimalTabPage.SuspendLayout();
+            consultarConsultasVetTabPage.SuspendLayout();
+            consultarPrescricoesAnimalTabPage.SuspendLayout();
+            consultarPagamentosDonoTabPage.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -437,14 +513,14 @@ namespace PetDB
             medicoTabPage.Controls.Add(medicoClinicaComboBox);
             medicoTabPage.Controls.Add(medicoEspecialidadeComboBox);
             medicoTabPage.Controls.Add(medicoClinicaText);
-            medicoTabPage.Controls.Add(medicoEspecialidadeLabel);
             medicoTabPage.Controls.Add(medicoEspecialidadeText);
             medicoTabPage.Controls.Add(medicoOMVLabel);
-            medicoTabPage.Controls.Add(medicoOMVText);
             medicoTabPage.Controls.Add(medicoNomeLabel);
-            medicoTabPage.Controls.Add(medicoNomeText);
             medicoTabPage.Controls.Add(medicoTelefoneLabel);
             medicoTabPage.Controls.Add(medicoEmailLabel);
+            medicoTabPage.Controls.Add(medicoEspecialidadeLabel);
+            medicoTabPage.Controls.Add(medicoOMVText);
+            medicoTabPage.Controls.Add(medicoNomeText);
             medicoTabPage.Controls.Add(medicoEmailText);
             medicoTabPage.Controls.Add(medicoTelefoneText);
             medicoTabPage.Controls.Add(medicoClinicaLabel);
@@ -480,16 +556,6 @@ namespace PetDB
             medicoClinicaText.Size = new Size(180, 23);
             medicoClinicaText.TabIndex = 33;
             // 
-            // medicoEspecialidadeLabel
-            // 
-            medicoEspecialidadeLabel.AutoSize = true;
-            medicoEspecialidadeLabel.Location = new Point(5, 91);
-            medicoEspecialidadeLabel.Margin = new Padding(2, 0, 2, 0);
-            medicoEspecialidadeLabel.Name = "medicoEspecialidadeLabel";
-            medicoEspecialidadeLabel.Size = new Size(78, 15);
-            medicoEspecialidadeLabel.TabIndex = 32;
-            medicoEspecialidadeLabel.Text = "Especialidade";
-            // 
             // medicoEspecialidadeText
             // 
             medicoEspecialidadeText.Location = new Point(5, 110);
@@ -508,14 +574,6 @@ namespace PetDB
             medicoOMVLabel.TabIndex = 25;
             medicoOMVLabel.Text = "Numero OMV";
             // 
-            // medicoOMVText
-            // 
-            medicoOMVText.Location = new Point(5, 22);
-            medicoOMVText.Margin = new Padding(2);
-            medicoOMVText.Name = "medicoOMVText";
-            medicoOMVText.Size = new Size(124, 23);
-            medicoOMVText.TabIndex = 23;
-            // 
             // medicoNomeLabel
             // 
             medicoNomeLabel.AutoSize = true;
@@ -525,14 +583,6 @@ namespace PetDB
             medicoNomeLabel.Size = new Size(40, 15);
             medicoNomeLabel.TabIndex = 26;
             medicoNomeLabel.Text = "Nome";
-            // 
-            // medicoNomeText
-            // 
-            medicoNomeText.Location = new Point(131, 22);
-            medicoNomeText.Margin = new Padding(2);
-            medicoNomeText.Name = "medicoNomeText";
-            medicoNomeText.Size = new Size(185, 23);
-            medicoNomeText.TabIndex = 24;
             // 
             // medicoTelefoneLabel
             // 
@@ -553,6 +603,32 @@ namespace PetDB
             medicoEmailLabel.Size = new Size(36, 15);
             medicoEmailLabel.TabIndex = 30;
             medicoEmailLabel.Text = "Email";
+            // 
+            // medicoEspecialidadeLabel
+            // 
+            medicoEspecialidadeLabel.AutoSize = true;
+            medicoEspecialidadeLabel.Location = new Point(5, 91);
+            medicoEspecialidadeLabel.Margin = new Padding(2, 0, 2, 0);
+            medicoEspecialidadeLabel.Name = "medicoEspecialidadeLabel";
+            medicoEspecialidadeLabel.Size = new Size(78, 15);
+            medicoEspecialidadeLabel.TabIndex = 32;
+            medicoEspecialidadeLabel.Text = "Especialidade";
+            // 
+            // medicoOMVText
+            // 
+            medicoOMVText.Location = new Point(5, 22);
+            medicoOMVText.Margin = new Padding(2);
+            medicoOMVText.Name = "medicoOMVText";
+            medicoOMVText.Size = new Size(124, 23);
+            medicoOMVText.TabIndex = 23;
+            // 
+            // medicoNomeText
+            // 
+            medicoNomeText.Location = new Point(131, 22);
+            medicoNomeText.Margin = new Padding(2);
+            medicoNomeText.Name = "medicoNomeText";
+            medicoNomeText.Size = new Size(185, 23);
+            medicoNomeText.TabIndex = 24;
             // 
             // medicoEmailText
             // 
@@ -1650,9 +1726,20 @@ namespace PetDB
             consultarTabControl.SelectedIndex = 0;
             consultarTabControl.Size = new Size(354, 275);
             consultarTabControl.TabIndex = 21;
+            consultarTabControl.SelectedIndexChanged += consultarTabControl_onSelectedIndexChange;
             // 
             // consultarVetCliTabPage
             // 
+            consultarVetCliTabPage.Controls.Add(consultarMedicosClinicaEmailText);
+            consultarVetCliTabPage.Controls.Add(label3);
+            consultarVetCliTabPage.Controls.Add(consultarMedicosClinicaTelefoneText);
+            consultarVetCliTabPage.Controls.Add(label4);
+            consultarVetCliTabPage.Controls.Add(consultarMedicosClinicaEspecialidadeText);
+            consultarVetCliTabPage.Controls.Add(label2);
+            consultarVetCliTabPage.Controls.Add(consultarMedicosClinicaOMVText);
+            consultarVetCliTabPage.Controls.Add(consultarMedicosClinicaNumOMVLabel);
+            consultarVetCliTabPage.Controls.Add(consultarMedicosClinicaLabel);
+            consultarVetCliTabPage.Controls.Add(consultarMedicosClinicaComboBox);
             consultarVetCliTabPage.Location = new Point(4, 64);
             consultarVetCliTabPage.Margin = new Padding(2);
             consultarVetCliTabPage.Name = "consultarVetCliTabPage";
@@ -1662,8 +1749,106 @@ namespace PetDB
             consultarVetCliTabPage.Text = "Medicos por Clinica";
             consultarVetCliTabPage.UseVisualStyleBackColor = true;
             // 
+            // consultarMedicosClinicaEmailText
+            // 
+            consultarMedicosClinicaEmailText.Enabled = false;
+            consultarMedicosClinicaEmailText.Location = new Point(146, 140);
+            consultarMedicosClinicaEmailText.Name = "consultarMedicosClinicaEmailText";
+            consultarMedicosClinicaEmailText.Size = new Size(182, 23);
+            consultarMedicosClinicaEmailText.TabIndex = 9;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(146, 122);
+            label3.Name = "label3";
+            label3.Size = new Size(36, 15);
+            label3.TabIndex = 8;
+            label3.Text = "Email";
+            // 
+            // consultarMedicosClinicaTelefoneText
+            // 
+            consultarMedicosClinicaTelefoneText.Enabled = false;
+            consultarMedicosClinicaTelefoneText.Location = new Point(19, 140);
+            consultarMedicosClinicaTelefoneText.Name = "consultarMedicosClinicaTelefoneText";
+            consultarMedicosClinicaTelefoneText.Size = new Size(111, 23);
+            consultarMedicosClinicaTelefoneText.TabIndex = 7;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(19, 122);
+            label4.Name = "label4";
+            label4.Size = new Size(52, 15);
+            label4.TabIndex = 6;
+            label4.Text = "Telefone";
+            // 
+            // consultarMedicosClinicaEspecialidadeText
+            // 
+            consultarMedicosClinicaEspecialidadeText.Enabled = false;
+            consultarMedicosClinicaEspecialidadeText.Location = new Point(146, 82);
+            consultarMedicosClinicaEspecialidadeText.Name = "consultarMedicosClinicaEspecialidadeText";
+            consultarMedicosClinicaEspecialidadeText.Size = new Size(182, 23);
+            consultarMedicosClinicaEspecialidadeText.TabIndex = 5;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(146, 64);
+            label2.Name = "label2";
+            label2.Size = new Size(78, 15);
+            label2.TabIndex = 4;
+            label2.Text = "Especialidade";
+            // 
+            // consultarMedicosClinicaOMVText
+            // 
+            consultarMedicosClinicaOMVText.Enabled = false;
+            consultarMedicosClinicaOMVText.Location = new Point(19, 82);
+            consultarMedicosClinicaOMVText.Name = "consultarMedicosClinicaOMVText";
+            consultarMedicosClinicaOMVText.Size = new Size(111, 23);
+            consultarMedicosClinicaOMVText.TabIndex = 3;
+            // 
+            // consultarMedicosClinicaNumOMVLabel
+            // 
+            consultarMedicosClinicaNumOMVLabel.AutoSize = true;
+            consultarMedicosClinicaNumOMVLabel.Location = new Point(19, 64);
+            consultarMedicosClinicaNumOMVLabel.Name = "consultarMedicosClinicaNumOMVLabel";
+            consultarMedicosClinicaNumOMVLabel.Size = new Size(34, 15);
+            consultarMedicosClinicaNumOMVLabel.TabIndex = 2;
+            consultarMedicosClinicaNumOMVLabel.Text = "OMV";
+            // 
+            // consultarMedicosClinicaLabel
+            // 
+            consultarMedicosClinicaLabel.AutoSize = true;
+            consultarMedicosClinicaLabel.Location = new Point(20, 4);
+            consultarMedicosClinicaLabel.Name = "consultarMedicosClinicaLabel";
+            consultarMedicosClinicaLabel.Size = new Size(106, 15);
+            consultarMedicosClinicaLabel.TabIndex = 1;
+            consultarMedicosClinicaLabel.Text = "Selecione a clínica:";
+            // 
+            // consultarMedicosClinicaComboBox
+            // 
+            consultarMedicosClinicaComboBox.FormattingEnabled = true;
+            consultarMedicosClinicaComboBox.Location = new Point(20, 22);
+            consultarMedicosClinicaComboBox.Name = "consultarMedicosClinicaComboBox";
+            consultarMedicosClinicaComboBox.Size = new Size(274, 23);
+            consultarMedicosClinicaComboBox.TabIndex = 0;
+            consultarMedicosClinicaComboBox.SelectedIndexChanged += consultarMedicosClinicaComboBox_SelectedIndexChanged;
+            // 
             // consultarAnimaisDonoTabPage
             // 
+            consultarAnimaisDonoTabPage.Controls.Add(consultarAnimaisDonoEspecieText);
+            consultarAnimaisDonoTabPage.Controls.Add(consultarAnimaisDonoDataNascimentoText);
+            consultarAnimaisDonoTabPage.Controls.Add(consultarAnimaisDonoPesoText);
+            consultarAnimaisDonoTabPage.Controls.Add(label6);
+            consultarAnimaisDonoTabPage.Controls.Add(label7);
+            consultarAnimaisDonoTabPage.Controls.Add(label8);
+            consultarAnimaisDonoTabPage.Controls.Add(label9);
+            consultarAnimaisDonoTabPage.Controls.Add(label10);
+            consultarAnimaisDonoTabPage.Controls.Add(consultarAnimaisDonoSexoText);
+            consultarAnimaisDonoTabPage.Controls.Add(consultarAnimaisDonoNumero);
+            consultarAnimaisDonoTabPage.Controls.Add(label5);
+            consultarAnimaisDonoTabPage.Controls.Add(consultarAnimaisDonoComboBox);
             consultarAnimaisDonoTabPage.Location = new Point(4, 64);
             consultarAnimaisDonoTabPage.Margin = new Padding(2);
             consultarAnimaisDonoTabPage.Name = "consultarAnimaisDonoTabPage";
@@ -1672,9 +1857,127 @@ namespace PetDB
             consultarAnimaisDonoTabPage.TabIndex = 1;
             consultarAnimaisDonoTabPage.Text = "Animais por Dono";
             consultarAnimaisDonoTabPage.UseVisualStyleBackColor = true;
+            consultarAnimaisDonoTabPage.Click += consultarAnimaisDonoTabPage_Click;
+            // 
+            // consultarAnimaisDonoEspecieText
+            // 
+            consultarAnimaisDonoEspecieText.Enabled = false;
+            consultarAnimaisDonoEspecieText.Location = new Point(167, 130);
+            consultarAnimaisDonoEspecieText.Name = "consultarAnimaisDonoEspecieText";
+            consultarAnimaisDonoEspecieText.Size = new Size(140, 23);
+            consultarAnimaisDonoEspecieText.TabIndex = 29;
+            // 
+            // consultarAnimaisDonoDataNascimentoText
+            // 
+            consultarAnimaisDonoDataNascimentoText.Enabled = false;
+            consultarAnimaisDonoDataNascimentoText.Location = new Point(22, 132);
+            consultarAnimaisDonoDataNascimentoText.Name = "consultarAnimaisDonoDataNascimentoText";
+            consultarAnimaisDonoDataNascimentoText.Size = new Size(123, 23);
+            consultarAnimaisDonoDataNascimentoText.TabIndex = 28;
+            // 
+            // consultarAnimaisDonoPesoText
+            // 
+            consultarAnimaisDonoPesoText.Enabled = false;
+            consultarAnimaisDonoPesoText.Location = new Point(219, 70);
+            consultarAnimaisDonoPesoText.Name = "consultarAnimaisDonoPesoText";
+            consultarAnimaisDonoPesoText.Size = new Size(88, 23);
+            consultarAnimaisDonoPesoText.TabIndex = 27;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(167, 111);
+            label6.Name = "label6";
+            label6.Size = new Size(46, 15);
+            label6.TabIndex = 26;
+            label6.Text = "Especie";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(219, 52);
+            label7.Name = "label7";
+            label7.Size = new Size(32, 15);
+            label7.TabIndex = 25;
+            label7.Text = "Peso";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(20, 114);
+            label8.Name = "label8";
+            label8.Size = new Size(114, 15);
+            label8.TabIndex = 24;
+            label8.Text = "Data de Nascimento";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(132, 52);
+            label9.Name = "label9";
+            label9.Size = new Size(31, 15);
+            label9.TabIndex = 23;
+            label9.Text = "Sexo";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(20, 52);
+            label10.Name = "label10";
+            label10.Size = new Size(51, 15);
+            label10.TabIndex = 22;
+            label10.Text = "Número";
+            // 
+            // consultarAnimaisDonoSexoText
+            // 
+            consultarAnimaisDonoSexoText.Enabled = false;
+            consultarAnimaisDonoSexoText.Location = new Point(132, 70);
+            consultarAnimaisDonoSexoText.Name = "consultarAnimaisDonoSexoText";
+            consultarAnimaisDonoSexoText.Size = new Size(56, 23);
+            consultarAnimaisDonoSexoText.TabIndex = 21;
+            // 
+            // consultarAnimaisDonoNumero
+            // 
+            consultarAnimaisDonoNumero.Enabled = false;
+            consultarAnimaisDonoNumero.Location = new Point(22, 70);
+            consultarAnimaisDonoNumero.Name = "consultarAnimaisDonoNumero";
+            consultarAnimaisDonoNumero.Size = new Size(77, 23);
+            consultarAnimaisDonoNumero.TabIndex = 20;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(20, 5);
+            label5.Name = "label5";
+            label5.Size = new Size(101, 15);
+            label5.TabIndex = 3;
+            label5.Text = "Selecione o dono:";
+            // 
+            // consultarAnimaisDonoComboBox
+            // 
+            consultarAnimaisDonoComboBox.FormattingEnabled = true;
+            consultarAnimaisDonoComboBox.Location = new Point(20, 23);
+            consultarAnimaisDonoComboBox.Name = "consultarAnimaisDonoComboBox";
+            consultarAnimaisDonoComboBox.Size = new Size(274, 23);
+            consultarAnimaisDonoComboBox.TabIndex = 2;
+            consultarAnimaisDonoComboBox.SelectedIndexChanged += consultarAnimaisDonoComboBox_SelectedIndexChanged;
             // 
             // consultarAnimaisClinicaTabPage
             // 
+            consultarAnimaisClinicaTabPage.Controls.Add(consultarAnimaisClinicaDonoText);
+            consultarAnimaisClinicaTabPage.Controls.Add(label17);
+            consultarAnimaisClinicaTabPage.Controls.Add(consultarAnimaisClinicaEspecieText);
+            consultarAnimaisClinicaTabPage.Controls.Add(consultarAnimaisClinicaDataNascimentoText);
+            consultarAnimaisClinicaTabPage.Controls.Add(consultarAnimaisClinicaPesoText);
+            consultarAnimaisClinicaTabPage.Controls.Add(label11);
+            consultarAnimaisClinicaTabPage.Controls.Add(label12);
+            consultarAnimaisClinicaTabPage.Controls.Add(label13);
+            consultarAnimaisClinicaTabPage.Controls.Add(label14);
+            consultarAnimaisClinicaTabPage.Controls.Add(label15);
+            consultarAnimaisClinicaTabPage.Controls.Add(consultarAnimaisClinicaSexoText);
+            consultarAnimaisClinicaTabPage.Controls.Add(consultarAnimaisClinicaNumeroText);
+            consultarAnimaisClinicaTabPage.Controls.Add(label16);
+            consultarAnimaisClinicaTabPage.Controls.Add(consultarAnimaisClinicaComboBox);
             consultarAnimaisClinicaTabPage.Location = new Point(4, 64);
             consultarAnimaisClinicaTabPage.Margin = new Padding(2);
             consultarAnimaisClinicaTabPage.Name = "consultarAnimaisClinicaTabPage";
@@ -1683,9 +1986,138 @@ namespace PetDB
             consultarAnimaisClinicaTabPage.TabIndex = 2;
             consultarAnimaisClinicaTabPage.Text = "Animais por Clinica";
             consultarAnimaisClinicaTabPage.UseVisualStyleBackColor = true;
+            consultarAnimaisClinicaTabPage.Click += consultarAnimaisClinicaTabPage_Click;
+            // 
+            // consultarAnimaisClinicaDonoText
+            // 
+            consultarAnimaisClinicaDonoText.Enabled = false;
+            consultarAnimaisClinicaDonoText.Location = new Point(100, 166);
+            consultarAnimaisClinicaDonoText.Name = "consultarAnimaisClinicaDonoText";
+            consultarAnimaisClinicaDonoText.Size = new Size(207, 23);
+            consultarAnimaisClinicaDonoText.TabIndex = 43;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(55, 169);
+            label17.Name = "label17";
+            label17.Size = new Size(39, 15);
+            label17.TabIndex = 42;
+            label17.Text = "Dono:";
+            // 
+            // consultarAnimaisClinicaEspecieText
+            // 
+            consultarAnimaisClinicaEspecieText.Enabled = false;
+            consultarAnimaisClinicaEspecieText.Location = new Point(167, 130);
+            consultarAnimaisClinicaEspecieText.Name = "consultarAnimaisClinicaEspecieText";
+            consultarAnimaisClinicaEspecieText.Size = new Size(140, 23);
+            consultarAnimaisClinicaEspecieText.TabIndex = 41;
+            // 
+            // consultarAnimaisClinicaDataNascimentoText
+            // 
+            consultarAnimaisClinicaDataNascimentoText.Enabled = false;
+            consultarAnimaisClinicaDataNascimentoText.Location = new Point(22, 132);
+            consultarAnimaisClinicaDataNascimentoText.Name = "consultarAnimaisClinicaDataNascimentoText";
+            consultarAnimaisClinicaDataNascimentoText.Size = new Size(123, 23);
+            consultarAnimaisClinicaDataNascimentoText.TabIndex = 40;
+            // 
+            // consultarAnimaisClinicaPesoText
+            // 
+            consultarAnimaisClinicaPesoText.Enabled = false;
+            consultarAnimaisClinicaPesoText.Location = new Point(219, 70);
+            consultarAnimaisClinicaPesoText.Name = "consultarAnimaisClinicaPesoText";
+            consultarAnimaisClinicaPesoText.Size = new Size(88, 23);
+            consultarAnimaisClinicaPesoText.TabIndex = 39;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(167, 111);
+            label11.Name = "label11";
+            label11.Size = new Size(46, 15);
+            label11.TabIndex = 38;
+            label11.Text = "Especie";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(219, 52);
+            label12.Name = "label12";
+            label12.Size = new Size(32, 15);
+            label12.TabIndex = 37;
+            label12.Text = "Peso";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(20, 114);
+            label13.Name = "label13";
+            label13.Size = new Size(114, 15);
+            label13.TabIndex = 36;
+            label13.Text = "Data de Nascimento";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(132, 52);
+            label14.Name = "label14";
+            label14.Size = new Size(31, 15);
+            label14.TabIndex = 35;
+            label14.Text = "Sexo";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(20, 52);
+            label15.Name = "label15";
+            label15.Size = new Size(51, 15);
+            label15.TabIndex = 34;
+            label15.Text = "Número";
+            // 
+            // consultarAnimaisClinicaSexoText
+            // 
+            consultarAnimaisClinicaSexoText.Enabled = false;
+            consultarAnimaisClinicaSexoText.Location = new Point(132, 70);
+            consultarAnimaisClinicaSexoText.Name = "consultarAnimaisClinicaSexoText";
+            consultarAnimaisClinicaSexoText.Size = new Size(56, 23);
+            consultarAnimaisClinicaSexoText.TabIndex = 33;
+            // 
+            // consultarAnimaisClinicaNumeroText
+            // 
+            consultarAnimaisClinicaNumeroText.Enabled = false;
+            consultarAnimaisClinicaNumeroText.Location = new Point(22, 69);
+            consultarAnimaisClinicaNumeroText.Name = "consultarAnimaisClinicaNumeroText";
+            consultarAnimaisClinicaNumeroText.Size = new Size(77, 23);
+            consultarAnimaisClinicaNumeroText.TabIndex = 32;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(20, 5);
+            label16.Name = "label16";
+            label16.Size = new Size(106, 15);
+            label16.TabIndex = 31;
+            label16.Text = "Selecione a clínica:";
+            // 
+            // consultarAnimaisClinicaComboBox
+            // 
+            consultarAnimaisClinicaComboBox.FormattingEnabled = true;
+            consultarAnimaisClinicaComboBox.Location = new Point(20, 23);
+            consultarAnimaisClinicaComboBox.Name = "consultarAnimaisClinicaComboBox";
+            consultarAnimaisClinicaComboBox.Size = new Size(274, 23);
+            consultarAnimaisClinicaComboBox.TabIndex = 30;
+            consultarAnimaisClinicaComboBox.SelectedIndexChanged += consultarAnimaisClinicaComboBox_SelectedIndexChanged;
             // 
             // consultarConsultasAnimalTabPage
             // 
+            consultarConsultasAnimalTabPage.Controls.Add(consultarConsultasAnimalBtnVerRelatório);
+            consultarConsultasAnimalTabPage.Controls.Add(consultarConsultasAnimalBtnVerTratamentos);
+            consultarConsultasAnimalTabPage.Controls.Add(consultarConsultasAnimalMedicoText);
+            consultarConsultasAnimalTabPage.Controls.Add(label21);
+            consultarConsultasAnimalTabPage.Controls.Add(label22);
+            consultarConsultasAnimalTabPage.Controls.Add(consultarConsultasAnimalIdText);
+            consultarConsultasAnimalTabPage.Controls.Add(label23);
+            consultarConsultasAnimalTabPage.Controls.Add(consultarConsultasAnimalComboBox);
             consultarConsultasAnimalTabPage.Location = new Point(4, 64);
             consultarConsultasAnimalTabPage.Margin = new Padding(2);
             consultarConsultasAnimalTabPage.Name = "consultarConsultasAnimalTabPage";
@@ -1694,9 +2126,90 @@ namespace PetDB
             consultarConsultasAnimalTabPage.TabIndex = 3;
             consultarConsultasAnimalTabPage.Text = "Consultas por Animal";
             consultarConsultasAnimalTabPage.UseVisualStyleBackColor = true;
+            consultarConsultasAnimalTabPage.Click += consultarConsultasAnimalTabPage_Click;
+            // 
+            // consultarConsultasAnimalBtnVerRelatório
+            // 
+            consultarConsultasAnimalBtnVerRelatório.Location = new Point(23, 128);
+            consultarConsultasAnimalBtnVerRelatório.Name = "consultarConsultasAnimalBtnVerRelatório";
+            consultarConsultasAnimalBtnVerRelatório.Size = new Size(119, 23);
+            consultarConsultasAnimalBtnVerRelatório.TabIndex = 54;
+            consultarConsultasAnimalBtnVerRelatório.Text = "Ver Relatório";
+            consultarConsultasAnimalBtnVerRelatório.UseVisualStyleBackColor = true;
+            consultarConsultasAnimalBtnVerRelatório.Click += consultarConsultasAnimalBtnVerRelatório_Click;
+            // 
+            // consultarConsultasAnimalBtnVerTratamentos
+            // 
+            consultarConsultasAnimalBtnVerTratamentos.Location = new Point(175, 128);
+            consultarConsultasAnimalBtnVerTratamentos.Name = "consultarConsultasAnimalBtnVerTratamentos";
+            consultarConsultasAnimalBtnVerTratamentos.Size = new Size(159, 23);
+            consultarConsultasAnimalBtnVerTratamentos.TabIndex = 53;
+            consultarConsultasAnimalBtnVerTratamentos.Text = "Ver Tratamentos";
+            consultarConsultasAnimalBtnVerTratamentos.UseVisualStyleBackColor = true;
+            consultarConsultasAnimalBtnVerTratamentos.Click += consultarConsultasAnimalBtnVerTratamentos_Click;
+            // 
+            // consultarConsultasAnimalMedicoText
+            // 
+            consultarConsultasAnimalMedicoText.Enabled = false;
+            consultarConsultasAnimalMedicoText.Location = new Point(175, 72);
+            consultarConsultasAnimalMedicoText.Name = "consultarConsultasAnimalMedicoText";
+            consultarConsultasAnimalMedicoText.Size = new Size(159, 23);
+            consultarConsultasAnimalMedicoText.TabIndex = 52;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(175, 54);
+            label21.Name = "label21";
+            label21.Size = new Size(47, 15);
+            label21.TabIndex = 51;
+            label21.Text = "Médico";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(21, 55);
+            label22.Name = "label22";
+            label22.Size = new Size(17, 15);
+            label22.TabIndex = 50;
+            label22.Text = "Id";
+            // 
+            // consultarConsultasAnimalIdText
+            // 
+            consultarConsultasAnimalIdText.Enabled = false;
+            consultarConsultasAnimalIdText.Location = new Point(23, 72);
+            consultarConsultasAnimalIdText.Name = "consultarConsultasAnimalIdText";
+            consultarConsultasAnimalIdText.Size = new Size(116, 23);
+            consultarConsultasAnimalIdText.TabIndex = 49;
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(21, 5);
+            label23.Name = "label23";
+            label23.Size = new Size(109, 15);
+            label23.TabIndex = 48;
+            label23.Text = "Selecione o animal:";
+            // 
+            // consultarConsultasAnimalComboBox
+            // 
+            consultarConsultasAnimalComboBox.FormattingEnabled = true;
+            consultarConsultasAnimalComboBox.Location = new Point(21, 23);
+            consultarConsultasAnimalComboBox.Name = "consultarConsultasAnimalComboBox";
+            consultarConsultasAnimalComboBox.Size = new Size(274, 23);
+            consultarConsultasAnimalComboBox.TabIndex = 47;
+            consultarConsultasAnimalComboBox.SelectedIndexChanged += consultarConsultasAnimalComboBox_SelectedIndexChanged;
             // 
             // consultarConsultasVetTabPage
             // 
+            consultarConsultasVetTabPage.Controls.Add(consultarConsultasMedicoBtnVerRelatorio);
+            consultarConsultasVetTabPage.Controls.Add(consultarConsultasMedicoBtnVerTratamentos);
+            consultarConsultasVetTabPage.Controls.Add(consultarConsultasMedicoAnimalText);
+            consultarConsultasVetTabPage.Controls.Add(label24);
+            consultarConsultasVetTabPage.Controls.Add(label25);
+            consultarConsultasVetTabPage.Controls.Add(consultarConsultasMedicoIdText);
+            consultarConsultasVetTabPage.Controls.Add(label26);
+            consultarConsultasVetTabPage.Controls.Add(consultarConsultasMedicoComboBox);
             consultarConsultasVetTabPage.Location = new Point(4, 64);
             consultarConsultasVetTabPage.Margin = new Padding(2);
             consultarConsultasVetTabPage.Name = "consultarConsultasVetTabPage";
@@ -1705,9 +2218,89 @@ namespace PetDB
             consultarConsultasVetTabPage.TabIndex = 4;
             consultarConsultasVetTabPage.Text = "Consultas por MV";
             consultarConsultasVetTabPage.UseVisualStyleBackColor = true;
+            consultarConsultasVetTabPage.Click += consultarConsultasVetTabPage_Click;
+            // 
+            // consultarConsultasMedicoBtnVerRelatorio
+            // 
+            consultarConsultasMedicoBtnVerRelatorio.Location = new Point(23, 128);
+            consultarConsultasMedicoBtnVerRelatorio.Name = "consultarConsultasMedicoBtnVerRelatorio";
+            consultarConsultasMedicoBtnVerRelatorio.Size = new Size(119, 23);
+            consultarConsultasMedicoBtnVerRelatorio.TabIndex = 62;
+            consultarConsultasMedicoBtnVerRelatorio.Text = "Ver Relatório";
+            consultarConsultasMedicoBtnVerRelatorio.UseVisualStyleBackColor = true;
+            consultarConsultasMedicoBtnVerRelatorio.Click += consultarConsultasMedicoBtnVerRelatorio_Click;
+            // 
+            // consultarConsultasMedicoBtnVerTratamentos
+            // 
+            consultarConsultasMedicoBtnVerTratamentos.Location = new Point(175, 128);
+            consultarConsultasMedicoBtnVerTratamentos.Name = "consultarConsultasMedicoBtnVerTratamentos";
+            consultarConsultasMedicoBtnVerTratamentos.Size = new Size(159, 23);
+            consultarConsultasMedicoBtnVerTratamentos.TabIndex = 61;
+            consultarConsultasMedicoBtnVerTratamentos.Text = "Ver Tratamentos";
+            consultarConsultasMedicoBtnVerTratamentos.UseVisualStyleBackColor = true;
+            consultarConsultasMedicoBtnVerTratamentos.Click += consultarConsultasMedicoBtnVerTratamentos_Click;
+            // 
+            // consultarConsultasMedicoAnimalText
+            // 
+            consultarConsultasMedicoAnimalText.Enabled = false;
+            consultarConsultasMedicoAnimalText.Location = new Point(175, 72);
+            consultarConsultasMedicoAnimalText.Name = "consultarConsultasMedicoAnimalText";
+            consultarConsultasMedicoAnimalText.Size = new Size(159, 23);
+            consultarConsultasMedicoAnimalText.TabIndex = 60;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(175, 54);
+            label24.Name = "label24";
+            label24.Size = new Size(45, 15);
+            label24.TabIndex = 59;
+            label24.Text = "Animal";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(21, 55);
+            label25.Name = "label25";
+            label25.Size = new Size(17, 15);
+            label25.TabIndex = 58;
+            label25.Text = "Id";
+            // 
+            // consultarConsultasMedicoIdText
+            // 
+            consultarConsultasMedicoIdText.Enabled = false;
+            consultarConsultasMedicoIdText.Location = new Point(23, 72);
+            consultarConsultasMedicoIdText.Name = "consultarConsultasMedicoIdText";
+            consultarConsultasMedicoIdText.Size = new Size(116, 23);
+            consultarConsultasMedicoIdText.TabIndex = 57;
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Location = new Point(21, 5);
+            label26.Name = "label26";
+            label26.Size = new Size(113, 15);
+            label26.TabIndex = 56;
+            label26.Text = "Selecione o médico:";
+            // 
+            // consultarConsultasMedicoComboBox
+            // 
+            consultarConsultasMedicoComboBox.FormattingEnabled = true;
+            consultarConsultasMedicoComboBox.Location = new Point(21, 23);
+            consultarConsultasMedicoComboBox.Name = "consultarConsultasMedicoComboBox";
+            consultarConsultasMedicoComboBox.Size = new Size(274, 23);
+            consultarConsultasMedicoComboBox.TabIndex = 55;
+            consultarConsultasMedicoComboBox.SelectedIndexChanged += consultarConsultasMedicoComboBox_SelectedIndexChanged;
             // 
             // consultarPrescricoesAnimalTabPage
             // 
+            consultarPrescricoesAnimalTabPage.Controls.Add(consultarPrescricaoAnimalBtnVerMedicamentos);
+            consultarPrescricoesAnimalTabPage.Controls.Add(consultarPrescricaoAnimalMedicoText);
+            consultarPrescricoesAnimalTabPage.Controls.Add(label18);
+            consultarPrescricoesAnimalTabPage.Controls.Add(label19);
+            consultarPrescricoesAnimalTabPage.Controls.Add(consultarPrescricaoAnimalNumeroText);
+            consultarPrescricoesAnimalTabPage.Controls.Add(label20);
+            consultarPrescricoesAnimalTabPage.Controls.Add(consultarPrescricaoAnimalComboBox);
             consultarPrescricoesAnimalTabPage.Location = new Point(4, 64);
             consultarPrescricoesAnimalTabPage.Margin = new Padding(2);
             consultarPrescricoesAnimalTabPage.Name = "consultarPrescricoesAnimalTabPage";
@@ -1716,9 +2309,82 @@ namespace PetDB
             consultarPrescricoesAnimalTabPage.TabIndex = 5;
             consultarPrescricoesAnimalTabPage.Text = "Prescrições por Animal";
             consultarPrescricoesAnimalTabPage.UseVisualStyleBackColor = true;
+            consultarPrescricoesAnimalTabPage.Click += consultarPrescricoesAnimalTabPage_Click;
+            // 
+            // consultarPrescricaoAnimalBtnVerMedicamentos
+            // 
+            consultarPrescricaoAnimalBtnVerMedicamentos.Location = new Point(80, 137);
+            consultarPrescricaoAnimalBtnVerMedicamentos.Name = "consultarPrescricaoAnimalBtnVerMedicamentos";
+            consultarPrescricaoAnimalBtnVerMedicamentos.Size = new Size(175, 23);
+            consultarPrescricaoAnimalBtnVerMedicamentos.TabIndex = 47;
+            consultarPrescricaoAnimalBtnVerMedicamentos.Text = "Ver Medicamentos";
+            consultarPrescricaoAnimalBtnVerMedicamentos.UseVisualStyleBackColor = true;
+            consultarPrescricaoAnimalBtnVerMedicamentos.Click += consultarPrescricaoAnimalBtnVerMedicamentos_Click;
+            // 
+            // consultarPrescricaoAnimalMedicoText
+            // 
+            consultarPrescricaoAnimalMedicoText.Enabled = false;
+            consultarPrescricaoAnimalMedicoText.Location = new Point(166, 73);
+            consultarPrescricaoAnimalMedicoText.Name = "consultarPrescricaoAnimalMedicoText";
+            consultarPrescricaoAnimalMedicoText.Size = new Size(159, 23);
+            consultarPrescricaoAnimalMedicoText.TabIndex = 46;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(164, 55);
+            label18.Name = "label18";
+            label18.Size = new Size(47, 15);
+            label18.TabIndex = 45;
+            label18.Text = "Médico";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(24, 55);
+            label19.Name = "label19";
+            label19.Size = new Size(51, 15);
+            label19.TabIndex = 44;
+            label19.Text = "Número";
+            // 
+            // consultarPrescricaoAnimalNumeroText
+            // 
+            consultarPrescricaoAnimalNumeroText.Enabled = false;
+            consultarPrescricaoAnimalNumeroText.Location = new Point(26, 72);
+            consultarPrescricaoAnimalNumeroText.Name = "consultarPrescricaoAnimalNumeroText";
+            consultarPrescricaoAnimalNumeroText.Size = new Size(116, 23);
+            consultarPrescricaoAnimalNumeroText.TabIndex = 43;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(24, 5);
+            label20.Name = "label20";
+            label20.Size = new Size(109, 15);
+            label20.TabIndex = 42;
+            label20.Text = "Selecione o animal:";
+            // 
+            // consultarPrescricaoAnimalComboBox
+            // 
+            consultarPrescricaoAnimalComboBox.FormattingEnabled = true;
+            consultarPrescricaoAnimalComboBox.Location = new Point(24, 23);
+            consultarPrescricaoAnimalComboBox.Name = "consultarPrescricaoAnimalComboBox";
+            consultarPrescricaoAnimalComboBox.Size = new Size(274, 23);
+            consultarPrescricaoAnimalComboBox.TabIndex = 41;
+            consultarPrescricaoAnimalComboBox.SelectedIndexChanged += consultarPrescricaoAnimalComboBox_SelectedIndexChanged;
             // 
             // consultarPagamentosDonoTabPage
             // 
+            consultarPagamentosDonoTabPage.Controls.Add(consultarPagamentosDonoMetodoText);
+            consultarPagamentosDonoTabPage.Controls.Add(label30);
+            consultarPagamentosDonoTabPage.Controls.Add(label31);
+            consultarPagamentosDonoTabPage.Controls.Add(consultarPagamentosDonoValorText);
+            consultarPagamentosDonoTabPage.Controls.Add(consultarPagamentosDonoEstadoText);
+            consultarPagamentosDonoTabPage.Controls.Add(label27);
+            consultarPagamentosDonoTabPage.Controls.Add(label28);
+            consultarPagamentosDonoTabPage.Controls.Add(consultarPagamentosDonoNumeroText);
+            consultarPagamentosDonoTabPage.Controls.Add(label29);
+            consultarPagamentosDonoTabPage.Controls.Add(consultarPagamentosDonoComboBox);
             consultarPagamentosDonoTabPage.Location = new Point(4, 64);
             consultarPagamentosDonoTabPage.Margin = new Padding(2);
             consultarPagamentosDonoTabPage.Name = "consultarPagamentosDonoTabPage";
@@ -1727,6 +2393,93 @@ namespace PetDB
             consultarPagamentosDonoTabPage.TabIndex = 6;
             consultarPagamentosDonoTabPage.Text = "Pagamentos por Dono";
             consultarPagamentosDonoTabPage.UseVisualStyleBackColor = true;
+            consultarPagamentosDonoTabPage.Click += consultarPagamentosDonoTabPage_Click;
+            // 
+            // consultarPagamentosDonoMetodoText
+            // 
+            consultarPagamentosDonoMetodoText.Enabled = false;
+            consultarPagamentosDonoMetodoText.Location = new Point(167, 127);
+            consultarPagamentosDonoMetodoText.Name = "consultarPagamentosDonoMetodoText";
+            consultarPagamentosDonoMetodoText.Size = new Size(159, 23);
+            consultarPagamentosDonoMetodoText.TabIndex = 56;
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.Location = new Point(167, 110);
+            label30.Name = "label30";
+            label30.Size = new Size(49, 15);
+            label30.TabIndex = 55;
+            label30.Text = "Método";
+            // 
+            // label31
+            // 
+            label31.AutoSize = true;
+            label31.Location = new Point(21, 110);
+            label31.Name = "label31";
+            label31.Size = new Size(33, 15);
+            label31.TabIndex = 54;
+            label31.Text = "Valor";
+            // 
+            // consultarPagamentosDonoValorText
+            // 
+            consultarPagamentosDonoValorText.Enabled = false;
+            consultarPagamentosDonoValorText.Location = new Point(23, 127);
+            consultarPagamentosDonoValorText.Name = "consultarPagamentosDonoValorText";
+            consultarPagamentosDonoValorText.Size = new Size(116, 23);
+            consultarPagamentosDonoValorText.TabIndex = 53;
+            // 
+            // consultarPagamentosDonoEstadoText
+            // 
+            consultarPagamentosDonoEstadoText.Enabled = false;
+            consultarPagamentosDonoEstadoText.Location = new Point(167, 72);
+            consultarPagamentosDonoEstadoText.Name = "consultarPagamentosDonoEstadoText";
+            consultarPagamentosDonoEstadoText.Size = new Size(159, 23);
+            consultarPagamentosDonoEstadoText.TabIndex = 52;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Location = new Point(167, 55);
+            label27.Name = "label27";
+            label27.Size = new Size(31, 15);
+            label27.TabIndex = 51;
+            label27.Text = "Data";
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Location = new Point(21, 55);
+            label28.Name = "label28";
+            label28.Size = new Size(51, 15);
+            label28.TabIndex = 50;
+            label28.Text = "Número";
+            // 
+            // consultarPagamentosDonoNumeroText
+            // 
+            consultarPagamentosDonoNumeroText.Enabled = false;
+            consultarPagamentosDonoNumeroText.Location = new Point(23, 72);
+            consultarPagamentosDonoNumeroText.Name = "consultarPagamentosDonoNumeroText";
+            consultarPagamentosDonoNumeroText.Size = new Size(116, 23);
+            consultarPagamentosDonoNumeroText.TabIndex = 49;
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Location = new Point(21, 5);
+            label29.Name = "label29";
+            label29.Size = new Size(101, 15);
+            label29.TabIndex = 48;
+            label29.Text = "Selecione o dono:";
+            // 
+            // consultarPagamentosDonoComboBox
+            // 
+            consultarPagamentosDonoComboBox.FormattingEnabled = true;
+            consultarPagamentosDonoComboBox.Location = new Point(21, 23);
+            consultarPagamentosDonoComboBox.Name = "consultarPagamentosDonoComboBox";
+            consultarPagamentosDonoComboBox.Size = new Size(274, 23);
+            consultarPagamentosDonoComboBox.TabIndex = 47;
+            consultarPagamentosDonoComboBox.SelectedIndexChanged += consultarPagamentosDonoComboBox_SelectedIndexChanged;
             // 
             // AdminForm
             // 
@@ -1740,8 +2493,8 @@ namespace PetDB
             Controls.Add(addBtn);
             Controls.Add(listBox1);
             Controls.Add(menuStrip1);
-            Controls.Add(registarTabControl);
             Controls.Add(consultarTabControl);
+            Controls.Add(registarTabControl);
             MainMenuStrip = menuStrip1;
             Margin = new Padding(2);
             Name = "AdminForm";
@@ -1775,6 +2528,20 @@ namespace PetDB
             tratamentoTab.ResumeLayout(false);
             tratamentoTab.PerformLayout();
             consultarTabControl.ResumeLayout(false);
+            consultarVetCliTabPage.ResumeLayout(false);
+            consultarVetCliTabPage.PerformLayout();
+            consultarAnimaisDonoTabPage.ResumeLayout(false);
+            consultarAnimaisDonoTabPage.PerformLayout();
+            consultarAnimaisClinicaTabPage.ResumeLayout(false);
+            consultarAnimaisClinicaTabPage.PerformLayout();
+            consultarConsultasAnimalTabPage.ResumeLayout(false);
+            consultarConsultasAnimalTabPage.PerformLayout();
+            consultarConsultasVetTabPage.ResumeLayout(false);
+            consultarConsultasVetTabPage.PerformLayout();
+            consultarPrescricoesAnimalTabPage.ResumeLayout(false);
+            consultarPrescricoesAnimalTabPage.PerformLayout();
+            consultarPagamentosDonoTabPage.ResumeLayout(false);
+            consultarPagamentosDonoTabPage.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1822,7 +2589,6 @@ namespace PetDB
         private TextBox medicoTelefoneText;
         private TabPage donoTabPage;
         private TabControl tabControl2;
-        private TabPage tabPage4;
         private Label donoEnderecoLabel;
         private TextBox donoEnderecoText;
         private Label donoNifLabel;
@@ -1944,5 +2710,74 @@ namespace PetDB
         private Label label1;
         private TextBox tratamentoCodigoText;
         private Label tratamentoCodigoLabel;
+        private Label consultarMedicosClinicaLabel;
+        private ComboBox consultarMedicosClinicaComboBox;
+        private TextBox consultarMedicosClinicaOMVText;
+        private Label consultarMedicosClinicaNumOMVLabel;
+        private TextBox consultarMedicosClinicaEspecialidadeText;
+        private Label label2;
+        private TextBox consultarMedicosClinicaEmailText;
+        private Label label3;
+        private TextBox consultarMedicosClinicaTelefoneText;
+        private Label label4;
+        private Label label5;
+        private ComboBox consultarAnimaisDonoComboBox;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label label9;
+        private Label label10;
+        private TextBox consultarAnimaisDonoSexoText;
+        private TextBox consultarAnimaisDonoNumero;
+        private TextBox consultarAnimaisDonoPesoText;
+        private TextBox consultarAnimaisDonoEspecieText;
+        private TextBox consultarAnimaisDonoDataNascimentoText;
+        private TextBox consultarAnimaisClinicaEspecieText;
+        private TextBox consultarAnimaisClinicaDataNascimentoText;
+        private TextBox consultarAnimaisClinicaPesoText;
+        private Label label11;
+        private Label label12;
+        private Label label13;
+        private Label label14;
+        private Label label15;
+        private TextBox consultarAnimaisClinicaSexoText;
+        private TextBox consultarAnimaisClinicaNumeroText;
+        private Label label16;
+        private ComboBox consultarAnimaisClinicaComboBox;
+        private TextBox consultarAnimaisClinicaDonoText;
+        private Label label17;
+        private TextBox consultarPrescricaoAnimalMedicoText;
+        private Label label18;
+        private Label label19;
+        private TextBox consultarPrescricaoAnimalNumeroText;
+        private Label label20;
+        private ComboBox consultarPrescricaoAnimalComboBox;
+        private Button consultarPrescricaoAnimalBtnVerMedicamentos;
+        private TextBox consultarConsultasAnimalMedicoText;
+        private Label label21;
+        private Label label22;
+        private TextBox consultarConsultasAnimalIdText;
+        private Label label23;
+        private ComboBox consultarConsultasAnimalComboBox;
+        private Button consultarConsultasAnimalBtnVerRelatório;
+        private Button consultarConsultasAnimalBtnVerTratamentos;
+        private Button consultarConsultasMedicoBtnVerRelatorio;
+        private Button consultarConsultasMedicoBtnVerTratamentos;
+        private TextBox consultarConsultasMedicoAnimalText;
+        private Label label24;
+        private Label label25;
+        private TextBox consultarConsultasMedicoIdText;
+        private Label label26;
+        private ComboBox consultarConsultasMedicoComboBox;
+        private TextBox consultarPagamentosDonoEstadoText;
+        private Label label27;
+        private Label label28;
+        private TextBox consultarPagamentosDonoNumeroText;
+        private Label label29;
+        private ComboBox consultarPagamentosDonoComboBox;
+        private TextBox consultarPagamentosDonoMetodoText;
+        private Label label30;
+        private Label label31;
+        private TextBox consultarPagamentosDonoValorText;
     }
 }

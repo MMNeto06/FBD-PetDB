@@ -77,6 +77,7 @@ END
 GO
 
 CREATE PROCEDURE SP_GetPrescriptionInfo 
+	@PetId int = NULL 
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -86,6 +87,7 @@ BEGIN
 	JOIN PETDB_Animal as a ON p.Animal = a.Numero
 	JOIN PETDB_PrescricaoMedico as pm ON p.Numero = pm.NumeroPrescricao
 	JOIN PETDB_MedicoVeterinario as m ON pm.NumeroOMVMedico = m.NumOMV
+	WHERE (@PetId IS NULL OR a.Numero = @PetId)
 	ORDER BY p.[Data] DESC;
 END 
 GO 
@@ -124,6 +126,7 @@ END
 GO
 
 CREATE PROCEDURE SP_GetPaymentInfo
+	@OwnerNIF int = NULL
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -134,11 +137,30 @@ BEGIN
 	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
+	WHERE (@OwnerNIF IS NULL OR a.Dono = @OwnerNIF)
 	ORDER BY p.[Data] DESC;
 END 
 GO
 
+/*CREATE PROCEDURE SP_GetPaymentsByOwner
+		@OwnerNIF int
+AS
+BEGIN
+	SET NOCOUNT ON; 
+
+	SELECT p.Id, p.[Data], p.Custo, p.Estado, m.Descricao as MetodoPagamento, a.Nome, v.Nome as Medico, p.Consulta
+	FROM PETDB_Pagamento as p
+	JOIN PETDB_MetodoPagamento as m ON p.MetodoPagamento = m.Codigo
+	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
+	JOIN PETDB_Animal as a ON c.Animal = a.Numero
+	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
+	WHERE Dono=@OwnerNIF
+	ORDER BY p.[Data] DESC;
+END
+GO*/
+
 CREATE PROCEDURE SP_GetAppointmentInfo
+	@PetId int = NULL, @VetOMV int = NULL
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -147,20 +169,7 @@ BEGIN
 	FROM PETDB_Consulta as c
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
-	ORDER BY c.[Data] DESC;
-END 
-GO 
-
-CREATE PROCEDURE SP_GetAppointmentInfoByAnimal @AnimalId int
-AS 
-BEGIN 
-	SET NOCOUNT ON; 
-
-	SELECT c.Id, c.[Data], a.Nome as Animal, v.Nome as Medico
-	FROM PETDB_Consulta as c
-	JOIN PETDB_Animal as a ON c.Animal = a.Numero
-	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
-	WHERE a.Numero=@AnimalId
+	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR v.NumOMV = @VetOMV)
 	ORDER BY c.[Data] DESC;
 END 
 GO 
@@ -176,6 +185,7 @@ END
 GO
 
 CREATE PROCEDURE SP_GetVetInfo
+	@ClinicNIF int = NULL 
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -184,11 +194,13 @@ BEGIN
 	FROM PETDB_MedicoVeterinario as v
 	JOIN PETDB_Especialidade as e ON v.Especialidade = e.Codigo
 	JOIN PETDB_ClinicaVeterinaria as c ON v.Clinica = c.NIF
+	WHERE (@ClinicNIF IS NULL OR c.NIF = @ClinicNIF)
 	ORDER BY v.Nome;
 END
 GO
 
 CREATE PROCEDURE SP_GetPetInfo
+	@OwnerNIF int = NULL
 AS
 BEGIN
 	SET NOCOUNT ON; 
@@ -197,44 +209,21 @@ BEGIN
 	FROM PETDB_Animal as a
 	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
 	JOIN PETDB_Dono as d ON d.NIF = a.Dono
+	WHERE (@OwnerNIF IS NULL OR d.NIF = @OwnerNIF)
 	ORDER BY a.Nome;
 END
 GO
 
 
 CREATE PROCEDURE SP_GetOwnerTable
+	@OwnerNIF int = NULL
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_Dono
+	WHERE (@OwnerNIF IS NULL OR NIF=@OwnerNIF)
 	ORDER BY Nome;
-END 
-GO
-
-CREATE PROCEDURE SP_GetVetsByClinic
-		@ClinicNIF int
-AS 
-BEGIN 
-	SET NOCOUNT ON; 
-
-	SELECT * FROM PETDB_MedicoVeterinario
-	WHERE Clinica=@ClinicNIF
-	ORDER BY Nome; 
-
-END
-GO
-
-CREATE PROCEDURE SP_GetPetsByOwner
-		@OwnerNIF int
-AS 
-BEGIN 
-	SET NOCOUNT ON; 
-
-	SELECT * FROM PETDB_Animal
-	WHERE Dono=@OwnerNIF
-	ORDER BY Nome;
-
 END 
 GO
 
@@ -244,37 +233,15 @@ AS
 BEGIN  
 	SET NOCOUNT ON; 
 
-	SELECT A.Numero, A.Nome, A.DataNascimento, A.Peso, A.Sexo, A.Dono, A.Especie 
-	FROM PETDB_Animal as A
-	JOIN PETDB_Consulta ON Numero=Animal
-	JOIN PETDB_MedicoVeterinario ON Medico=NumOMV
-	WHERE Clinica=@ClinicNIF
-	ORDER BY A.Nome;
+	SELECT a.Numero, a.Nome, a.DataNascimento, a.Peso, a.Sexo, d.Nome as Dono, e.Descricao as Especie 
+	FROM PETDB_Animal as a
+	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
+	JOIN PETDB_Consulta as c ON a.Numero=Animal
+	JOIN PETDB_MedicoVeterinario as m ON c.Medico=m.NumOMV
+	JOIN PETDB_Dono as d ON d.NIF = a.Dono
+	WHERE m.Clinica=@ClinicNIF
+	ORDER BY a.Nome;
 END
-GO
-
-CREATE PROCEDURE SP_GetAppointmentsByPet
-		@PetNum int
-AS
-BEGIN 
-	SET NOCOUNT ON; 
-
-	SELECT * FROM PETDB_Consulta
-	WHERE Animal=@PetNum
-	ORDER BY [Data] DESC;
-END
-GO
-
-CREATE PROCEDURE SP_GetAppointmentsByVet
-		@VetOMV int
-AS 
-BEGIN 
-	SET NOCOUNT ON; 
-
-	SELECT * FROM PETDB_Consulta
-	WHERE Medico=@VetOMV
-	ORDER BY [Data] DESC; 
-END 
 GO
 
 CREATE PROCEDURE SP_GetPrescriptionsByPet
@@ -289,22 +256,7 @@ BEGIN
 END 
 GO
 
-CREATE PROCEDURE SP_GetPaymentsByOwner
-		@OwnerNIF int
-AS
-BEGIN
-	SET NOCOUNT ON; 
 
-	SELECT p.Id, p.[Data], p.Custo, p.Estado, m.Descricao as MetodoPagamento, a.Nome, v.Nome as Medico, p.Consulta
-	FROM PETDB_Pagamento as p
-	JOIN PETDB_MetodoPagamento as m ON p.MetodoPagamento = m.Codigo
-	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
-	JOIN PETDB_Animal as a ON c.Animal = a.Numero
-	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
-	WHERE Dono=@OwnerNIF
-	ORDER BY p.[Data] DESC;
-END
-GO
 
 CREATE PROCEDURE SP_GetSpecialtyTable
 AS

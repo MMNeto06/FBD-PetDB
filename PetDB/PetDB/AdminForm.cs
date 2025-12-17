@@ -16,6 +16,7 @@ namespace PetDB
         private Login loginPage;
         private String option = "";
         private String entity = "";
+        private String tab = "";
         public AdminForm(Login loginPage)
         {
             InitializeComponent();
@@ -50,6 +51,7 @@ namespace PetDB
 
         private void registarToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            tab = "Registar";
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
             generalBaseControls();
@@ -57,6 +59,8 @@ namespace PetDB
 
         private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            tab = "Consultar";
+            option = "";
             consultarTabControl.Visible = true;
             registarTabControl.Visible = false;
             addBtn.Visible = false;
@@ -64,6 +68,7 @@ namespace PetDB
             remBtn.Visible = false;
             okBtn.Visible = false;
             cancelBtn.Visible = false;
+            consultarVetCliTabPage_Click(sender, e);
         }
 
         private void generalBaseControls()
@@ -582,7 +587,7 @@ namespace PetDB
 
             List<Vet> vets = new List<Vet>();
 
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetVetInfo", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetVetInfo", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1175,49 +1180,152 @@ namespace PetDB
             tratamentoDescricaoText.Text = t.Descricao;
         }
 
+        private void ShowClinicVet()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+            Vet vet = new Vet();
+            vet = (Vet)listBox1.Items[currentListIndex];
+            consultarMedicosClinicaOMVText.Text = vet.NumOMV;
+            consultarMedicosClinicaTelefoneText.Text = vet.Telefone;
+            consultarMedicosClinicaEmailText.Text = vet.Email;
+            consultarMedicosClinicaEspecialidadeText.Text = vet.Especialidade;
+        }
+
+        private void ShowOwnerPets()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+            Pet pet = new Pet();
+            pet = (Pet)listBox1.Items[currentListIndex];
+            consultarAnimaisDonoNumero.Text = pet.Numero;
+            consultarAnimaisDonoSexoText.Text = pet.Sexo;
+            consultarAnimaisDonoPesoText.Text = pet.Peso;
+            consultarAnimaisDonoDataNascimentoText.Text = pet.DataNascimento;
+            consultarAnimaisDonoEspecieText.Text = pet.Especie;
+        }
+
+        private void ShowClinicPets()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+            Pet pet = new Pet();
+            pet = (Pet)listBox1.Items[currentListIndex];
+            consultarAnimaisClinicaNumeroText.Text = pet.Numero;
+            consultarAnimaisClinicaSexoText.Text = pet.Sexo;
+            consultarAnimaisClinicaPesoText.Text = pet.Peso;
+            consultarAnimaisClinicaDataNascimentoText.Text = pet.DataNascimento;
+            consultarAnimaisClinicaEspecieText.Text = pet.Especie;
+            consultarAnimaisClinicaDonoText.Text = pet.Dono;
+        }
+
+        private void ShowPetAppointments()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+            Appointment ap = new Appointment();
+            ap = (Appointment)listBox1.Items[currentListIndex];
+            consultarConsultasAnimalIdText.Text = ap.Id;
+            consultarConsultasAnimalMedicoText.Text = ap.Medico;
+        }
+
+        private void ShowVetAppointments()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+            Appointment ap = new Appointment();
+            ap = (Appointment)listBox1.Items[currentListIndex];
+            consultarConsultasMedicoIdText.Text = ap.Id;
+            consultarConsultasMedicoAnimalText.Text = ap.Animal;
+        }
+
+        private void ShowPetPrescriptions()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+
+            Prescription prescription = new Prescription();
+            prescription = (Prescription)listBox1.Items[currentListIndex];
+            consultarPrescricaoAnimalNumeroText.Text = prescription.Numero;
+            consultarPrescricaoAnimalMedicoText.Text = prescription.Medico;
+        }
+
+        private void ShowOwnerPayments()
+        {
+            if (listBox1.Items.Count == 0 || currentListIndex < 0)
+                return;
+            Payment payment = new Payment();
+            payment = (Payment)listBox1.Items[currentListIndex];
+            consultarPagamentosDonoNumeroText.Text = payment.Id;
+            consultarPagamentosDonoValorText.Text = payment.Valor;
+            consultarPagamentosDonoEstadoText.Text = payment.Estado;
+            consultarPagamentosDonoMetodoText.Text = payment.Metodo;
+        }
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex >= 0)
             {
                 currentListIndex = listBox1.SelectedIndex;
-                switch (entity)
+                switch ((entity, tab))
                 {
-                    case "Clinica":
-                        ShowClinicaVeterinaria();
-                        break;
-                    case "Medico":
+                    case ("Clinica", "Registar"):
                         ShowVet();
                         break;
-                    case "Dono":
+                    case ("Medico", "Registar"):
+                        ShowVet();
+                        break;
+                    case ("Dono", "Registar"):
                         ShowOwner();
                         break;
-                    case "Animal":
+                    case ("Animal", "Registar"):
                         ShowPet();
                         break;
-                    case "Medicamento":
+                    case ("Medicamento", "Registar"):
                         ShowMed();
                         break;
-                    case "Consulta":
+                    case ("Consulta", "Registar"):
                         ShowConsulta();
                         break;
-                    case "Pagamento":
+                    case ("Pagamento", "Registar"):
                         ShowPayment();
                         break;
-                    case "Prescricao":
+                    case ("Prescricao", "Registar"):
                         ShowPrescription();
                         break;
-                    case "Especialidade":
+                    case ("Especialidade", "Registar"):
                         ShowEspecialidade();
                         break;
-                    case "Especie":
+                    case ("Especie", "Registar"):
                         ShowEspecie();
                         break;
-                    case "MetodoPagamento":
+                    case ("MetodoPagamento", "Registar"):
                         ShowMetodoPagamento();
                         break;
-                    case "Tratamento":
+                    case ("Tratamento", "Registar"):
                         ShowTratamento();
                         break;
+                    case ("Medico", "Consultar"):
+                        ShowClinicVet();
+                        break;
+                    case ("AnimalDono", "Consultar"):
+                        ShowOwnerPets();
+                        break;
+                    case ("AnimalClinica", "Consultar"):
+                        ShowClinicPets();
+                        break;
+                    case ("ConsultaAnimal", "Consultar"):
+                        ShowPetAppointments();
+                        break;
+                    case ("ConsultaMedico", "Consultar"):
+                        ShowVetAppointments();
+                        break;
+                    case ("PrescricaoAnimal", "Consultar"):
+                        ShowPetPrescriptions();
+                        break;
+                    case ("PagamentoDono", "Consultar"):
+                        ShowOwnerPayments();
+                        break; 
                     default:
                         break;
                 }
@@ -1254,28 +1362,28 @@ namespace PetDB
             cn.Close();
         }
 
-        private void LoadClinicasComboBox()
+        private void LoadClinicasComboBox(ComboBox cb, TextBox clinicName)
         {
             if (!verifySGBDConnection())
                 return;
 
-            medicoClinicaComboBox.Items.Clear();
+            cb.Items.Clear();
 
             List<CliVet> clinicas = GetClinicasVeterinarias();
 
             foreach (var CV in clinicas)
             {
-                medicoClinicaComboBox.Items.Add(CV);
+                cb.Items.Add(CV);
             }
 
             if (option == "Edit")
             {
-                for (int i = 0; i < medicoClinicaComboBox.Items.Count; i++)
+                for (int i = 0; i < cb.Items.Count; i++)
                 {
-                    CliVet c = (CliVet)medicoClinicaComboBox.Items[i];
-                    if (c.Nome == medicoClinicaText.Text)
+                    CliVet c = (CliVet)cb.Items[i];
+                    if (c.Nome == clinicName.Text)
                     {
-                        medicoClinicaComboBox.SelectedIndex = i;
+                        cb.SelectedIndex = i;
                         break;
                     }
                 }
@@ -1338,28 +1446,28 @@ namespace PetDB
             cn.Close();
         }
 
-        private void LoadDonosComboBox()
+        private void LoadDonosComboBox(ComboBox cb, TextBox ownerName)
         {
             if (!verifySGBDConnection())
                 return;
 
-            animalDonoComboBox.Items.Clear();
+            cb.Items.Clear();
 
             List<Owner> owners = GetDonos();
 
             foreach (var o in owners)
             {
-                animalDonoComboBox.Items.Add(o);
+                cb.Items.Add(o);
             }
 
             if (option == "Edit")
             {
-                for (int i = 0; i < animalDonoComboBox.Items.Count; i++)
+                for (int i = 0; i < cb.Items.Count; i++)
                 {
-                    Owner o = (Owner)animalDonoComboBox.Items[i];
-                    if (o.Nome == animalDonoText.Text)
+                    Owner o = (Owner)cb.Items[i];
+                    if (o.Nome == ownerName.Text)
                     {
-                        animalDonoComboBox.SelectedIndex = i;
+                        cb.SelectedIndex = i;
                         break;
                     }
                 }
@@ -1570,7 +1678,7 @@ namespace PetDB
                 case "Medico":
                     medicoEditControls();
                     LoadEspecialidadesComboBox();
-                    LoadClinicasComboBox();
+                    LoadClinicasComboBox(medicoClinicaComboBox, medicoClinicaText);
                     break;
                 case "Dono":
                     donoEditControls();
@@ -1579,7 +1687,7 @@ namespace PetDB
                     animalEditControls();
                     LoadSexoComboBox();
                     LoadEspeciesComboBox();
-                    LoadDonosComboBox();
+                    LoadDonosComboBox(animalDonoComboBox, animalDonoText);
                     break;
                 case "Medicamento":
                     medicamentoEditControls();
@@ -1694,7 +1802,7 @@ namespace PetDB
                 case "Medico":
                     medicoAddControls();
                     LoadEspecialidadesComboBox();
-                    LoadClinicasComboBox();
+                    LoadClinicasComboBox(medicoClinicaComboBox, medicoClinicaText);
                     break;
                 case "Dono":
                     donoAddControls();
@@ -1703,7 +1811,7 @@ namespace PetDB
                     animalAddControls();
                     LoadSexoComboBox();
                     LoadEspeciesComboBox();
-                    LoadDonosComboBox();
+                    LoadDonosComboBox(animalDonoComboBox, animalDonoText);
                     break;
                 case "Medicamento":
                     medicamentoAddControls();
@@ -2423,5 +2531,364 @@ namespace PetDB
             PopUpForm popup = new PopUpForm(uc, "Consultas");
             popup.ShowDialog();
         }
+
+
+
+        private void consultarVetCliTabPage_Click(object sender, EventArgs e)
+        {
+            entity = "Medico";
+            listBox1.Items.Clear();
+            LoadClinicasComboBox(consultarMedicosClinicaComboBox, null);
+        }
+
+        private void consultarMedicosClinicaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            listBox1.Items.Clear();
+
+            SqlCommand cmd = new SqlCommand("SP_GetVetInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            CliVet cv = (CliVet)consultarMedicosClinicaComboBox.SelectedItem;
+            cmd.Parameters.AddWithValue("@ClinicNIF", cv.NIF);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Vet vet = new Vet();
+                vet.NumOMV = reader["NumOMV"].ToString();
+                vet.Nome = reader["Nome"].ToString();
+                vet.Telefone = reader["Telefone"].ToString();
+                vet.Email = reader["Email"].ToString();
+                vet.Especialidade = reader["Especialidade"].ToString();
+                vet.Clinica = reader["Clinica"].ToString();
+                listBox1.Items.Add(vet);
+            }
+
+            reader.Close();
+            cn.Close();
+        }
+
+        private void consultarAnimaisDonoTabPage_Click(object sender, EventArgs e)
+        {
+            entity = "AnimalDono";
+            listBox1.Items.Clear();
+            LoadDonosComboBox(consultarAnimaisDonoComboBox, null);
+        }
+
+        private void consultarAnimaisDonoComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            listBox1.Items.Clear();
+
+            Owner o = (Owner)consultarAnimaisDonoComboBox.SelectedItem;
+
+            SqlCommand cmd = new SqlCommand("SP_GetPetInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OwnerNIF", int.Parse(o.NIF));
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Pet pet = new Pet();
+                pet.Numero = reader["Numero"].ToString();
+                pet.Nome = reader["Nome"].ToString();
+                pet.DataNascimento = ((DateTime)reader["DataNascimento"]).ToString("dd/MM/yyyy");
+                pet.Sexo = reader["Sexo"].ToString();
+                pet.Peso = reader["Peso"].ToString();
+                pet.Especie = reader["Especie"].ToString();
+                pet.Dono = reader["Dono"].ToString();
+                listBox1.Items.Add(pet);
+            }
+            reader.Close();
+            cn.Close();
+        }
+
+        private void consultarAnimaisClinicaTabPage_Click(object sender, EventArgs e)
+        {
+            entity = "AnimalClinica";
+            listBox1.Items.Clear();
+            LoadClinicasComboBox(consultarAnimaisClinicaComboBox, null);
+        }
+
+
+        private void consultarAnimaisClinicaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            listBox1.Items.Clear();
+
+            CliVet cv = (CliVet)consultarAnimaisClinicaComboBox.SelectedItem;
+
+            SqlCommand cmd = new SqlCommand("SP_GetPetsByClinic", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ClinicNIF", int.Parse(cv.NIF));
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Pet pet = new Pet();
+                pet.Numero = reader["Numero"].ToString();
+                pet.Nome = reader["Nome"].ToString();
+                pet.DataNascimento = ((DateTime)reader["DataNascimento"]).ToString("dd/MM/yyyy");
+                pet.Sexo = reader["Sexo"].ToString();
+                pet.Peso = reader["Peso"].ToString();
+                pet.Especie = reader["Especie"].ToString();
+                pet.Dono = reader["Dono"].ToString();
+                listBox1.Items.Add(pet);
+            }
+            reader.Close();
+            cn.Close();
+        }
+
+        private void consultarConsultasAnimalTabPage_Click(object sender, EventArgs e)
+        {
+            entity = "ConsultaAnimal";
+            listBox1.Items.Clear();
+            LoadAnimaisComboBox(consultarConsultasAnimalComboBox, null);
+        }
+
+        private void consultarConsultasAnimalComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            listBox1.Items.Clear();
+
+            Pet p = (Pet)consultarConsultasAnimalComboBox.SelectedItem;
+
+            SqlCommand cmd = new SqlCommand("SP_GetAppointmentInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PetId", int.Parse(p.Numero));
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Appointment ap = new Appointment();
+                ap.Id = reader["Id"].ToString();
+                ap.Data = reader["Data"].ToString();
+                ap.Animal = reader["Animal"].ToString();
+                ap.Medico = reader["Medico"].ToString();
+                listBox1.Items.Add(ap);
+            }
+            reader.Close();
+            cn.Close();
+        }
+
+        private void consultarConsultasAnimalBtnVerRelatório_Click(object sender, EventArgs e)
+        {
+            int idConsulta = Int32.Parse(consultarConsultasAnimalIdText.Text);
+
+            String reportContent = getAppointmentReportById(idConsulta);
+
+            UC_ShowReport uc = new UC_ShowReport();
+            uc.setReportText(reportContent);
+            uc.SetMethod("View");
+
+            PopUpForm popup = new PopUpForm(uc, "Relatório da Consulta");
+            popup.ShowDialog();
+        }
+
+        private void consultarConsultasAnimalBtnVerTratamentos_Click(object sender, EventArgs e)
+        {
+            int idConsulta = Int32.Parse(consultarConsultasAnimalIdText.Text);
+
+            List<Treatment> treatments = getAppointmentTreatmentsById(idConsulta);
+
+            UC_ListTreatments uc = new UC_ListTreatments();
+            uc.SetMode("View");
+            uc.SetTreatments(treatments);
+
+            PopUpForm popup = new PopUpForm(uc, "Tratamentos da Consulta");
+            popup.ShowDialog();
+
+        }
+
+        private void consultarConsultasVetTabPage_Click(object sender, EventArgs e)
+        {
+            entity = "ConsultaMedico";
+            listBox1.Items.Clear();
+            LoadMedicosComboBox(consultarConsultasMedicoComboBox, null);
+        }
+
+        private void consultarConsultasMedicoComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            listBox1.Items.Clear();
+
+            Vet v = (Vet)consultarConsultasMedicoComboBox.SelectedItem;
+
+            SqlCommand cmd = new SqlCommand("SP_GetAppointmentInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@VetOMV", int.Parse(v.NumOMV));
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Appointment ap = new Appointment();
+                ap.Id = reader["Id"].ToString();
+                ap.Data = reader["Data"].ToString();
+                ap.Animal = reader["Animal"].ToString();
+                ap.Medico = reader["Medico"].ToString();
+                listBox1.Items.Add(ap);
+            }
+            reader.Close();
+            cn.Close();
+        }
+
+
+        private void consultarConsultasMedicoBtnVerRelatorio_Click(object sender, EventArgs e)
+        {
+            int idConsulta = Int32.Parse(consultarConsultasMedicoIdText.Text);
+
+            String reportContent = getAppointmentReportById(idConsulta);
+
+            UC_ShowReport uc = new UC_ShowReport();
+            uc.setReportText(reportContent);
+            uc.SetMethod("View");
+
+            PopUpForm popup = new PopUpForm(uc, "Relatório da Consulta");
+            popup.ShowDialog();
+        }
+
+        private void consultarConsultasMedicoBtnVerTratamentos_Click(object sender, EventArgs e)
+        {
+            int idConsulta = Int32.Parse(consultarConsultasMedicoIdText.Text);
+
+            List<Treatment> treatments = getAppointmentTreatmentsById(idConsulta);
+
+            UC_ListTreatments uc = new UC_ListTreatments();
+            uc.SetMode("View");
+            uc.SetTreatments(treatments);
+
+            PopUpForm popup = new PopUpForm(uc, "Tratamentos da Consulta");
+            popup.ShowDialog();
+        }
+
+        private void consultarPrescricoesAnimalTabPage_Click(object sender, EventArgs e)
+        {
+            entity = "PrescricaoAnimal";
+            listBox1.Items.Clear();
+            LoadAnimaisComboBox(consultarPrescricaoAnimalComboBox, null);
+        }
+
+        private void consultarPrescricaoAnimalComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            listBox1.Items.Clear();
+
+            Pet p = (Pet)consultarPrescricaoAnimalComboBox.SelectedItem;
+
+            SqlCommand cmd = new SqlCommand("SP_GetPrescriptionInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PetId", int.Parse(p.Numero));
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Prescription prescription = new Prescription();
+                prescription.Numero = reader["Numero"].ToString();
+                prescription.Data = ((DateTime)reader["Data"]).ToString("dd/MM/yyyy");
+                prescription.Animal = reader["Animal"].ToString();
+                prescription.Medico = reader["Medico"].ToString();
+                listBox1.Items.Add(prescription);
+            }
+            reader.Close();
+            cn.Close();
+        }
+
+        private void consultarPrescricaoAnimalBtnVerMedicamentos_Click(object sender, EventArgs e)
+        {
+            int idPrescricao = Int32.Parse(consultarPrescricaoAnimalNumeroText.Text);
+
+            List<Med> meds = getPrescriptionMedsById(idPrescricao);
+
+            UC_ListMeds uc = new UC_ListMeds();
+            uc.SetMainForm(this);
+            uc.SetMeds(meds);
+            uc.SetMethod("View");
+
+            PopUpForm popup = new PopUpForm(uc, "Medicamentos da Prescrição");
+            popup.ShowDialog();
+        }
+
+        private void consultarPagamentosDonoTabPage_Click(object sender, EventArgs e)
+        {
+            entity = "PagamentoDono";
+            listBox1.Items.Clear();
+            LoadDonosComboBox(consultarPagamentosDonoComboBox, null);
+        }
+
+        private void consultarPagamentosDonoComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            listBox1.Items.Clear();
+            Owner o = (Owner)consultarPagamentosDonoComboBox.SelectedItem;
+
+            SqlCommand cmd = new SqlCommand("SP_GetPaymentInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OwnerNIF", o.NIF);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Payment payment = new Payment();
+                payment.Id = reader["Id"].ToString();
+                payment.Valor = reader["Custo"].ToString();
+                payment.Data = reader["Data"].ToString();
+                payment.Estado = reader["Estado"].ToString();
+                payment.Metodo = reader["Metodo"].ToString();
+                payment.Animal = reader["Animal"].ToString();
+                payment.Medico = reader["Medico"].ToString();
+                listBox1.Items.Add(payment);
+            }
+
+            reader.Close();
+            cn.Close();
+        }
+
+        private void consultarTabControl_onSelectedIndexChange(object sender, EventArgs e)
+        {
+            int selectedTabIndex = consultarTabControl.SelectedIndex;
+            switch (selectedTabIndex)
+            {
+                case 0: // Medidos por Clinica
+                    consultarVetCliTabPage_Click(sender, e);
+                    break;
+                case 1: // Animais por Dono
+                    consultarAnimaisDonoTabPage_Click(sender, e);
+                    break;
+                case 2: // Animais por Clinica
+                    consultarAnimaisClinicaTabPage_Click(sender, e);
+                    break;
+                case 3: // Consultas por Animal
+                    consultarConsultasAnimalTabPage_Click(sender, e);
+                    break;
+                case 4: // Consultas por Medico
+                    consultarConsultasVetTabPage_Click(sender, e);
+                    break;
+                case 5: // Prescricao por Animal
+                    consultarPrescricoesAnimalTabPage_Click(sender, e);
+                    break;
+                case 6: // Pagamentos por Dono
+                    consultarPagamentosDonoTabPage_Click(sender, e);
+                    break;
+                default: break;
+            }
+        }
+
+
     }
 }
+
+
