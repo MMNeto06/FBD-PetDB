@@ -53,17 +53,14 @@ namespace PetDB
         {
             if (idType == "Administrador")
             {
-                idLabel.Text = "Identificação";
                 registerBtn.Enabled = false;
             }
             else if (idType == "Medico")
             {
-                idLabel.Text = "Identificação (Número OMV)";
                 registerBtn.Enabled = true;
             }
             else
             {
-                idLabel.Text = "Identificação (NIF)";
                 registerBtn.Enabled = true;
             }
             idLabel.Visible = true;
@@ -280,14 +277,14 @@ namespace PetDB
 
                         if (idType == "Clinica")
                         {
-                            ClinicaForm clinicaPage = new ClinicaForm(this, Int32.Parse(reader["NIF"].ToString()), reader["Nome"].ToString());
+                            ClinicaForm clinicaPage = new ClinicaForm(this, Int32.Parse(reader["NIF"].ToString()));
                             clinicaPage.Show();
                             this.showInitialPage();
                             this.Hide();
                         }
                         else if (idType == "Medico")
                         {
-                            MedicoForm medicoPage = new MedicoForm(this, Int32.Parse(reader["NumOmv"].ToString()), reader["Nome"].ToString());
+                            MedicoForm medicoPage = new MedicoForm(this, Int32.Parse(reader["NumOmv"].ToString()));
                             medicoPage.Show();
                             this.showInitialPage();
                             this.Hide();
