@@ -11,12 +11,17 @@ namespace PetDB
     public partial class ClinicaForm : Form
     {
         private Login loginPage;
-        public ClinicaForm(Login loginPage, int nif, string nome)
+        private int nif;
+        public ClinicaForm(Login loginPage, int nif)
         {
             InitializeComponent();
-            showNifLabel.Text = nif.ToString();
-            showNameLabel.Text = nome.ToString();
             this.loginPage = loginPage;
+            this.nif = nif;
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            loginPage.Show();
         }
 
         private void backBtn_Click(object sender, EventArgs e)

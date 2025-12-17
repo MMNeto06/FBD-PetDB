@@ -131,9 +131,9 @@
             idLabel.Font = new Font("Segoe UI", 15F);
             idLabel.Location = new Point(171, 144);
             idLabel.Name = "idLabel";
-            idLabel.Size = new Size(318, 35);
+            idLabel.Size = new Size(157, 35);
             idLabel.TabIndex = 6;
-            idLabel.Text = "Identificação (NIF ou OMV)";
+            idLabel.Text = "Identificação";
             // 
             // idTextBox
             // 
