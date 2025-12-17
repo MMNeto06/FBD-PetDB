@@ -24,6 +24,7 @@ namespace PetDB
             clinicaBaseControls();
             registarTabControl.Visible = true;
             consultarTabControl.Visible = false;
+            tab = "Registar";
             clinicaVeterinariaTab_Click(null, null);
         }
 
@@ -1270,7 +1271,7 @@ namespace PetDB
                 switch ((entity, tab))
                 {
                     case ("Clinica", "Registar"):
-                        ShowVet();
+                        ShowClinicaVeterinaria();
                         break;
                     case ("Medico", "Registar"):
                         ShowVet();
@@ -1715,23 +1716,52 @@ namespace PetDB
             }
         }
 
-        private void remBtn_Click(object sender, EventArgs e)
+        private bool ExecuteInsertSP(SqlCommand cmd)
+        {
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException e)
+            {
+                MessageBox.Show(e.Message, "Erro na Base de Dados", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private void OnInfoMessage(object sender, SqlInfoMessageEventArgs e)
+        {
+            MessageBox.Show(e.Message, "Info do SQL Server", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void DeleteTuples(String sp, int pk, String param)
         {
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("DELETE FROM PetDB_ClinicaVeterinaria WHERE NIF=" + clinicaNifText.Text, cn); // MUDAR PARA SP; ADICIONAR SWITCH CASE
-            try
+            cn.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue(param, pk);
+            cmd.Parameters.AddWithValue("@DeletedBy", "admin");
+            ExecuteInsertSP(cmd);
+
+            cn.InfoMessage -= new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            cn.Close(); 
+        }
+
+        private void remBtn_Click(object sender, EventArgs e)
+        {
+            switch (entity)
             {
-                cmd.ExecuteNonQuery();
-                System.Windows.Forms.MessageBox.Show("Clinica apagada da base de dados");
+                case "Clinica":
+                    DeleteTuples("PR_SoftDeleteClinica", int.Parse(clinicaNifText.Text), "@ClinicNIF");
+                    clinicaVeterinariaTab_Click(sender, e);
+                    break; 
             }
-            catch (Exception exception)
-            {
-                System.Windows.Forms.MessageBox.Show("Ocorreu um erro: \n" + exception);
-            }
-            cn.Close();
-            clinicaVeterinariaTab_Click(sender, e);
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
@@ -1851,19 +1881,7 @@ namespace PetDB
             }
         }
 
-        private bool ExecuteInsertSP(SqlCommand cmd)
-        {
-            try
-            {
-                cmd.ExecuteNonQuery();
-                return true;
-            }
-            catch (SqlException e)
-            {
-                MessageBox.Show(e.Message, "Erro na Base de Dados", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
+
 
         private void ClinicaTuples(String sp, String msgShow)
         {

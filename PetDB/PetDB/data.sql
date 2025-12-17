@@ -570,51 +570,6 @@ INSERT INTO PETDB_ConsultaTratamento (IdConsulta, CodigoTratamento) VALUES
 (120, 12),
 (130, 3);
 
-INSERT INTO PETDB_Vacina (CodigoVacina, Consulta, Descricao) VALUES
--- Médico 1007 (Vacinação e Imunologia)
-(1, 6, 'Vacinação antirrábica'),
-(2, 16, 'Vacinação múltipla'),
-(3, 26, 'Injeção preventiva'),
-(4, 36, 'Vacinação antirrábica'),
-(5, 46, 'Vacinação múltipla'),
-(6, 56, 'Injeção preventiva'),
-(7, 66, 'Vacinação múltipla'),
-(8, 76, 'Vacinação antirrábica'),
-(9, 86, 'Injeção preventiva'),
-(10, 96, 'Vacinação múltipla'),
-(11, 106, 'Vacinação múltipla'),
-(12, 116, 'Vacinação antirrábica'),
-
--- Médico 1006 (Parasitologia – usa vacinas múltiplas em alguns casos)
-(13, 10, 'Vacinação múltipla'),
-(14, 20, 'Vacinação múltipla'),
-(15, 30, 'Vacinação preventiva'),
-(16, 40, 'Vacina contra pulgas e carraças'),
-(17, 50, 'Vacinação múltipla'),
-(18, 60, 'Vacinação preventiva'),
-(19, 70, 'Vacinação múltipla'),
-(20, 80, 'Vacinação preventiva'),
-(21, 90, 'Vacina contra parasitas externos'),
-(22, 100, 'Vacinação múltipla'),
-(23, 110, 'Vacinação preventiva'),
-(24, 120, 'Vacinação múltipla'),
-(25, 130, 'Vacinação preventiva'),
-
--- Médico 1001 (Clínica Geral)
-(26, 1, 'Vacinação antirrábica'),
-(27, 11, 'Vacinação múltipla'),
-(28, 21, 'Injeção preventiva'),
-(29, 31, 'Vacinação antirrábica'),
-(30, 41, 'Vacinação múltipla'),
-(31, 51, 'Injeção preventiva'),
-(32, 61, 'Vacinação antirrábica'),
-(33, 71, 'Vacinação múltipla'),
-(34, 81, 'Vacinação antirrábica'),
-(35, 91, 'Injeção preventiva'),
-(36, 101, 'Vacinação antirrábica'),
-(37, 111, 'Vacinação múltipla'),
-(38, 121, 'Injeção preventiva');
-
 INSERT INTO PETDB_Relatorio (Consulta, Conteudo) VALUES
 (1, 'Consulta de clínica geral ao cão Rex por Dr. Mauro Andrade. Exame físico normal, ligeira sensibilidade abdominal sem gravidade. Recomendado reforço de desparasitação interna e vacinação anual.'),
 (2, 'Consulta de cirurgia ao gato Luna por Dr. Samuel Costa. Avaliação pré-operatória para esterilização. Animal saudável, análises basais recomendadas antes do procedimento.'),

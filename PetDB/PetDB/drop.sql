@@ -5,7 +5,6 @@ DROP TABLE PETDB_Prescricao;
 DROP TABLE PETDB_Pagamento;
 DROP TABLE PETDB_MetodoPagamento;
 DROP TABLE PETDB_Relatorio;
-DROP TABLE PETDB_Vacina;
 DROP TABLE PETDB_ConsultaTratamento;
 DROP TABLE PETDB_Tratamento;
 DROP TABLE PETDB_Consulta;

@@ -3,13 +3,19 @@ CREATE TABLE PETDB_Dono(
 	Nome varchar(64) NOT NULL, 
 	Telefone varchar(9) NOT NULL, 
 	Email varchar(64) NOT NULL, 
-	Endereco varchar(64) NOT NULL
+	Endereco varchar(64) NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL
 );
 GO
 
 CREATE TABLE PETDB_Especie(
 	Codigo int IDENTITY(1,1) PRIMARY KEY, 
-	Descricao varchar(64) NOT NULL
+	Descricao varchar(64) NOT NULL,
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL
 );
 GO
 
@@ -18,13 +24,19 @@ CREATE TABLE PETDB_ClinicaVeterinaria(
 	Nome varchar(64) NOT NULL, 
 	Telefone varchar(9) NOT NULL, 
 	Email varchar(64) NOT NULL, 
-	Endereco varchar(64) NOT NULL
+	Endereco varchar(64) NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL
 );
 GO 
 
 CREATE TABLE PETDB_Especialidade(
 	Codigo int IDENTITY(1,1) PRIMARY KEY, 
-	Descricao varchar(64) NOT NULL
+	Descricao varchar(64) NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL
 ); 
 GO
 
@@ -35,6 +47,9 @@ CREATE TABLE PETDB_MedicoVeterinario(
 	Email varchar(64) NOT NULL, 
 	Especialidade int NOT NULL, 
 	Clinica int NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL,
 	FOREIGN KEY (Especialidade) REFERENCES PETDB_Especialidade(Codigo),
 	FOREIGN KEY (Clinica) REFERENCES PETDB_ClinicaVeterinaria(NIF)
 );
@@ -48,6 +63,9 @@ CREATE TABLE PETDB_Animal(
 	Sexo char(1) NOT NULL CHECK (Sexo IN ('M', 'F')), 
 	Especie int NOT NULL, 
 	Dono int NOT NULL,
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL,
 	FOREIGN KEY (Especie) REFERENCES PETDB_Especie(Codigo), 
 	FOREIGN KEY (Dono) REFERENCES PETDB_Dono(NIF)
 );
@@ -58,6 +76,9 @@ CREATE TABLE PETDB_Consulta(
 	[Data] datetime NOT NULL, 
 	Animal int NOT NULL, 
 	Medico int NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL,
 	FOREIGN KEY (Animal) REFERENCES PETDB_Animal(Numero),
 	FOREIGN KEY (Medico) REFERENCES PETDB_MedicoVeterinario(NumOMV)
 );
@@ -65,7 +86,10 @@ GO
 
 CREATE TABLE PETDB_Tratamento(
 	Codigo int IDENTITY(1,1) PRIMARY KEY, 
-	Descricao varchar(64) NOT NULL
+	Descricao varchar(64) NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL
 );
 GO 
 
@@ -78,15 +102,6 @@ CREATE TABLE PETDB_ConsultaTratamento(
 );
 GO
 
-CREATE TABLE PETDB_Vacina(
-	CodigoVacina int,
-	Consulta int,
-	Descricao varchar(64) NOT NULL, 
-	PRIMARY KEY (CodigoVacina, Consulta), 
-	FOREIGN KEY (Consulta) REFERENCES PETDB_Consulta(Id)
-);
-GO 
-
 CREATE TABLE PETDB_Relatorio(
 	CodigoRelatorio int IDENTITY(1,1), 
 	Consulta int, 
@@ -98,7 +113,10 @@ GO
 
 CREATE TABLE PETDB_MetodoPagamento(
 	Codigo int PRIMARY KEY, 
-	Descricao varchar(64) NOT NULL
+	Descricao varchar(64) NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL
 );
 GO 
 
@@ -109,6 +127,9 @@ CREATE TABLE PETDB_Pagamento(
 	Estado varchar(8) NOT NULL CHECK (Estado IN ('Pago', 'Pendente')), 
 	MetodoPagamento int NOT NULL, 
 	Consulta int NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL, 
 	FOREIGN KEY (MetodoPagamento) REFERENCES PETDB_MetodoPagamento(Codigo),
 	FOREIGN KEY (Consulta) REFERENCES PETDB_Consulta(Id)
 ); 
@@ -118,6 +139,9 @@ CREATE TABLE PETDB_Prescricao(
 	Numero int PRIMARY KEY, 
 	[Data] date NOT NULL, 
 	Animal int NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL,
 	FOREIGN KEY (Animal) REFERENCES PETDB_Animal(Numero)
 );
 GO 
@@ -125,7 +149,10 @@ GO
 CREATE TABLE PETDB_Medicamento(
 	Codigo int PRIMARY KEY, 
 	Descricao varchar(64) NOT NULL, 
-	Dose varchar(10) NOT NULL
+	Dose varchar(10) NOT NULL, 
+	IsActive BIT NOT NULL DEFAULT 1, 
+	DeletedAt DATETIME NULL, 
+	DeletedBy VARCHAR(64) NULL
 );
 GO 
 

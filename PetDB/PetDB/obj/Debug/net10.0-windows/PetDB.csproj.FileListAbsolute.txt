@@ -147,3 +147,4 @@ C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\De
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_NewMed.resources
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\obj\Debug\net10.0-windows\PetDB.UC_NewTreatment.resources
 C:\Users\netom\Desktop\UNIVERSIDADE\2_ANO\FBD\PetDB\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\logo.jpg
+C:\Users\diosi\Documents\GitHub\FBD-PetDB\PetDB\PetDB\bin\Debug\net10.0-windows\logo.jpg
