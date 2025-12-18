@@ -1,10 +1,11 @@
 CREATE PROCEDURE SP_GetMedInfo
+	@IsActive BIT = 1
 AS 
 BEGIN
 	SET NOCOUNT ON; 
 
 	SELECT Codigo, Descricao AS Nome, Dose FROM PETDB_Medicamento
-	WHERE IsActive = 1
+	WHERE IsActive = @IsActive
 	ORDER BY Descricao;
 END
 GO
@@ -22,12 +23,13 @@ END
 GO
 
 CREATE PROCEDURE SP_GetSpecieInfo
+	@IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_Especie
-	WHERE IsActive = 1
+	WHERE IsActive = @IsActive
 	ORDER BY Descricao;
 END 
 GO
@@ -44,12 +46,13 @@ END
 GO
 
 CREATE PROCEDURE SP_GetSpecialityInfo
+	@IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_Especialidade
-	WHERE IsActive = 1
+	WHERE IsActive = @IsActive
 	ORDER BY Descricao;
 END 
 GO
@@ -80,7 +83,7 @@ END
 GO
 
 CREATE PROCEDURE SP_GetPrescriptionInfo 
-	@PetId int = NULL 
+	@PetId int = NULL, @IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -90,7 +93,7 @@ BEGIN
 	JOIN PETDB_Animal as a ON p.Animal = a.Numero
 	JOIN PETDB_PrescricaoMedico as pm ON p.Numero = pm.NumeroPrescricao
 	JOIN PETDB_MedicoVeterinario as m ON pm.NumeroOMVMedico = m.NumOMV
-	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND p.IsActive = 1 
+	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND p.IsActive = @IsActive
 	ORDER BY p.[Data] DESC;
 END 
 GO 
@@ -129,7 +132,7 @@ END
 GO
 
 CREATE PROCEDURE SP_GetPaymentInfo
-	@OwnerNIF int = NULL
+	@OwnerNIF int = NULL, @IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -140,13 +143,13 @@ BEGIN
 	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
-	WHERE (@OwnerNIF IS NULL OR a.Dono = @OwnerNIF) AND p.IsActive = 1
+	WHERE (@OwnerNIF IS NULL OR a.Dono = @OwnerNIF) AND p.IsActive = @IsActive
 	ORDER BY p.[Data] DESC;
 END 
 GO
 
 CREATE PROCEDURE SP_GetAppointmentInfo
-	@PetId int = NULL, @VetOMV int = NULL
+	@PetId int = NULL, @VetOMV int = NULL, @IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -155,7 +158,7 @@ BEGIN
 	FROM PETDB_Consulta as c
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
-	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR v.NumOMV = @VetOMV) AND c.IsActive = 1
+	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR v.NumOMV = @VetOMV) AND c.IsActive = @IsActive
 	ORDER BY c.[Data] DESC;
 END 
 GO 
@@ -188,7 +191,7 @@ END
 GO
 
 CREATE PROCEDURE SP_GetPetInfo
-	@OwnerNIF int = NULL
+	@OwnerNIF int = NULL, @IsActive BIT = 1
 AS
 BEGIN
 	SET NOCOUNT ON; 
@@ -197,20 +200,20 @@ BEGIN
 	FROM PETDB_Animal as a
 	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
 	JOIN PETDB_Dono as d ON d.NIF = a.Dono
-	WHERE (@OwnerNIF IS NULL OR d.NIF = @OwnerNIF) AND a.IsActive = 1
+	WHERE (@OwnerNIF IS NULL OR d.NIF = @OwnerNIF) AND a.IsActive = @IsActive
 	ORDER BY a.Nome;
 END
 GO
 
 
 CREATE PROCEDURE SP_GetOwnerTable
-	@OwnerNIF int = NULL
+	@OwnerNIF int = NULL, @IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_Dono
-	WHERE (@OwnerNIF IS NULL OR NIF=@OwnerNIF) AND IsActive = 1
+	WHERE (@OwnerNIF IS NULL OR NIF=@OwnerNIF) AND IsActive = @IsActive
 	ORDER BY Nome;
 END 
 GO
@@ -284,10 +287,11 @@ END
 GO
 
 CREATE PROCEDURE SP_GetPaymentMethods
+	@IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
-	SELECT * FROM PETDB_MetodoPagamento WHERE IsActive = 1; 
+	SELECT * FROM PETDB_MetodoPagamento WHERE IsActive = @IsActive; 
 END 
 GO 
 
@@ -301,10 +305,11 @@ END
 GO
 
 CREATE PROCEDURE SP_GetTreatments
+	@IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
-	SELECT * FROM PETDB_Tratamento WHERE IsActive = 1;
+	SELECT * FROM PETDB_Tratamento WHERE IsActive = @IsActive;
 END 
 GO
 

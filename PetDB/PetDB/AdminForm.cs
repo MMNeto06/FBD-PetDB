@@ -1,5 +1,6 @@
 using Microsoft.Data.SqlClient;
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -289,6 +290,8 @@ namespace PetDB
             consultaMedicoText.Visible = true;
             btnVerTratamentos.Visible = true;
             btnConsultarRelatorio.Visible = true;
+            btnVerTratamentos.Enabled = true;
+            btnConsultarRelatorio.Enabled = true;
             consultaIdText.Enabled = false;
             consultaDataText.Enabled = false;
             consultaAnimalText.Enabled = false;
@@ -392,6 +395,7 @@ namespace PetDB
             prescricaoAnimalText.Enabled = false;
             prescricaoMedicoText.Enabled = false;
             prescricaoBtnVerMedicamentos.Visible = true;
+            prescricaoBtnVerMedicamentos.Enabled = true;
             prescricaoBtnEditarMedicamentos.Visible = false;
             generalBaseControls();
         }
@@ -419,6 +423,7 @@ namespace PetDB
 
         private void especialidadeBaseControls()
         {
+            btnConsultarMedicos.Enabled = true;
             especialidadeCodigoText.Enabled = false;
             especialidadeDescricaoText.Enabled = false;
             generalBaseControls();
@@ -436,6 +441,7 @@ namespace PetDB
 
         private void especieBaseControls()
         {
+            btnConsultaAnimais.Enabled = true;
             especieCodigoText.Enabled = false;
             especieDescricaoText.Enabled = false;
             generalBaseControls();
@@ -453,6 +459,7 @@ namespace PetDB
 
         private void metodoPagamentoBaseControls()
         {
+            metodoPagamentoBtnPagamentos.Enabled = true;
             metodoPagamentoCodigoText.Enabled = false;
             metodoPagamentoDescricaoText.Enabled = false;
             generalBaseControls();
@@ -470,6 +477,7 @@ namespace PetDB
 
         private void tratamentoBaseControls()
         {
+            tratamentoBtnConsultas.Enabled = true;
             tratamentoCodigoText.Enabled = false;
             tratamentoDescricaoText.Enabled = false;
             generalBaseControls();
@@ -702,7 +710,12 @@ namespace PetDB
                 return null;
 
             List<Owner> owners = new List<Owner>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetOwnerTable", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetOwnerTable", cn);
+            cmd.CommandType = CommandType.StoredProcedure; 
+            if (tab == "Restaurar")
+            {
+                cmd.Parameters.AddWithValue("@IsActive", 0); 
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -726,6 +739,9 @@ namespace PetDB
 
             entity = "Dono";
             donoBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
+
             List<Owner> owners = GetDonos();
             listBox1.Items.Clear();
 
@@ -733,6 +749,18 @@ namespace PetDB
                 listBox1.Items.Add(owner);
 
             cn.Close();
+
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem donos inativos!");
+                donoNifText.Text = "";
+                donoNomeText.Text = "";
+                donoTelefoneText.Text = "";
+                donoEmailText.Text = "";
+                donoEnderecoText.Text = "";
+                return;
+            }
 
             currentListIndex = 0;
             ShowOwner();
@@ -744,7 +772,11 @@ namespace PetDB
                 return null;
 
             List<Pet> pets = new List<Pet>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPetInfo", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetPetInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+                cmd.Parameters.AddWithValue("@IsActive", 0); 
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -772,6 +804,9 @@ namespace PetDB
 
             entity = "Animal";
             animalBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
+
             listBox1.Items.Clear();
 
             List<Pet> pets = GetAnimais();
@@ -781,6 +816,18 @@ namespace PetDB
 
             cn.Close();
 
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem animais inativos!");
+                animalNumeroText.Text = "";
+                animalNomeText.Text = "";
+                animalSexoText.Text = "";
+                animalPesoText.Text = "";
+                animalDataNascimentoText.Text = "";
+                animalEspecieText.Text = "";
+                animalDonoText.Text = "";
+                return;
+            }
 
             currentListIndex = 0;
             ShowPet();
@@ -792,7 +839,10 @@ namespace PetDB
                 return null;
 
             List<Med> meds = new List<Med>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetMedInfo", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetMedInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+                cmd.Parameters.AddWithValue("@IsActive", 0); 
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -814,6 +864,9 @@ namespace PetDB
 
             entity = "Medicamento";
             medicamentoBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
+
             listBox1.Items.Clear();
 
             List<Med> meds = GetMeds();
@@ -822,6 +875,15 @@ namespace PetDB
                 listBox1.Items.Add(m);
 
             cn.Close();
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem medicamentos inativos!");
+                medicamentoCodigoText.Text = "";
+                medicamentoNomeText.Text = "";
+                medicamentoDoseText.Text = "";
+                return;
+            }
 
             currentListIndex = 0;
             ShowMed();
@@ -834,7 +896,10 @@ namespace PetDB
 
             List<Appointment> consultas = new List<Appointment>();
 
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetAppointmentInfo", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetAppointmentInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+                cmd.Parameters.AddWithValue("@IsActive", 0);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -859,6 +924,8 @@ namespace PetDB
 
             entity = "Consulta";
             consultaBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
             listBox1.Items.Clear();
 
             List<Appointment> consultas = GetConsultas();
@@ -867,6 +934,18 @@ namespace PetDB
                 listBox1.Items.Add(c);
 
             cn.Close();
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem consultas inativas!");
+                consultaIdText.Text = "";
+                consultaDataText.Text = "";
+                consultaAnimalText.Text = "";
+                consultaMedicoText.Text = "";
+                btnVerTratamentos.Enabled = false;
+                btnConsultarRelatorio.Enabled = false; 
+                return;
+            }
 
             currentListIndex = 0;
             ShowConsulta();
@@ -879,7 +958,15 @@ namespace PetDB
 
             entity = "Pagamento";
             pagamentoBaseControls();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPaymentInfo", cn);
+
+            SqlCommand cmd = new SqlCommand("SP_GetPaymentInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+            {
+                RestaurarControls();
+                cmd.Parameters.AddWithValue("IsActive", 0); 
+            }
+                  
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -898,6 +985,19 @@ namespace PetDB
             reader.Close();
             cn.Close();
 
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem pagamentos inativos!");
+                pagamentoIdText.Text = "";
+                pagamentoValorText.Text = "";
+                pagamentoDataText.Text = "";
+                pagamentoEstadoText.Text = "";
+                pagamentoMetodoText.Text = "";
+                pagamentoAnimalText.Text = "";
+                pagamentoMedicoText.Text = "";
+                return;
+            }
+
 
             currentListIndex = 0;
             ShowPayment();
@@ -910,7 +1010,14 @@ namespace PetDB
 
             entity = "Prescricao";
             prescricaoBaseControls();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPrescriptionInfo", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetPrescriptionInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+            {
+                RestaurarControls(); 
+                cmd.Parameters.AddWithValue("@IsActive", 0);
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -926,6 +1033,17 @@ namespace PetDB
             reader.Close();
             cn.Close();
 
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem prescrições inativas!");
+                prescricaoBtnVerMedicamentos.Enabled = false; 
+                prescricaoNumeroText.Text = "";
+                prescricaoDataText.Text = "";
+                prescricaoAnimalText.Text = "";
+                prescricaoMedicoText.Text = "";
+                return;
+            }
+
             currentListIndex = 0;
             ShowPrescription();
         }
@@ -936,7 +1054,10 @@ namespace PetDB
                 return null;
 
             List<Especialidade> especialidades = new List<Especialidade>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecialityInfo", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetSpecialityInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+                cmd.Parameters.AddWithValue("@IsActive", 0); 
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -959,6 +1080,8 @@ namespace PetDB
 
             entity = "Especialidade";
             especialidadeBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
             List<Especialidade> especialidades = GetEspecialidades();
 
             listBox1.Items.Clear();
@@ -967,6 +1090,15 @@ namespace PetDB
                 listBox1.Items.Add(especialidade);
 
             cn.Close();
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem especialidades inativas!");
+                btnConsultarMedicos.Enabled = false; 
+                especialidadeCodigoText.Text = "";
+                especialidadeDescricaoText.Text = "";
+                return;
+            }
 
             currentListIndex = 0;
             ShowEspecialidade();
@@ -978,7 +1110,10 @@ namespace PetDB
                 return null;
 
             List<Especie> especies = new List<Especie>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecieInfo", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetSpecieInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+                cmd.Parameters.AddWithValue("@IsActive", 0); 
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -999,6 +1134,8 @@ namespace PetDB
 
             entity = "Especie";
             especieBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
             List<Especie> especies = GetEspecies();
 
             listBox1.Items.Clear();
@@ -1007,6 +1144,15 @@ namespace PetDB
                 listBox1.Items.Add(especie);
 
             cn.Close();
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem especialidades inativas!");
+                btnConsultaAnimais.Enabled = false;
+                especieCodigoText.Text = "";
+                especieDescricaoText.Text = "";
+                return;
+            }
 
             currentListIndex = 0;
             ShowEspecie();
@@ -1018,7 +1164,12 @@ namespace PetDB
                 return null;
 
             List<PaymentMethod> methods = new List<PaymentMethod>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPaymentMethods", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetPaymentMethods", cn);
+            cmd.CommandType = CommandType.StoredProcedure; 
+            if (tab == "Restaurar")
+            {
+                cmd.Parameters.AddWithValue("@IsActive", 0); 
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1042,6 +1193,8 @@ namespace PetDB
 
             entity = "MetodoPagamento";
             metodoPagamentoBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
             List<PaymentMethod> methods = GetMetodosPagamento();
 
             listBox1.Items.Clear();
@@ -1050,6 +1203,15 @@ namespace PetDB
                 listBox1.Items.Add(method);
 
             cn.Close();
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem métodos de pagamento inativos!");
+                metodoPagamentoBtnPagamentos.Enabled = false;
+                metodoPagamentoCodigoText.Text = "";
+                metodoPagamentoDescricaoText.Text = "";
+                return;
+            }
 
             currentListIndex = 0;
             ShowMetodoPagamento();
@@ -1061,7 +1223,10 @@ namespace PetDB
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetTreatments", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetTreatments", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+                cmd.Parameters.AddWithValue("@IsActive", 0); 
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1084,6 +1249,9 @@ namespace PetDB
 
             entity = "Tratamento";
             tratamentoBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls();
+
             List<Treatment> treatments = GetTreatments();
 
             listBox1.Items.Clear();
@@ -1092,6 +1260,15 @@ namespace PetDB
                 listBox1.Items.Add(t);
 
             cn.Close();
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem tratamentos inativos!");
+                tratamentoBtnConsultas.Enabled = false; 
+                tratamentoCodigoText.Text = "";
+                tratamentoDescricaoText.Text = "";
+                return;
+            }
 
             currentListIndex = 0;
             ShowTratamento();
@@ -3049,6 +3226,47 @@ namespace PetDB
                     RestaurarTuplos("PR_RestoreMedicoVeterinario", int.Parse(medicoOMVText.Text), "@NumOMV");
                     medicoVeterinarioTab_Click(sender, e);
                     break;
+                case "Dono":
+                    RestaurarTuplos("PR_RestoreDono", int.Parse(donoNifText.Text), "@DonoNIF");
+                    donoTab_Click(sender, e);
+                    break;
+                case "Animal":
+                    RestaurarTuplos("PR_RestoreAnimal", int.Parse(animalNumeroText.Text), "@AnimalNumero");
+                    animalTab_Click(sender, e);
+                    break;
+                case "Medicamento":
+                    RestaurarTuplos("PR_RestoreMedicamento", int.Parse(medicamentoCodigoText.Text), "@MedicamentoCodigo");
+                    medTab_Click(sender, e);
+                    break;
+                case "Consulta":
+                    RestaurarTuplos("PR_RestoreConsulta", int.Parse(consultaIdText.Text), "@ConsultaId");
+                    consultaTab_Click(sender, e);
+                    break;
+                case "Pagamento":
+                    RestaurarTuplos("PR_RestorePagamento", int.Parse(pagamentoIdText.Text), "@PagamentoId");
+                    pagamentoTab_Click(sender, e);
+                    break;
+                case "Prescricao":
+                    RestaurarTuplos("PR_RestorePrescricao", int.Parse(prescricaoNumeroText.Text), "@PrescricaoNumero");
+                    prescricaoTab_Click(sender, e);
+                    break;
+                case "Especialidade":
+                    RestaurarTuplos("PR_RestoreEspecialidade", int.Parse(especialidadeCodigoText.Text), "@EspecialidadeCodigo");
+                    especialidadeTab_Click(sender, e);
+                    break;
+                case "Especie":
+                    RestaurarTuplos("PR_RestoreEspecie", int.Parse(especieCodigoText.Text), "@EspecieCodigo");
+                    especieTab_Click(sender, e);
+                    break;
+                case "MetodoPagamento":
+                    RestaurarTuplos("PR_RestoreMetodoPagamento", int.Parse(metodoPagamentoCodigoText.Text), "@MetodoPagamentoCodigo");
+                    metodoPagamentoTab_Click(sender, e);
+                    break;
+                case "Tratamento":
+                    RestaurarTuplos("PR_RestoreTratamento", int.Parse(tratamentoCodigoText.Text), "@TratamentoCodigo");
+                    tratamentoTab_Click(sender, e);
+                    break;
+
             }
 
         }
