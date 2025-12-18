@@ -2513,8 +2513,8 @@ namespace PetDB
             Controls.Add(btnRestaurar);
             Controls.Add(listBox1);
             Controls.Add(menuStrip1);
-            Controls.Add(registarTabControl);
             Controls.Add(consultarTabControl);
+            Controls.Add(registarTabControl);
             MainMenuStrip = menuStrip1;
             Margin = new Padding(2);
             Name = "AdminForm";
@@ -2575,12 +2575,11 @@ namespace PetDB
         #endregion
         private MenuStrip menuStrip1;
         private ToolStripMenuItem registarToolStripMenuItem;
-        private ListBox listBox1;
-        private Button addBtn;
-        private Button editBtn;
-        private Button remBtn;
-        private Button okBtn;
-        private Button cancelBtn;
+        protected Button addBtn;
+        protected Button editBtn;
+        protected Button remBtn;
+        protected Button okBtn;
+        protected Button cancelBtn;
         private Label clinicaNomeLabel;
         private TextBox clinicaNomeText;
         private ToolStripMenuItem consultarToolStripMenuItem;
@@ -2589,8 +2588,6 @@ namespace PetDB
         private TextBox clinicaTelefoneText;
         private Label clinicaEmailLabel;
         private TextBox clinicaEmailText;
-        private TabControl registarTabControl;
-        private TabPage clinicaTabPage;
         private TabPage medicoTabPage;
         private Label clinicaEnderecoLabel;
         private TextBox clinicaEnderecoText;
@@ -2690,7 +2687,6 @@ namespace PetDB
         private Label especieCodigoLabel;
         private ComboBox medicoClinicaComboBox;
         private ComboBox medicoEspecialidadeComboBox;
-        private TabControl consultarTabControl;
         private TabPage consultarVetCliTabPage;
         private TabPage consultarAnimaisDonoTabPage;
         private TabPage consultarAnimaisClinicaTabPage;
@@ -2800,6 +2796,10 @@ namespace PetDB
         private Label label31;
         private TextBox consultarPagamentosDonoValorText;
         private ToolStripMenuItem restaurarToolStripMenuItem;
-        private Button btnRestaurar;
+        protected Button btnRestaurar;
+        protected TabControl registarTabControl;
+        protected TabPage clinicaTabPage;
+        protected TabControl consultarTabControl;
+        protected ListBox listBox1;
     }
 }

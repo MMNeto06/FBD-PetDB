@@ -14,17 +14,22 @@ namespace PetDB
     {
         private SqlConnection cn;
         private int currentListIndex;
-        private Login loginPage;
+        protected Login loginPage;
         private String option = "";
         private String entity = "";
         private String tab = "";
-        public AdminForm(Login loginPage)
+
+        public AdminForm()
         {
             InitializeComponent();
+        }
+
+        public AdminForm(Login loginPage) : this()
+        {
             this.loginPage = loginPage;
-            clinicaBaseControls();
             registarTabControl.Visible = true;
             consultarTabControl.Visible = false;
+            clinicaBaseControls();
             registarToolStripMenuItem_Click(null, null);
         }
 
@@ -50,14 +55,19 @@ namespace PetDB
             return cn.State == ConnectionState.Open;
         }
 
-        private void registarToolStripMenuItem_Click(object sender, EventArgs e)
+        protected virtual void SelecionarRegistarAbaInicial(object sender, EventArgs e)
+        {
+            clinicaVeterinariaTab_Click(sender, e);
+        }
+
+        protected void registarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tab = "Registar";
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
             generalBaseControls();
-            registarTabControl.SelectedIndex = 0; 
-            clinicaVeterinariaTab_Click(sender, e);
+            registarTabControl.SelectedIndex = 0;
+            SelecionarRegistarAbaInicial(sender, e); 
         }
 
         private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -75,7 +85,7 @@ namespace PetDB
             consultarVetCliTabPage_Click(sender, e);
         }
 
-        private void RestaurarControls()
+        protected void RestaurarControls()
         {
             addBtn.Visible = false;
             editBtn.Visible = false;
@@ -101,7 +111,7 @@ namespace PetDB
             clinicaVeterinariaTab_Click(sender, e);
         }
 
-        private void generalBaseControls()
+        protected void generalBaseControls()
         {
             addBtn.Visible = true;
             editBtn.Visible = true;
@@ -111,7 +121,7 @@ namespace PetDB
             btnRestaurar.Visible = false;
         }
 
-        private void generalEditControls()
+        protected void generalEditControls()
         {
             addBtn.Visible = false;
             editBtn.Visible = false;
@@ -150,7 +160,7 @@ namespace PetDB
             clinicaEnderecoText.Text = "";
         }
 
-        private void medicoBaseControls()
+        protected void medicoBaseControls()
         {
             medicoOMVText.Enabled = false;
             medicoNomeText.Enabled = false;
@@ -164,7 +174,7 @@ namespace PetDB
             generalBaseControls();
         }
 
-        private void medicoEditControls()
+        protected void medicoEditControls()
         {
             medicoNomeText.Enabled = true;
             medicoTelefoneText.Enabled = true;
@@ -176,7 +186,7 @@ namespace PetDB
             generalEditControls();
         }
 
-        private void medicoAddControls()
+        protected void medicoAddControls()
         {
             medicoEditControls();
             medicoOMVText.Enabled = true;
@@ -637,7 +647,7 @@ namespace PetDB
             ShowClinicaVeterinaria();
         }
 
-        private List<Vet> GetMedicos()
+        protected virtual List<Vet> GetMedicos()
         {
             if (!verifySGBDConnection())
                 return null;
@@ -669,7 +679,7 @@ namespace PetDB
             return vets;
         }
 
-        private void medicoVeterinarioTab_Click(object sender, EventArgs e)
+        protected void medicoVeterinarioTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -2495,7 +2505,7 @@ namespace PetDB
             }
         }
 
-        private void registarTabControl_onSelectedIndexChange(object sender, EventArgs e)
+        protected virtual void registarTabControl_onSelectedIndexChange(object sender, EventArgs e)
         {
             int selectedTabIndex = registarTabControl.SelectedIndex;
             switch (selectedTabIndex)

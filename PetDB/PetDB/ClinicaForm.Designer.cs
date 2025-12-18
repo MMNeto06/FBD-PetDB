@@ -28,91 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            menuStrip1 = new MenuStrip();
             toolStripMenuItem1 = new ToolStripMenuItem();
-            outrasOpçõesToolStripMenuItem = new ToolStripMenuItem();
-            label1 = new Label();
-            showNifLabel = new Label();
-            showNameLabel = new Label();
-            menuStrip1.SuspendLayout();
+            registarTabControl.SuspendLayout();
             SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, outrasOpçõesToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 28);
-            menuStrip1.TabIndex = 0;
-            menuStrip1.Text = "menuStrip1";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(39, 24);
+            toolStripMenuItem1.Size = new Size(32, 20);
             toolStripMenuItem1.Text = "<-";
             toolStripMenuItem1.Click += backBtn_Click;
             // 
-            // outrasOpçõesToolStripMenuItem
-            // 
-            outrasOpçõesToolStripMenuItem.Name = "outrasOpçõesToolStripMenuItem";
-            outrasOpçõesToolStripMenuItem.Size = new Size(118, 24);
-            outrasOpçõesToolStripMenuItem.Text = "Outras opções";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 20F);
-            label1.Location = new Point(52, 180);
-            label1.Name = "label1";
-            label1.Size = new Size(705, 46);
-            label1.TabIndex = 1;
-            label1.Text = "Esta página da Clinica está sobre construção :)";
-            // 
-            // showNifLabel
-            // 
-            showNifLabel.AutoSize = true;
-            showNifLabel.Location = new Point(219, 259);
-            showNifLabel.Name = "showNifLabel";
-            showNifLabel.Size = new Size(177, 20);
-            showNifLabel.TabIndex = 2;
-            showNifLabel.Text = "Nif para ver que funciona";
-            // 
-            // showNameLabel
-            // 
-            showNameLabel.AutoSize = true;
-            showNameLabel.Location = new Point(252, 310);
-            showNameLabel.Name = "showNameLabel";
-            showNameLabel.Size = new Size(198, 20);
-            showNameLabel.TabIndex = 3;
-            showNameLabel.Text = "Nome para ver que funciona";
-            // 
             // ClinicaForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(showNameLabel);
-            Controls.Add(showNifLabel);
-            Controls.Add(label1);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
+            ClientSize = new Size(676, 313);
             Name = "ClinicaForm";
             Text = "ClinicaForm";
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
+            registarTabControl.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private MenuStrip menuStrip1;
         private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem outrasOpçõesToolStripMenuItem;
-        private Label label1;
-        private Label showNifLabel;
-        private Label showNameLabel;
     }
 }
