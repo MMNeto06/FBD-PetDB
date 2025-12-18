@@ -112,7 +112,7 @@ CREATE TABLE PETDB_Relatorio(
 GO 
 
 CREATE TABLE PETDB_MetodoPagamento(
-	Codigo int PRIMARY KEY, 
+	Codigo int IDENTITY(1,1) PRIMARY KEY, 
 	Descricao varchar(64) NOT NULL, 
 	IsActive BIT NOT NULL DEFAULT 1, 
 	DeletedAt DATETIME NULL, 

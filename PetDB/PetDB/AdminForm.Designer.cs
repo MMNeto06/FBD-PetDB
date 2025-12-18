@@ -33,6 +33,7 @@ namespace PetDB
             backBtnToolStripMenuItem = new ToolStripMenuItem();
             registarToolStripMenuItem = new ToolStripMenuItem();
             consultarToolStripMenuItem = new ToolStripMenuItem();
+            restaurarToolStripMenuItem = new ToolStripMenuItem();
             listBox1 = new ListBox();
             addBtn = new Button();
             editBtn = new Button();
@@ -254,6 +255,7 @@ namespace PetDB
             consultarPagamentosDonoNumeroText = new TextBox();
             label29 = new Label();
             consultarPagamentosDonoComboBox = new ComboBox();
+            btnRestaurar = new Button();
             menuStrip1.SuspendLayout();
             registarTabControl.SuspendLayout();
             clinicaTabPage.SuspendLayout();
@@ -281,7 +283,7 @@ namespace PetDB
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { backBtnToolStripMenuItem, registarToolStripMenuItem, consultarToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { backBtnToolStripMenuItem, registarToolStripMenuItem, consultarToolStripMenuItem, restaurarToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
@@ -309,6 +311,13 @@ namespace PetDB
             consultarToolStripMenuItem.Size = new Size(70, 20);
             consultarToolStripMenuItem.Text = "Consultar";
             consultarToolStripMenuItem.Click += consultarToolStripMenuItem_Click;
+            // 
+            // restaurarToolStripMenuItem
+            // 
+            restaurarToolStripMenuItem.Name = "restaurarToolStripMenuItem";
+            restaurarToolStripMenuItem.Size = new Size(68, 20);
+            restaurarToolStripMenuItem.Text = "Restaurar";
+            restaurarToolStripMenuItem.Click += restaurarToolStripMenuItem_Click;
             // 
             // listBox1
             // 
@@ -2481,6 +2490,16 @@ namespace PetDB
             consultarPagamentosDonoComboBox.TabIndex = 47;
             consultarPagamentosDonoComboBox.SelectedIndexChanged += consultarPagamentosDonoComboBox_SelectedIndexChanged;
             // 
+            // btnRestaurar
+            // 
+            btnRestaurar.Location = new Point(422, 282);
+            btnRestaurar.Name = "btnRestaurar";
+            btnRestaurar.Size = new Size(75, 23);
+            btnRestaurar.TabIndex = 22;
+            btnRestaurar.Text = "Restaurar";
+            btnRestaurar.UseVisualStyleBackColor = true;
+            btnRestaurar.Click += btnRestaurar_Click;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -2489,12 +2508,13 @@ namespace PetDB
             Controls.Add(cancelBtn);
             Controls.Add(okBtn);
             Controls.Add(remBtn);
-            Controls.Add(editBtn);
             Controls.Add(addBtn);
+            Controls.Add(editBtn);
+            Controls.Add(btnRestaurar);
             Controls.Add(listBox1);
             Controls.Add(menuStrip1);
-            Controls.Add(consultarTabControl);
             Controls.Add(registarTabControl);
+            Controls.Add(consultarTabControl);
             MainMenuStrip = menuStrip1;
             Margin = new Padding(2);
             Name = "AdminForm";
@@ -2779,5 +2799,7 @@ namespace PetDB
         private Label label30;
         private Label label31;
         private TextBox consultarPagamentosDonoValorText;
+        private ToolStripMenuItem restaurarToolStripMenuItem;
+        private Button btnRestaurar;
     }
 }

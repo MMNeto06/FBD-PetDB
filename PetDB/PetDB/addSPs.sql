@@ -497,7 +497,7 @@ CREATE PROCEDURE SP_AddPaymentMethod
 	@MethodDescription varchar(64)
 AS 
 BEGIN 
-	SET NOCOUNT ON ; 
+	SET NOCOUNT ON; 
 
 	IF LEN(@MethodDescription) <= 0 
 	BEGIN 
@@ -507,6 +507,28 @@ BEGIN
 	BEGIN TRY
 		BEGIN TRANSACTION SCHEDULEINSERT
 			INSERT INTO PETDB_MetodoPagamento(Descricao) VALUES (@MethodDescription); 
+		COMMIT TRANSACTION SCHEDULEINSERT
+	END TRY
+	BEGIN CATCH 
+		ROLLBACK TRANSACTION SCHEDULEINSERT
+	END CATCH 
+END 
+GO
+
+CREATE PROCEDURE SP_AddTreatment
+	@TreatmentDescription varchar(64)
+AS 
+BEGIN 
+	SET NOCOUNT ON; 
+
+	IF LEN(@TreatmentDescription) <= 0 
+	BEGIN 
+		RAISERROR('Descrição do Tratamento tem um tamanho inválido!', 16, 1); 
+	END
+
+	BEGIN TRY
+		BEGIN TRANSACTION SCHEDULEINSERT
+			INSERT INTO PETDB_Tratamento(Descricao) VALUES (@TreatmentDescription); 
 		COMMIT TRANSACTION SCHEDULEINSERT
 	END TRY
 	BEGIN CATCH 

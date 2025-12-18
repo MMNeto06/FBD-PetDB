@@ -161,18 +161,19 @@ END
 GO 
 
 CREATE PROCEDURE SP_GetClinicTable
+	@IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
 
 	SELECT * FROM PETDB_ClinicaVeterinaria
-	WHERE IsActive = 1
+	WHERE IsActive = @IsActive
 	ORDER BY Nome;
 END
 GO
 
 CREATE PROCEDURE SP_GetVetInfo
-	@ClinicNIF int = NULL 
+	@ClinicNIF int = NULL, @IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -181,7 +182,7 @@ BEGIN
 	FROM PETDB_MedicoVeterinario as v
 	JOIN PETDB_Especialidade as e ON v.Especialidade = e.Codigo
 	JOIN PETDB_ClinicaVeterinaria as c ON v.Clinica = c.NIF
-	WHERE (@ClinicNIF IS NULL OR c.NIF = @ClinicNIF) AND v.IsActive = 1
+	WHERE (@ClinicNIF IS NULL OR c.NIF = @ClinicNIF) AND v.IsActive = @IsActive
 	ORDER BY v.Nome;
 END
 GO

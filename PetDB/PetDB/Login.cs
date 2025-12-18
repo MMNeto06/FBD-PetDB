@@ -267,7 +267,9 @@ namespace PetDB
                     }
                     else
                     {
-                        cmd = new SqlCommand("EXEC SP_GetOwnerByNIF " + id, cn);
+                        cmd = new SqlCommand("SP_GetOwnerTable", cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@OwnerNIF", id);
                     }
 
                     SqlDataReader reader = cmd.ExecuteReader();

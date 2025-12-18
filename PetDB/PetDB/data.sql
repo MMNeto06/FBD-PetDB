@@ -702,12 +702,12 @@ INSERT INTO PETDB_Relatorio (Consulta, Conteudo) VALUES
 (129, 'Consulta de nutrição ao papagaio Loro por Dra. Melissa Varela. Ajustes dietéticos recomendados para melhorar consumo de frutas e sementes.'),
 (130, 'Consulta de vacinação ao furão Furby por Dr. Bruno Torres. Vacinação anual completada sem intercorrências.');
 
-INSERT INTO PETDB_MetodoPagamento (Codigo, Descricao) VALUES
-(1, 'Dinheiro'),
-(2, 'Cartão de Crédito'),
-(3, 'Cartão de Débito'),
-(4, 'Transferência Bancária'),
-(5, 'MB Way'); 
+INSERT INTO PETDB_MetodoPagamento (Descricao) VALUES
+('Dinheiro'),
+('Cartão de Crédito'),
+('Cartão de Débito'),
+('Transferência Bancária'),
+('MB Way'); 
 
 INSERT INTO PETDB_Pagamento ([Data], Custo, Estado, MetodoPagamento, Consulta) VALUES
 ('2018-01-12 10:15:00', 50.0, 'Pago', 2, 1),

@@ -24,8 +24,7 @@ namespace PetDB
             clinicaBaseControls();
             registarTabControl.Visible = true;
             consultarTabControl.Visible = false;
-            tab = "Registar";
-            clinicaVeterinariaTab_Click(null, null);
+            registarToolStripMenuItem_Click(null, null);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -56,6 +55,8 @@ namespace PetDB
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
             generalBaseControls();
+            registarTabControl.SelectedIndex = 0; 
+            clinicaVeterinariaTab_Click(sender, e);
         }
 
         private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,7 +70,34 @@ namespace PetDB
             remBtn.Visible = false;
             okBtn.Visible = false;
             cancelBtn.Visible = false;
+            btnRestaurar.Visible = false;
             consultarVetCliTabPage_Click(sender, e);
+        }
+
+        private void RestaurarControls()
+        {
+            addBtn.Visible = false;
+            editBtn.Visible = false;
+            remBtn.Visible = false;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
+            btnRestaurar.Visible = true;
+        }
+
+        private void restaurarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tab = "Restaurar";
+            option = "";
+            addBtn.Visible = false;
+            editBtn.Visible = false;
+            remBtn.Visible = false;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
+            btnRestaurar.Visible = true;
+            consultarTabControl.Visible = false;
+            registarTabControl.Visible = true;
+            registarTabControl.SelectedIndex = 0; 
+            clinicaVeterinariaTab_Click(sender, e);
         }
 
         private void generalBaseControls()
@@ -79,6 +107,7 @@ namespace PetDB
             remBtn.Visible = true;
             okBtn.Visible = false;
             cancelBtn.Visible = false;
+            btnRestaurar.Visible = false;
         }
 
         private void generalEditControls()
@@ -539,7 +568,13 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetClinicTable", cn);
+            SqlCommand cmd = new SqlCommand("SP_GetClinicTable", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+            {
+                cmd.Parameters.AddWithValue("@IsActive", 0);
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -565,6 +600,8 @@ namespace PetDB
 
             entity = "Clinica";
             clinicaBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
 
             listBox1.Items.Clear();
 
@@ -576,6 +613,17 @@ namespace PetDB
             }
 
             cn.Close();
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem clínicas inativas!");
+                clinicaNifText.Text = "";
+                clinicaNomeText.Text = "";
+                clinicaTelefoneText.Text = "";
+                clinicaEmailText.Text = "";
+                clinicaEnderecoText.Text = "";
+                return; 
+            }
 
             currentListIndex = 0;
             ShowClinicaVeterinaria();
@@ -589,6 +637,11 @@ namespace PetDB
             List<Vet> vets = new List<Vet>();
 
             SqlCommand cmd = new SqlCommand("SP_GetVetInfo", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (tab == "Restaurar")
+            {
+                cmd.Parameters.AddWithValue("@IsActive", 0);
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -615,6 +668,9 @@ namespace PetDB
 
             entity = "Medico";
             medicoBaseControls();
+            if (tab == "Restaurar")
+                RestaurarControls(); 
+
             listBox1.Items.Clear();
 
             List<Vet> vets = GetMedicos();
@@ -623,6 +679,18 @@ namespace PetDB
                 listBox1.Items.Add(v);
 
             cn.Close();
+
+            if (listBox1.Items.Count <= 0)
+            {
+                listBox1.Items.Add("Não existem médicos inativos!");
+                medicoOMVText.Text = "";
+                medicoNomeText.Text = "";
+                medicoTelefoneText.Text = "";
+                medicoEmailText.Text = "";
+                medicoEspecialidadeText.Text = "";
+                medicoClinicaText.Text = "";
+                return;
+            }
 
             currentListIndex = 0;
             ShowVet();
@@ -1326,7 +1394,7 @@ namespace PetDB
                         break;
                     case ("PagamentoDono", "Consultar"):
                         ShowOwnerPayments();
-                        break; 
+                        break;
                     default:
                         break;
                 }
@@ -1750,7 +1818,7 @@ namespace PetDB
 
             cn.InfoMessage -= new SqlInfoMessageEventHandler(OnInfoMessage);
 
-            cn.Close(); 
+            cn.Close();
         }
 
         private void remBtn_Click(object sender, EventArgs e)
@@ -1760,7 +1828,51 @@ namespace PetDB
                 case "Clinica":
                     DeleteTuples("PR_SoftDeleteClinica", int.Parse(clinicaNifText.Text), "@ClinicNIF");
                     clinicaVeterinariaTab_Click(sender, e);
-                    break; 
+                    break;
+                case "Medico":
+                    DeleteTuples("PR_SoftDeleteMedicoVeterinario", int.Parse(medicoOMVText.Text), "@NumOMV");
+                    medicoVeterinarioTab_Click(sender, e);
+                    break;
+                case "Dono":
+                    DeleteTuples("PR_SoftDeleteDono", int.Parse(donoNifText.Text), "@NIF");
+                    donoTab_Click(sender, e);
+                    break;
+                case "Animal":
+                    DeleteTuples("PR_SoftDeleteAnimal", int.Parse(animalNumeroText.Text), "@Numero");
+                    animalTab_Click(sender, e);
+                    break;
+                case "Medicamento":
+                    DeleteTuples("PR_SoftDeleteMedicamento", int.Parse(medicamentoCodigoText.Text), "@Codigo");
+                    medTab_Click(sender, e);
+                    break;
+                case "Consulta":
+                    DeleteTuples("PR_SoftDeleteConsulta", int.Parse(consultaIdText.Text), "@ConsultaId");
+                    consultaTab_Click(sender, e);
+                    break;
+                case "Pagamento":
+                    DeleteTuples("PR_SoftDeletePagamento", int.Parse(pagamentoIdText.Text), "@PagamentoId");
+                    consultaTab_Click(sender, e);
+                    break;
+                case "Prescricao":
+                    DeleteTuples("PR_SoftDeletePrescricao", int.Parse(prescricaoNumeroText.Text), "@PrescricaoNumero");
+                    prescricaoTab_Click(sender, e);
+                    break;
+                case "Especialidade":
+                    DeleteTuples("PR_SoftDeleteEspecialidade", int.Parse(especialidadeCodigoText.Text), "@EspecialidadeCodigo");
+                    especialidadeTab_Click(sender, e);
+                    break;
+                case "Especie":
+                    DeleteTuples("PR_SoftDeleteEspecie", int.Parse(especieCodigoText.Text), "@EspecieCodigo");
+                    especieTab_Click(sender, e);
+                    break;
+                case "MetodoPagamento":
+                    DeleteTuples("PR_SoftDeleteMetodoPagamento", int.Parse(metodoPagamentoCodigoText.Text), "@MetodoCodigo");
+                    metodoPagamentoTab_Click(sender, e);
+                    break;
+                case "Tratamento":
+                    DeleteTuples("PR_SoftDeleteTratamento", int.Parse(tratamentoCodigoText.Text), "@TratamentoCodigo");
+                    tratamentoTab_Click(sender, e);
+                    break;
             }
         }
 
@@ -2194,9 +2306,11 @@ namespace PetDB
                     break;
                 case ("Add", "MetodoPagamento"):
                     SimpleAddTuples("SP_AddPaymentMethod", "Método de Pagamento adicionado com sucesso!", "@MethodDescription", metodoPagamentoDescricaoText);
+                    metodoPagamentoTab_Click(sender, e);
                     break;
                 case ("Add", "Tratamento"):
                     SimpleAddTuples("SP_AddTreatment", "Tratamento adicionado com sucesso!", "@TreatmentDescription", tratamentoDescricaoText);
+                    tratamentoTab_Click(sender, e);
                     break;
                 default:
                     break;
@@ -2905,7 +3019,39 @@ namespace PetDB
             }
         }
 
+        private void RestaurarTuplos(String sp, int pk, String param)
+        {
+            if (!verifySGBDConnection())
+                return;
 
+            cn.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue(param, pk);
+            cmd.Parameters.AddWithValue("@RestoredBy", "admin");
+            ExecuteInsertSP(cmd);
+
+            cn.InfoMessage -= new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            cn.Close();
+        }
+
+        private void btnRestaurar_Click(object sender, EventArgs e)
+        {
+            switch (entity)
+            {
+                case "Clinica":
+                    RestaurarTuplos("PR_RestoreClinica", int.Parse(clinicaNifText.Text), "@ClinicNIF");
+                    clinicaVeterinariaTab_Click(sender, e);
+                    break;
+                case "Medico":
+                    RestaurarTuplos("PR_RestoreMedicoVeterinario", int.Parse(medicoOMVText.Text), "@NumOMV");
+                    medicoVeterinarioTab_Click(sender, e);
+                    break;
+            }
+
+        }
     }
 }
 
