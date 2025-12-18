@@ -83,7 +83,7 @@ END
 GO
 
 CREATE PROCEDURE SP_GetPrescriptionInfo 
-	@PetId int = NULL, @IsActive BIT = 1
+	@PetId int = NULL,@VetOMV int = NULL, @IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -93,7 +93,7 @@ BEGIN
 	JOIN PETDB_Animal as a ON p.Animal = a.Numero
 	JOIN PETDB_PrescricaoMedico as pm ON p.Numero = pm.NumeroPrescricao
 	JOIN PETDB_MedicoVeterinario as m ON pm.NumeroOMVMedico = m.NumOMV
-	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND p.IsActive = @IsActive
+	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR m.NumOMV = @VetOMV) AND p.IsActive = @IsActive
 	ORDER BY p.[Data] DESC;
 END 
 GO 
@@ -176,7 +176,7 @@ END
 GO
 
 CREATE PROCEDURE SP_GetVetInfo
-	@ClinicNIF int = NULL, @IsActive BIT = 1
+	@ClinicNIF int = NULL, @VetOMV int = NULL, @IsActive BIT = 1
 AS 
 BEGIN 
 	SET NOCOUNT ON; 
@@ -185,7 +185,7 @@ BEGIN
 	FROM PETDB_MedicoVeterinario as v
 	JOIN PETDB_Especialidade as e ON v.Especialidade = e.Codigo
 	JOIN PETDB_ClinicaVeterinaria as c ON v.Clinica = c.NIF
-	WHERE (@ClinicNIF IS NULL OR c.NIF = @ClinicNIF) AND v.IsActive = @IsActive
+	WHERE (@ClinicNIF IS NULL OR c.NIF = @ClinicNIF) AND (@VetOMV IS NULL OR v.NumOMV = @VetOMV) AND v.IsActive = @IsActive
 	ORDER BY v.Nome;
 END
 GO

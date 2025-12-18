@@ -2519,7 +2519,7 @@ namespace PetDB
             Margin = new Padding(2);
             Name = "AdminForm";
             StartPosition = FormStartPosition.Manual;
-            Text = "Form1";
+            Text = "Bem Vindo Administrador";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             registarTabControl.ResumeLayout(false);

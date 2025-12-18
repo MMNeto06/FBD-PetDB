@@ -116,7 +116,9 @@
             // 
             // logoBox
             // 
-            logoBox.ImageLocation = "C:\\Users\\netom\\Desktop\\UNIVERSIDADE\\2_ANO\\FBD\\PetDB\\FBD-PetDB\\PetDB\\PetDB\\logo.jpg";
+            logoBox.ErrorImage = Properties.Resources.logo;
+            logoBox.Image = Properties.Resources.logo;
+            logoBox.ImageLocation = "";
             logoBox.InitialImage = (Image)resources.GetObject("logoBox.InitialImage");
             logoBox.Location = new Point(495, 30);
             logoBox.Name = "logoBox";
@@ -343,6 +345,7 @@
             Controls.Add(clinicaBtn);
             Controls.Add(adminBtn);
             Controls.Add(loginText);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Login";
             Text = "Login";
             ((System.ComponentModel.ISupportInitialize)logoBox).EndInit();

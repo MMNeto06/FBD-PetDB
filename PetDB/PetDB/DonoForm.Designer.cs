@@ -256,7 +256,7 @@
             Controls.Add(cardsFlowLayoutPanel);
             MainMenuStrip = menuStrip1;
             Name = "DonoForm";
-            Text = "DonoForm";
+            Text = "Bem Vindo Dono";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();

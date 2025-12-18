@@ -7,4 +7,5 @@ DROP PROCEDURE SP_UpdateMedicine;
 DROP PROCEDURE SP_UpdateAppointment;
 DROP PROCEDURE SP_UpdatePayment;
 DROP PROCEDURE SP_UpdatePrescription;
+DROP PROCEDURE SP_UpdateReport;
 DROP PROCEDURE SP_UpdatePet;
