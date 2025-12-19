@@ -72,7 +72,8 @@ namespace PetDB
                 return;
 
             entity = "Consulta";
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetAppointmentInfoByAnimal " + _animal.Numero, cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(@PetId, NULL, DEFAULT) ORDER BY [Data] DESC", cn);
+            cmd.Parameters.AddWithValue("@PetId", _animal.Numero);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -109,7 +110,8 @@ namespace PetDB
                 return;
 
             entity = "Prescricao";
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPrescriptionsByPet " + _animal.Numero, cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionsByPet(@PetId)", cn);
+            cmd.Parameters.AddWithValue("@PetId", _animal.Numero);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -157,8 +159,7 @@ namespace PetDB
                 return null;
 
             List<String> meds = new List<String>();
-            SqlCommand cmd = new SqlCommand("SP_GetPrescriptionMedsById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionMedsById(@prescriptionID) ORDER BY Descricao", cn);
             cmd.Parameters.AddWithValue("@prescriptionID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -201,8 +202,7 @@ namespace PetDB
                 return null;
 
             List<String> treatments = new List<String>();
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentTreatmentsById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentTreatmentsById(@appointmentID) ORDER BY Descricao", cn);
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -223,8 +223,7 @@ namespace PetDB
                 return null;
 
             String reportContent = "Inválido!";
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentReportById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentReportById(@appointmentID)", cn);
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 

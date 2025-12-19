@@ -515,8 +515,8 @@ namespace PetDB
                 return null;
 
             List<Med> meds = new List<Med>();
-            SqlCommand cmd = new SqlCommand("SP_GetPrescriptionMedsById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionMedsById(@prescriptionID) ORDER BY Descricao", cn); 
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@prescriptionID", prescriptionId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -541,8 +541,8 @@ namespace PetDB
                 return null;
 
             List<String> vets = new List<String>();
-            SqlCommand cmd = new SqlCommand("SP_GetVetsBySpeciality", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetsBySpeciality(@specialityID) ORDER BY Nome", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@specialityID", especialidade);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -564,8 +564,8 @@ namespace PetDB
                 return null;
 
             List<String> animals = new List<String>();
-            SqlCommand cmd = new SqlCommand("SP_GetAnimalsBySpecie", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAnimalsBySpecie(@specieID) ORDER BY Nome", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@specieID", especie);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -586,12 +586,13 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("SP_GetClinicTable", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(@IsActive) ORDER BY Nome", cn);
+            cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             }
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -654,12 +655,13 @@ namespace PetDB
 
             List<Vet> vets = new List<Vet>();
 
-            SqlCommand cmd = new SqlCommand("SP_GetVetInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(NULL, NULL, @IsActive) ORDER BY Nome", cn);
+            cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             }
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -720,12 +722,12 @@ namespace PetDB
                 return null;
 
             List<Owner> owners = new List<Owner>();
-            SqlCommand cmd = new SqlCommand("SP_GetOwnerTable", cn);
-            cmd.CommandType = CommandType.StoredProcedure; 
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetOwnerTable(NULL, @IsActive) ORDER BY Nome", cn);
             if (tab == "Restaurar")
             {
-                cmd.Parameters.AddWithValue("@IsActive", 0); 
+                cmd.Parameters.AddWithValue("@IsActive", 0);
             }
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -782,11 +784,11 @@ namespace PetDB
                 return null;
 
             List<Pet> pets = new List<Pet>();
-            SqlCommand cmd = new SqlCommand("SP_GetPetInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(NULL, @IsActive) ORDER BY Nome", cn);
+            cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
-                cmd.Parameters.AddWithValue("@IsActive", 0); 
-
+                cmd.Parameters.AddWithValue("@IsActive", 0);
+            else cmd.Parameters.AddWithValue("IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -849,10 +851,10 @@ namespace PetDB
                 return null;
 
             List<Med> meds = new List<Med>();
-            SqlCommand cmd = new SqlCommand("SP_GetMedInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetMedInfo(@IsActive) ORDER BY Nome", cn);
             if (tab == "Restaurar")
-                cmd.Parameters.AddWithValue("@IsActive", 0); 
+                cmd.Parameters.AddWithValue("@IsActive", 0);
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -906,10 +908,11 @@ namespace PetDB
 
             List<Appointment> consultas = new List<Appointment>();
 
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(NULL, NULL, @IsActive) ORDER BY [Data] DESC", cn);
+            cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
                 cmd.Parameters.AddWithValue("@IsActive", 0);
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -969,13 +972,14 @@ namespace PetDB
             entity = "Pagamento";
             pagamentoBaseControls();
 
-            SqlCommand cmd = new SqlCommand("SP_GetPaymentInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentInfo(NULL, @IsActive) ORDER BY [Data] DESC", cn);
+            cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
                 RestaurarControls();
-                cmd.Parameters.AddWithValue("IsActive", 0); 
+                cmd.Parameters.AddWithValue("@IsActive", 0);
             }
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
                   
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
@@ -1020,13 +1024,14 @@ namespace PetDB
 
             entity = "Prescricao";
             prescricaoBaseControls();
-            SqlCommand cmd = new SqlCommand("SP_GetPrescriptionInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(NULL, NULL, @IsActive) ORDER BY [Data] DESC", cn);
+            cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
-                RestaurarControls(); 
+                RestaurarControls();
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             }
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
 
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
@@ -1064,10 +1069,11 @@ namespace PetDB
                 return null;
 
             List<Especialidade> especialidades = new List<Especialidade>();
-            SqlCommand cmd = new SqlCommand("SP_GetSpecialityInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecialityInfo(@IsActive) ORDER BY Descricao", cn);
+            cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
                 cmd.Parameters.AddWithValue("@IsActive", 0); 
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1120,10 +1126,11 @@ namespace PetDB
                 return null;
 
             List<Especie> especies = new List<Especie>();
-            SqlCommand cmd = new SqlCommand("SP_GetSpecieInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecieInfo(@IsActive) ORDER BY Descricao", cn);
+            cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
-                cmd.Parameters.AddWithValue("@IsActive", 0); 
+                cmd.Parameters.AddWithValue("@IsActive", 0);
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1174,12 +1181,12 @@ namespace PetDB
                 return null;
 
             List<PaymentMethod> methods = new List<PaymentMethod>();
-            SqlCommand cmd = new SqlCommand("SP_GetPaymentMethods", cn);
-            cmd.CommandType = CommandType.StoredProcedure; 
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentMethods(@IsActive)", cn);
             if (tab == "Restaurar")
             {
-                cmd.Parameters.AddWithValue("@IsActive", 0); 
+                cmd.Parameters.AddWithValue("@IsActive", 0);
             }
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1233,10 +1240,10 @@ namespace PetDB
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("SP_GetTreatments", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetTreatments(@IsActive)", cn);
             if (tab == "Restaurar")
-                cmd.Parameters.AddWithValue("@IsActive", 0); 
+                cmd.Parameters.AddWithValue("@IsActive", 0);
+            else cmd.Parameters.AddWithValue("@IsActive", 1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1799,8 +1806,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return appointmentId;
 
-            SqlCommand cmd = new SqlCommand("SP_GetPaymentAppointment", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentAppointment(@PaymentId)", cn);
             cmd.Parameters.AddWithValue("@PaymentId", paymentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -1907,7 +1913,7 @@ namespace PetDB
                 return date;
 
             SqlCommand cmd = new SqlCommand(sp, cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue(arg, searchId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -1950,20 +1956,20 @@ namespace PetDB
                     break;
                 case "Consulta":
                     consultaEditControls();
-                    consultaDateTimePicker.Value = GetDateTimeById("SP_GetAppointmentDateById", "@appointmentID", int.Parse(consultaIdText.Text));
+                    consultaDateTimePicker.Value = GetDateTimeById("SELECT * FROM fn_GetAppointmentDateById(@appointmentID)", "@appointmentID", int.Parse(consultaIdText.Text));
                     LoadAnimaisComboBox(consultaAnimaisComboBox, consultaAnimalText);
                     LoadMedicosComboBox(consultaMedicoComboBox, consultaMedicoText);
                     break;
                 case "Pagamento":
                     pagamentoEditControls();
-                    pagamentoDateTimePicker.Value = GetDateTimeById("SP_GetPaymentDate", "@PaymentId", int.Parse(pagamentoIdText.Text));
+                    pagamentoDateTimePicker.Value = GetDateTimeById("SELECT * FROM fn_GetPaymentDate(@PaymentId)", "@PaymentId", int.Parse(pagamentoIdText.Text));
                     LoadEstadoComboBox();
                     LoadMetodoComboBox();
                     LoadConsultasComboBox();
                     break;
                 case "Prescricao":
                     prescricaoEditControls();
-                    prescricaoDateTimePicker.Value = GetDateTimeById("SP_GetPrescriptionDate", "@PrescriptionId", int.Parse(prescricaoNumeroText.Text));
+                    prescricaoDateTimePicker.Value = GetDateTimeById("SELECT * FROM fn_GetPrescriptionDate(@PrescriptionID)", "@PrescriptionId", int.Parse(prescricaoNumeroText.Text));
                     LoadAnimaisComboBox(prescricaoAnimalComboBox, prescricaoAnimalText);
                     LoadMedicosComboBox(prescricaoMedicoComboBox, prescricaoMedicoText);
                     break;
@@ -2556,8 +2562,8 @@ namespace PetDB
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentTreatmentsById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentTreatmentsById(@appointmentID) ORDER BY Descricao", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -2583,8 +2589,8 @@ namespace PetDB
                 return null;
 
             String reportContent = "";
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentReportById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentReportById(@appointmentID)", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -2774,8 +2780,7 @@ namespace PetDB
                 return null;
 
             List<String> payments = new List<String>();
-            SqlCommand cmd = new SqlCommand("SP_GetPaymentsByMethod", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentsByMethod(@MethodID) ORDER BY [Data] DESC", cn);
             cmd.Parameters.AddWithValue("@MethodId", paymentMethodId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -2817,8 +2822,7 @@ namespace PetDB
                 return null;
 
             List<String> appointments = new List<String>();
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentsByTreatment", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentsByTreatment(@TreatmentId)", cn);
             cmd.Parameters.AddWithValue("@TreatmentId", treatmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -2867,8 +2871,8 @@ namespace PetDB
 
             listBox1.Items.Clear();
 
-            SqlCommand cmd = new SqlCommand("SP_GetVetInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(@ClinicNIF, NULL, DEFAULT) ORDER BY Nome", cn);
+            cmd.CommandType = CommandType.Text;
             CliVet cv = (CliVet)consultarMedicosClinicaComboBox.SelectedItem;
             cmd.Parameters.AddWithValue("@ClinicNIF", cv.NIF);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -2905,8 +2909,8 @@ namespace PetDB
 
             Owner o = (Owner)consultarAnimaisDonoComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SP_GetPetInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(@OwnerNIF, DEFAULT) ORDER BY Nome", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@OwnerNIF", int.Parse(o.NIF));
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -2943,8 +2947,8 @@ namespace PetDB
 
             CliVet cv = (CliVet)consultarAnimaisClinicaComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SP_GetPetsByClinic", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetsByClinic(@ClinicNIF) ORDER BY Dono", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@ClinicNIF", int.Parse(cv.NIF));
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -2980,8 +2984,8 @@ namespace PetDB
 
             Pet p = (Pet)consultarConsultasAnimalComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(@PetId, NULL, DEFAULT) ORDER BY [Data] DESC", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@PetId", int.Parse(p.Numero));
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -3043,8 +3047,8 @@ namespace PetDB
 
             Vet v = (Vet)consultarConsultasMedicoComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(NULL, @VetOMV, DEFAULT) ORDER BY [Data] DESC", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@VetOMV", int.Parse(v.NumOMV));
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -3106,8 +3110,8 @@ namespace PetDB
 
             Pet p = (Pet)consultarPrescricaoAnimalComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SP_GetPrescriptionInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(@PetId, NULL, DEFAULT) ORDER BY [Data] DESC", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@PetId", int.Parse(p.Numero));
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -3154,8 +3158,8 @@ namespace PetDB
             listBox1.Items.Clear();
             Owner o = (Owner)consultarPagamentosDonoComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SP_GetPaymentInfo", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentInfo(@OwnerNIF, DEFAULT) ORDER BY [Data] DESC", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@OwnerNIF", o.NIF);
             SqlDataReader reader = cmd.ExecuteReader();
 

@@ -92,7 +92,8 @@ namespace PetDB
 
             entity = "Prescricao";
             prescricaoBaseControls();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPrescriptionInfo NULL, " + omv, cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(NULL, @VetOMV, DEFAULT) ORDER BY [Data] DESC", cn);
+            cmd.Parameters.AddWithValue("@VetOMV", omv);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -125,7 +126,8 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetVetInfo NULL, " + omv, cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(NULL, @VetOMV, DEFAULT) ORDER BY NOME", cn);
+            cmd.Parameters.AddWithValue("@VetOMV", omv);
             SqlDataReader reader = cmd.ExecuteReader();
 
             if (reader.Read())
@@ -262,7 +264,8 @@ namespace PetDB
 
             List<Appointment> consultas = new List<Appointment>();
 
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetAppointmentInfo NULL, " + omv, cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(NULL, @VetOMV, DEFAULT) ORDER BY [Data] DESC", cn);
+            cmd.Parameters.AddWithValue("@VetOMV", omv);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -309,8 +312,8 @@ namespace PetDB
                 return null;
 
             String reportContent = "";
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentReportById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentReportById(@appointmentID)", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -332,8 +335,8 @@ namespace PetDB
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("SP_GetAppointmentTreatmentsById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentTreatmentsById(@appointmentID) ORDER BY Descricao", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -373,8 +376,8 @@ namespace PetDB
                 return null;
 
             List<Med> meds = new List<Med>();
-            SqlCommand cmd = new SqlCommand("SP_GetPrescriptionMedsById", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionMedsById(@prescriptionID) ORDER BY Descricao", cn);
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@prescriptionID", prescriptionId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -416,7 +419,7 @@ namespace PetDB
                 return null;
 
             List<Med> meds = new List<Med>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetMedInfo", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetMedInfo() ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -528,7 +531,7 @@ namespace PetDB
                 return null;
 
             List<Pet> pets = new List<Pet>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetPetInfo", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(NULL, DEFAULT) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -587,7 +590,7 @@ namespace PetDB
                 return date;
 
             SqlCommand cmd = new SqlCommand(sp, cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue(arg, searchId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -615,12 +618,12 @@ namespace PetDB
                     break;
                 case "Consulta":
                     consultaEditControls();
-                    consultaDateTimePicker.Value = GetDateTimeById("SP_GetAppointmentDateById", "@appointmentID", idConsulta);
+                    consultaDateTimePicker.Value = GetDateTimeById("SELECT * FROM fn_GetAppointmentDateById(@appointmentID)", "@appointmentID", idConsulta);
                     LoadAnimaisComboBox(consultaAnimaisComboBox, consultaAnimalText);
                     break;
                 case "Prescricao":
                     prescricaoEditControls();
-                    prescricaoDateTimePicker.Value = GetDateTimeById("SP_GetPrescriptionDate", "@PrescriptionId", int.Parse(prescricaoNumeroText.Text));
+                    prescricaoDateTimePicker.Value = GetDateTimeById("SELECT * FRPM fn_GetPrescriptionDate(@appointmentID)", "@PrescriptionId", int.Parse(prescricaoNumeroText.Text));
                     LoadAnimaisComboBox(prescricaoAnimalComboBox, prescricaoAnimalText);
                     break;
                 default: break;
@@ -764,7 +767,7 @@ namespace PetDB
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetTreatments", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetTreatments(DEFAULT)", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -880,7 +883,7 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetClinicTable", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -905,7 +908,7 @@ namespace PetDB
                 return null;
 
             List<Especialidade> especialidades = new List<Especialidade>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecialityInfo", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecialityInfo() ORDER BY Descricao", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())

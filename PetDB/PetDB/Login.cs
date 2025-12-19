@@ -169,7 +169,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetSpecialtyTable", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecialtyTable() ORDER BY Descricao", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -258,16 +258,18 @@ namespace PetDB
                     SqlCommand cmd;
                     if (idType == "Clinica")
                     {
-                        cmd = new SqlCommand("EXEC SP_GetClinicByNIF " + id, cn);
+                        cmd = new SqlCommand("SELECT * FROM fn_GetClinicByNIF(@ClinicNIF)", cn);
+                        cmd.Parameters.AddWithValue("@ClinicNIF", id);
                     }
                     else if (idType == "Medico")
                     {
-                        cmd = new SqlCommand("EXEC SP_GetMedicByOMV " + id, cn);
+                        cmd = new SqlCommand("SELECT * FROM fn_GetMedicByOMV(@MedicOMV)", cn);
+                        cmd.Parameters.AddWithValue("@MedicOMV", id);
                     }
                     else
                     {
-                        cmd = new SqlCommand("SP_GetOwnerTable", cn);
-                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd = new SqlCommand("SELECT * FROM fn_GetOwnerTable(@OwnerNIF, DEFAULT) ORDER BY NOME", cn);
+                        cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@OwnerNIF", id);
                     }
 
@@ -429,7 +431,7 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("EXEC SP_GetClinicTable", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
