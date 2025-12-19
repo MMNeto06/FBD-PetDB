@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DonoForm));
             menuStrip1 = new MenuStrip();
             toolStripMenuItem1 = new ToolStripMenuItem();
             animaisToolStripMenuItem = new ToolStripMenuItem();
@@ -254,6 +255,7 @@
             Controls.Add(titleLabel);
             Controls.Add(menuStrip1);
             Controls.Add(cardsFlowLayoutPanel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "DonoForm";
             Text = "Bem Vindo Dono";

@@ -51,11 +51,11 @@
             registerEnderecoLabel = new Label();
             registerEnderecoTextBox = new TextBox();
             registerClinicaLabel = new Label();
-            registerClinicaTextBox = new TextBox();
             registerEspecialidadeLabel = new Label();
             registerBackBtn = new Button();
             adicionarBtn = new Button();
             registerEspecialidadeComboBox = new ComboBox();
+            registerClinicaComboBox = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)logoBox).BeginInit();
             SuspendLayout();
             // 
@@ -116,10 +116,10 @@
             // 
             // logoBox
             // 
-            logoBox.ErrorImage = Properties.Resources.logo;
-            logoBox.Image = Properties.Resources.logo;
+            logoBox.ErrorImage = Properties.Resources.logo1;
+            logoBox.Image = Properties.Resources.logo1;
             logoBox.ImageLocation = "";
-            logoBox.InitialImage = (Image)resources.GetObject("logoBox.InitialImage");
+            logoBox.InitialImage = Properties.Resources.logo1;
             logoBox.Location = new Point(495, 30);
             logoBox.Name = "logoBox";
             logoBox.Size = new Size(200, 200);
@@ -261,23 +261,16 @@
             // registerClinicaLabel
             // 
             registerClinicaLabel.AutoSize = true;
-            registerClinicaLabel.Location = new Point(360, 344);
+            registerClinicaLabel.Location = new Point(388, 283);
             registerClinicaLabel.Name = "registerClinicaLabel";
             registerClinicaLabel.Size = new Size(79, 20);
             registerClinicaLabel.TabIndex = 22;
             registerClinicaLabel.Text = "NIF Clinica";
             // 
-            // registerClinicaTextBox
-            // 
-            registerClinicaTextBox.Location = new Point(358, 364);
-            registerClinicaTextBox.Name = "registerClinicaTextBox";
-            registerClinicaTextBox.Size = new Size(306, 27);
-            registerClinicaTextBox.TabIndex = 21;
-            // 
             // registerEspecialidadeLabel
             // 
             registerEspecialidadeLabel.AutoSize = true;
-            registerEspecialidadeLabel.Location = new Point(115, 344);
+            registerEspecialidadeLabel.Location = new Point(127, 280);
             registerEspecialidadeLabel.Name = "registerEspecialidadeLabel";
             registerEspecialidadeLabel.Size = new Size(101, 20);
             registerEspecialidadeLabel.TabIndex = 24;
@@ -307,23 +300,31 @@
             // registerEspecialidadeComboBox
             // 
             registerEspecialidadeComboBox.FormattingEnabled = true;
-            registerEspecialidadeComboBox.Location = new Point(113, 367);
+            registerEspecialidadeComboBox.Location = new Point(125, 303);
             registerEspecialidadeComboBox.Name = "registerEspecialidadeComboBox";
             registerEspecialidadeComboBox.Size = new Size(239, 28);
             registerEspecialidadeComboBox.TabIndex = 27;
             registerEspecialidadeComboBox.SelectedIndexChanged += registerEspecialidadeComboBox_SelectedIndexChanged;
+            // 
+            // registerClinicaComboBox
+            // 
+            registerClinicaComboBox.FormattingEnabled = true;
+            registerClinicaComboBox.Location = new Point(388, 306);
+            registerClinicaComboBox.Name = "registerClinicaComboBox";
+            registerClinicaComboBox.Size = new Size(306, 28);
+            registerClinicaComboBox.TabIndex = 28;
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(registerClinicaComboBox);
             Controls.Add(registerEspecialidadeComboBox);
             Controls.Add(adicionarBtn);
             Controls.Add(registerBackBtn);
             Controls.Add(registerEspecialidadeLabel);
             Controls.Add(registerClinicaLabel);
-            Controls.Add(registerClinicaTextBox);
             Controls.Add(registerEnderecoLabel);
             Controls.Add(registerEnderecoTextBox);
             Controls.Add(registerEmailLabel);
@@ -377,10 +378,10 @@
         private Label registerEnderecoLabel;
         private TextBox registerEnderecoTextBox;
         private Label registerClinicaLabel;
-        private TextBox registerClinicaTextBox;
         private Label registerEspecialidadeLabel;
         private Button registerBackBtn;
         private Button adicionarBtn;
         private ComboBox registerEspecialidadeComboBox;
+        private ComboBox registerClinicaComboBox;
     }
 }

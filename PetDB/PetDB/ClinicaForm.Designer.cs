@@ -28,9 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClinicaForm));
             toolStripMenuItem1 = new ToolStripMenuItem();
             registarTabControl.SuspendLayout();
             SuspendLayout();
+            // 
+            // clinicaTabPage
+            // 
+            clinicaTabPage.Location = new Point(4, 79);
+            clinicaTabPage.Size = new Size(406, 197);
+            // 
+            // listBox1
+            // 
+            listBox1.Size = new Size(356, 324);
             // 
             // toolStripMenuItem1
             // 
@@ -41,9 +51,10 @@
             // 
             // ClinicaForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(676, 313);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ClinicaForm";
             Text = "ClinicaForm";
             registarTabControl.ResumeLayout(false);

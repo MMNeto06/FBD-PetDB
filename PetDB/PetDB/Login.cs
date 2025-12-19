@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Linq.Expressions;
 using System.Text;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PetDB
 {
@@ -34,7 +33,7 @@ namespace PetDB
             adicionarBtn.Visible = false;
             registerBackBtn.Visible = false;
             registerClinicaLabel.Visible = false;
-            registerClinicaTextBox.Visible = false;
+            registerClinicaComboBox.Visible = false;
             registerEmailLabel.Visible = false;
             registerEmailTextBox.Visible = false;
             registerEnderecoLabel.Visible = false;
@@ -79,7 +78,7 @@ namespace PetDB
             adicionarBtn.Visible = false;
             registerBackBtn.Visible = false;
             registerClinicaLabel.Visible = false;
-            registerClinicaTextBox.Visible = false;
+            registerClinicaComboBox.Visible = false;
             registerEmailLabel.Visible = false;
             registerEmailTextBox.Visible = false;
             registerEnderecoLabel.Visible = false;
@@ -129,8 +128,7 @@ namespace PetDB
                 {
                     registerIdLabel.Text = "Número OMV";
                     registerClinicaLabel.Visible = true;
-                    registerClinicaTextBox.Visible = true;
-                    registerClinicaTextBox.Text = "";
+                    registerClinicaComboBox.Visible = true;
                     registerEspecialidadeLabel.Visible = true;
                     registerEspecialidadeComboBox.Visible = true;
                     codigoEspecialidade = 1;
@@ -187,6 +185,7 @@ namespace PetDB
             InitializeComponent();
             showInitialPage();
             populateEspecialidadeComboBox();
+            LoadClinicasComboBox();
         }
 
         private void adminBtn_Click(object sender, EventArgs e)
@@ -327,7 +326,8 @@ namespace PetDB
             {
                 System.Windows.Forms.MessageBox.Show("Erro: O número de telefone deve ser um número");
             }
-            if (Int32.TryParse(registerClinicaTextBox.Text, out clinicaNif) == false && idType == "Medico")
+            CliVet c = (CliVet)registerClinicaComboBox.SelectedItem;
+            if (Int32.TryParse(c.NIF, out clinicaNif) == false && idType == "Medico")
             {
                 System.Windows.Forms.MessageBox.Show("Erro: O NIF da sua clinica deve ser um número");
             }
@@ -378,7 +378,7 @@ namespace PetDB
             }
             catch (Exception exception)
             {
-                System.Windows.Forms.MessageBox.Show("Ocorreu um erro: " + exception.ToString());
+                System.Windows.Forms.MessageBox.Show("Ocorreu um erro, tente novamente");
             }
         }
 
@@ -396,6 +396,56 @@ namespace PetDB
                 loginBtn_Click(sender, e);
             }
 
+        }
+
+        private void LoadClinicasComboBox()
+        {
+            ComboBox cb = registerClinicaComboBox;
+            if (!verifySGBDConnection())
+                return;
+
+            cb.Items.Clear();
+
+            List<CliVet> clinicas = GetClinicasVeterinarias();
+
+            foreach (var CV in clinicas)
+            {
+                cb.Items.Add(CV);
+            }
+
+
+            for (int i = 0; i < cb.Items.Count; i++)
+            {
+                CliVet c = (CliVet)cb.Items[i];
+            }
+            cb.SelectedIndex = 0;
+
+            cn.Close();
+        }
+
+        private List<CliVet> GetClinicasVeterinarias()
+        {
+            if (!verifySGBDConnection())
+                return null;
+
+            List<CliVet> clinicas = new List<CliVet>();
+            SqlCommand cmd = new SqlCommand("EXEC SP_GetClinicTable", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                CliVet CV = new CliVet();
+                CV.NIF = reader["NIF"].ToString();
+                CV.Nome = reader["Nome"].ToString();
+                CV.Telefone = reader["Telefone"].ToString();
+                CV.Email = reader["Email"].ToString();
+                CV.Endereco = reader["Endereco"].ToString();
+                clinicas.Add(CV);
+            }
+            reader.Close();
+            cn.Close();
+
+            return clinicas;
         }
     }
 }
