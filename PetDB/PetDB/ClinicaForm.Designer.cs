@@ -31,16 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClinicaForm));
             toolStripMenuItem1 = new ToolStripMenuItem();
             registarTabControl.SuspendLayout();
+            consultarTabControl.SuspendLayout();
             SuspendLayout();
-            // 
-            // clinicaTabPage
-            // 
-            clinicaTabPage.Location = new Point(4, 79);
-            clinicaTabPage.Size = new Size(406, 197);
             // 
             // listBox1
             // 
-            listBox1.Size = new Size(356, 324);
+            listBox1.Items.AddRange(new object[] { resources.GetObject("listBox1.Items"), resources.GetObject("listBox1.Items1"), resources.GetObject("listBox1.Items2"), resources.GetObject("listBox1.Items3"), resources.GetObject("listBox1.Items4"), resources.GetObject("listBox1.Items5"), resources.GetObject("listBox1.Items6"), resources.GetObject("listBox1.Items7"), resources.GetObject("listBox1.Items8"), resources.GetObject("listBox1.Items9") });
+            listBox1.Size = new Size(285, 229);
             // 
             // toolStripMenuItem1
             // 
@@ -51,13 +48,14 @@
             // 
             // ClinicaForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(676, 313);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ClinicaForm";
             Text = "ClinicaForm";
             registarTabControl.ResumeLayout(false);
+            consultarTabControl.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }

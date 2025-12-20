@@ -28,4 +28,5 @@ DROP FUNCTION dbo.fn_GetMostRecentAppointmentId;
 DROP FUNCTION dbo.fn_GetPrescriptionDate;
 DROP FUNCTION dbo.fn_GetPaymentsByMethod;
 DROP FUNCTION dbo.fn_GetAppointmentsByTreatment;
+DROP FUNCTION dbo.fn_GetOwnersByClinic; 
 GO

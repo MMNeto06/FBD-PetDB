@@ -78,7 +78,7 @@ AS
 GO
 
 CREATE FUNCTION dbo.fn_GetPrescriptionInfo(
-	@PetId int = NULL,@VetOMV int = NULL, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
+	@PetId int = NULL,@VetOMV int = NULL, @ClinicNIF int = NULL, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
 	RETURNS TABLE
 AS 
 
@@ -89,7 +89,7 @@ AS
 	JOIN PETDB_Animal as a ON p.Animal = a.Numero
 	JOIN PETDB_PrescricaoMedico as pm ON p.Numero = pm.NumeroPrescricao
 	JOIN PETDB_MedicoVeterinario as m ON pm.NumeroOMVMedico = m.NumOMV
-	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR m.NumOMV = @VetOMV) 
+	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR m.NumOMV = @VetOMV) AND (@ClinicNIF IS NULL OR m.Clinica = @ClinicNIF)
 	AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND p.IsActive = @IsActive
 	-- ORDER BY p.[Data] DESC;
 ) 
@@ -130,7 +130,7 @@ AS
 )
 GO
 
-CREATE FUNCTION dbo.fn_GetPaymentInfo(@OwnerNIF int = NULL, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
+CREATE FUNCTION dbo.fn_GetPaymentInfo(@OwnerNIF int = NULL, @ClinicNIF int = NULL, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
 RETURNS TABLE
 AS 
 
@@ -142,13 +142,13 @@ AS
 	JOIN PETDB_Consulta as c ON p.Consulta = c.Id
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
-	WHERE (@OwnerNIF IS NULL OR a.Dono = @OwnerNIF) AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND p.IsActive = @IsActive
+	WHERE (@OwnerNIF IS NULL OR a.Dono = @OwnerNIF) AND (@ClinicNIF IS NULL OR v.Clinica = @ClinicNIF) AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND p.IsActive = @IsActive
 	-- ORDER BY p.[Data] DESC;
 ) 
 GO
 
 CREATE FUNCTION dbo.fn_GetAppointmentInfo
-	(@PetId int = NULL, @VetOMV int = NULL, @IsActive BIT = 1, @Search VARCHAR(64) = NULL) 
+	(@PetId int = NULL, @VetOMV int = NULL, @ClinicNIF int = NULL, @IsActive BIT = 1, @Search VARCHAR(64) = NULL) 
 	RETURNS TABLE
 AS 
 
@@ -159,7 +159,7 @@ AS
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
 	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR v.NumOMV = @VetOMV) AND 
-	(@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND c.IsActive = @IsActive
+	(@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND (@ClinicNIF IS NULL OR v.Clinica = @ClinicNIF) AND c.IsActive = @IsActive
 	-- ORDER BY c.[Data] DESC;
 ) 
 GO 
@@ -228,19 +228,19 @@ AS
 GO
 
 CREATE FUNCTION dbo.fn_GetPetsByClinic
-		(@ClinicNIF int, @Search VARCHAR(64) = NULL)
+		(@ClinicNIF int, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
 RETURNS TABLE
 AS
  
 	RETURN( 
 
-	SELECT a.Numero, a.Nome, a.DataNascimento, a.Peso, a.Sexo, d.Nome as Dono, e.Descricao as Especie 
+	SELECT a.Numero, a.Nome, a.DataNascimento, a.Peso, a.Sexo, d.Nome as Dono, e.Descricao as Especie , d.NIF as DonoNIF
 	FROM PETDB_Animal as a
 	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
 	JOIN PETDB_Consulta as c ON a.Numero=Animal
 	JOIN PETDB_MedicoVeterinario as m ON c.Medico=m.NumOMV
 	JOIN PETDB_Dono as d ON d.NIF = a.Dono
-	WHERE m.Clinica=@ClinicNIF AND a.IsActive = 1 AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%')
+	WHERE m.Clinica=@ClinicNIF AND a.IsActive = @IsActive AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%')
 	-- ORDER BY a.Nome;
 )
 GO
@@ -382,4 +382,14 @@ AS
 	JOIN PETDB_Animal as a ON a.Numero = c.Animal
 	WHERE ct.CodigoTratamento = @TreatmentId AND c.IsActive = 1
 )
+GO
+
+CREATE FUNCTION dbo.fn_GetOwnersByClinic
+	(@ClinicNIF int, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
+RETURNS TABLE 
+AS
+	RETURN (SELECT DISTINCT d.NIF, d.Nome, d.Telefone, d.Email, d.Endereco 
+		FROM dbo.fn_GetPetsByClinic(@ClinicNIF, @IsActive, NULL) AS p 
+		JOIN PETDB_Dono as d ON d.NIF = p.DonoNIF
+		WHERE d.IsActive = @IsActive AND (@Search IS NULL OR  d.Nome LIKE '%' + @Search + '%')); 
 GO

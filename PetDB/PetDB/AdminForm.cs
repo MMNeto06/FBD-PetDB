@@ -18,7 +18,8 @@ namespace PetDB
         protected Login loginPage;
         private String option = "";
         private String entity = "";
-        private String tab = "";
+        protected String tab = "";
+        protected int nif;
 
         public AdminForm()
         {
@@ -71,6 +72,11 @@ namespace PetDB
             SelecionarRegistarAbaInicial(sender, e);
         }
 
+        protected virtual void SetPrimeiraAbaConsultar(object sender, EventArgs e)
+        {
+            consultarVetCliTabPage_Click(sender, e);
+        }
+
         private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tab = "Consultar";
@@ -83,7 +89,12 @@ namespace PetDB
             okBtn.Visible = false;
             cancelBtn.Visible = false;
             btnRestaurar.Visible = false;
-            consultarVetCliTabPage_Click(sender, e);
+            SetPrimeiraAbaConsultar(sender, e);
+        }
+
+        protected virtual void RestaurarBtnVisible()
+        {
+            btnRestaurar.Visible = true;
         }
 
         protected void RestaurarControls()
@@ -93,23 +104,18 @@ namespace PetDB
             remBtn.Visible = false;
             okBtn.Visible = false;
             cancelBtn.Visible = false;
-            btnRestaurar.Visible = true;
+            RestaurarBtnVisible();
         }
 
         private void restaurarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tab = "Restaurar";
             option = "";
-            addBtn.Visible = false;
-            editBtn.Visible = false;
-            remBtn.Visible = false;
-            okBtn.Visible = false;
-            cancelBtn.Visible = false;
-            btnRestaurar.Visible = true;
+            RestaurarControls();
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
             registarTabControl.SelectedIndex = 0;
-            clinicaVeterinariaTab_Click(sender, e);
+            SelecionarRegistarAbaInicial(sender, e);
         }
 
         protected void generalBaseControls()
@@ -177,16 +183,32 @@ namespace PetDB
             generalBaseControls();
         }
 
+        protected virtual void MedicoClinicaComboBoxVisible()
+        {
+            medicoClinicaComboBox.Visible = true;
+        }
+
+        protected virtual void MedicoClinicaNomeTextEnabled()
+        {
+            medicoClinicaText.Enabled = true;
+        }
+
         protected void medicoEditControls()
         {
             medicoNomeText.Enabled = true;
             medicoTelefoneText.Enabled = true;
             medicoEmailText.Enabled = true;
             medicoEspecialidadeText.Enabled = true;
-            medicoClinicaText.Enabled = true;
+            MedicoClinicaNomeTextEnabled();
             medicoEspecialidadeComboBox.Visible = true;
-            medicoClinicaComboBox.Visible = true;
+            MedicoClinicaComboBoxVisible();
+            medicoClinicaComboBox.Enabled = true;
             generalEditControls();
+        }
+
+        protected virtual void MedicoClinicaText()
+        {
+            medicoClinicaText.Text = "";
         }
 
         protected void medicoAddControls()
@@ -198,7 +220,7 @@ namespace PetDB
             medicoTelefoneText.Text = "";
             medicoEmailText.Text = "";
             medicoEspecialidadeText.Text = "";
-            medicoClinicaText.Text = "";
+            MedicoClinicaText();
             medicoEspecialidadeComboBox.SelectedIndex = -1;
             medicoClinicaComboBox.SelectedIndex = -1;
         }
@@ -583,7 +605,7 @@ namespace PetDB
             return animals;
         }
 
-        private List<CliVet> GetClinicasVeterinarias(String searchContent)
+        protected List<CliVet> GetClinicasVeterinarias(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
@@ -651,7 +673,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem clínicas inativas!");
                 clinicaNifText.Text = "";
@@ -677,7 +699,7 @@ namespace PetDB
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@ClinicNIF", SqlDbType.Int).Value = DBNull.Value;
             cmd.Parameters.Add("@VetOMV", SqlDbType.Int).Value = DBNull.Value;
-            cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value =(tab == "Restaurar") ? 0 : 1;
+            cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = (tab == "Restaurar") ? 0 : 1;
             if (!string.IsNullOrWhiteSpace(searchContent))
             {
                 cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
@@ -730,7 +752,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem médicos inativos!");
                 medicoOMVText.Text = "";
@@ -746,7 +768,7 @@ namespace PetDB
             ShowVet();
         }
 
-        private List<Owner> GetDonos(String searchContent)
+        protected virtual List<Owner> GetDonos(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
@@ -782,7 +804,7 @@ namespace PetDB
             return owners;
         }
 
-        private void donoTab_Click(object sender, EventArgs e)
+        protected void donoTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -805,7 +827,7 @@ namespace PetDB
             cn.Close();
 
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem donos inativos!");
                 donoNifText.Text = "";
@@ -820,7 +842,7 @@ namespace PetDB
             ShowOwner();
         }
 
-        private List<Pet> GetAnimais(String searchContent)
+        protected virtual List<Pet> GetAnimais(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
@@ -859,7 +881,7 @@ namespace PetDB
             return pets;
         }
 
-        private void animalTab_Click(object sender, EventArgs e)
+        protected void animalTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -884,7 +906,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem animais inativos!");
                 animalNumeroText.Text = "";
@@ -933,7 +955,7 @@ namespace PetDB
             return meds;
         }
 
-        private void medTab_Click(object sender, EventArgs e)
+        protected void medTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -956,7 +978,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem medicamentos inativos!");
                 medicamentoCodigoText.Text = "";
@@ -969,14 +991,14 @@ namespace PetDB
             ShowMed();
         }
 
-        private List<Appointment> GetConsultas(String searchContent)
+        protected virtual List<Appointment> GetConsultas(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Appointment> consultas = new List<Appointment>();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(NULL, NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(NULL, NULL, NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
                 cmd.Parameters.AddWithValue("@IsActive", 0);
@@ -1006,7 +1028,7 @@ namespace PetDB
             return consultas;
         }
 
-        private void consultaTab_Click(object sender, EventArgs e)
+        protected void consultaTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -1030,7 +1052,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem consultas inativas!");
                 consultaIdText.Text = "";
@@ -1046,19 +1068,14 @@ namespace PetDB
             ShowConsulta();
         }
 
-        private void pagamentoTab_Click(object sender, EventArgs e)
+        protected virtual List<Payment> GetPayments(String searchContent)
         {
             if (!verifySGBDConnection())
-                return;
-            String searchContent = null;
-            if (searchTextBox.Text.Length >= 3)
-            {
-                searchContent = searchTextBox.Text;
-            }
-            entity = "Pagamento";
-            pagamentoBaseControls();
+                return null;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentInfo(NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
+            List<Payment> payments = new List<Payment>();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentInfo(NULL, NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
@@ -1088,12 +1105,33 @@ namespace PetDB
                 payment.Metodo = reader["Metodo"].ToString();
                 payment.Animal = reader["Animal"].ToString();
                 payment.Medico = reader["Medico"].ToString();
-                listBox1.Items.Add(payment);
+                payments.Add(payment);
             }
             reader.Close();
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            return payments;
+        }
+
+        protected void pagamentoTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
+            entity = "Pagamento";
+            pagamentoBaseControls();
+
+            List<Payment> payments = GetPayments(searchContent);
+
+            foreach (var p in payments)
+                listBox1.Items.Add(p);
+
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem pagamentos inativos!");
                 pagamentoIdText.Text = "";
@@ -1111,17 +1149,12 @@ namespace PetDB
             ShowPayment();
         }
 
-        private void prescricaoTab_Click(object sender, EventArgs e)
+        protected virtual List<Prescription> GetPrescriptions(String searchContent)
         {
             if (!verifySGBDConnection())
-                return;
-            String searchContent = null;
-            if (searchTextBox.Text.Length >= 3)
-            {
-                searchContent = searchTextBox.Text;
-            }
-            entity = "Prescricao";
-            prescricaoBaseControls();
+                return null;
+
+            List<Prescription> prescriptions = new List<Prescription>();
             SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionInfo(NULL, NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
@@ -1148,12 +1181,33 @@ namespace PetDB
                 prescription.Data = ((DateTime)reader["Data"]).ToString("dd/MM/yyyy");
                 prescription.Animal = reader["Animal"].ToString();
                 prescription.Medico = reader["Medico"].ToString();
-                listBox1.Items.Add(prescription);
+                prescriptions.Add(prescription);
             }
             reader.Close();
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            return prescriptions;
+        }
+
+        protected void prescricaoTab_Click(object sender, EventArgs e)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
+            entity = "Prescricao";
+            prescricaoBaseControls();
+
+            List<Prescription> prescriptions = GetPrescriptions(searchContent);
+
+            foreach (var p in prescriptions)
+                listBox1.Items.Add(p);
+
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem prescrições inativas!");
                 prescricaoBtnVerMedicamentos.Enabled = false;
@@ -1203,7 +1257,7 @@ namespace PetDB
             return especialidades;
         }
 
-        private void especialidadeTab_Click(object sender, EventArgs e)
+        protected void especialidadeTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -1225,7 +1279,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem especialidades inativas!");
                 btnConsultarMedicos.Enabled = false;
@@ -1271,7 +1325,7 @@ namespace PetDB
             return especies;
         }
 
-        private void especieTab_Click(object sender, EventArgs e)
+        protected void especieTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -1293,7 +1347,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem espécies inativas!");
                 btnConsultaAnimais.Enabled = false;
@@ -1343,7 +1397,7 @@ namespace PetDB
 
         }
 
-        private void metodoPagamentoTab_Click(object sender, EventArgs e)
+        protected void metodoPagamentoTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -1365,7 +1419,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem métodos de pagamento inativos!");
                 metodoPagamentoBtnPagamentos.Enabled = false;
@@ -1412,7 +1466,7 @@ namespace PetDB
             return treatments;
         }
 
-        private void tratamentoTab_Click(object sender, EventArgs e)
+        protected void tratamentoTab_Click(object sender, EventArgs e)
         {
             if (!verifySGBDConnection())
                 return;
@@ -1435,7 +1489,7 @@ namespace PetDB
 
             cn.Close();
 
-            if (listBox1.Items.Count <= 0)
+            if (listBox1.Items.Count <= 0 && tab == "Restaurar")
             {
                 listBox1.Items.Add("Não existem tratamentos inativos!");
                 tratamentoBtnConsultas.Enabled = false;
@@ -1643,6 +1697,8 @@ namespace PetDB
         {
             if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
+            consultarConsultasAnimalBtnVerRelatório.Enabled = true;
+            consultarConsultasAnimalBtnVerTratamentos.Enabled = true;
             Appointment ap = new Appointment();
             ap = (Appointment)listBox1.Items[currentListIndex];
             consultarConsultasAnimalIdText.Text = ap.Id;
@@ -1653,6 +1709,8 @@ namespace PetDB
         {
             if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
+            consultarConsultasMedicoBtnVerRelatorio.Enabled = true;
+            consultarConsultasMedicoBtnVerTratamentos.Enabled = true;
             Appointment ap = new Appointment();
             ap = (Appointment)listBox1.Items[currentListIndex];
             consultarConsultasMedicoIdText.Text = ap.Id;
@@ -1663,7 +1721,7 @@ namespace PetDB
         {
             if (listBox1.Items.Count == 0 || currentListIndex < 0)
                 return;
-
+            consultarPrescricaoAnimalBtnVerMedicamentos.Enabled = true;
             Prescription prescription = new Prescription();
             prescription = (Prescription)listBox1.Items[currentListIndex];
             consultarPrescricaoAnimalNumeroText.Text = prescription.Numero;
@@ -1926,7 +1984,7 @@ namespace PetDB
             cn.Close();
         }
 
-        private void LoadMedicosComboBox(ComboBox cb, TextBox medicoName)
+        protected virtual void LoadMedicosComboBox(ComboBox cb, TextBox medicoName)
         {
             if (!verifySGBDConnection())
                 return;
@@ -2378,8 +2436,15 @@ namespace PetDB
             cmd.Parameters.AddWithValue("@VetEmail", medicoEmailText.Text);
             Especialidade e = (Especialidade)medicoEspecialidadeComboBox.SelectedItem;
             cmd.Parameters.AddWithValue("@VetSpecialty", e.Codigo);
-            CliVet c = (CliVet)medicoClinicaComboBox.SelectedItem;
-            cmd.Parameters.AddWithValue("@VetClinic", c.NIF);
+            if (this is ClinicaForm)
+            {
+                cmd.Parameters.AddWithValue("@VetClinic", this.nif);
+            }
+            else
+            {
+                CliVet c = (CliVet)medicoClinicaComboBox.SelectedItem;
+                cmd.Parameters.AddWithValue("@VetClinic", c.NIF);
+            }
 
             if (ExecuteInsertSP(cmd))
             {
@@ -3026,6 +3091,10 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            consultarMedicosClinicaOMVText.Text = "";
+            consultarMedicosClinicaEspecialidadeText.Text = "";
+            consultarMedicosClinicaTelefoneText.Text = "";
+            consultarMedicosClinicaEmailText.Text = "";
             String searchContent = null;
             if (searchTextBox.Text.Length >= 3)
             {
@@ -3072,7 +3141,7 @@ namespace PetDB
             cn.Close();
         }
 
-        private void consultarAnimaisDonoTabPage_Click(object sender, EventArgs e)
+        protected void consultarAnimaisDonoTabPage_Click(object sender, EventArgs e)
         {
             entity = "AnimalDono";
             listBox1.Items.Clear();
@@ -3083,6 +3152,13 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
+
+            consultarAnimaisDonoNumero.Text = "";
+            consultarAnimaisDonoSexoText.Text = "";
+            consultarAnimaisDonoPesoText.Text = "";
+            consultarAnimaisDonoDataNascimentoText.Text = "";
+            consultarAnimaisDonoEspecieText.Text = "";
+
             String searchContent = null;
             if (searchTextBox.Text.Length >= 3)
             {
@@ -3121,7 +3197,7 @@ namespace PetDB
             cn.Close();
         }
 
-        private void consultarAnimaisClinicaTabPage_Click(object sender, EventArgs e)
+        protected void consultarAnimaisClinicaTabPage_Click(object sender, EventArgs e)
         {
             entity = "AnimalClinica";
             listBox1.Items.Clear();
@@ -3133,6 +3209,14 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
+
+            consultarAnimaisClinicaNumeroText.Text = "";
+            consultarAnimaisClinicaSexoText.Text = "";
+            consultarAnimaisClinicaPesoText.Text = "";
+            consultarAnimaisClinicaDataNascimentoText.Text = "";
+            consultarAnimaisClinicaEspecieText.Text = "";
+            consultarAnimaisClinicaDonoText.Text = "";
+
             String searchContent = null;
             if (searchTextBox.Text.Length >= 3)
             {
@@ -3142,7 +3226,7 @@ namespace PetDB
 
             CliVet cv = (CliVet)consultarAnimaisClinicaComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPetsByClinic(@ClinicNIF, @Search) ORDER BY Dono", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPetsByClinic(@ClinicNIF, DEFAULT, @Search) ORDER BY Dono", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@ClinicNIF", int.Parse(cv.NIF));
             if (!string.IsNullOrWhiteSpace(searchContent))
@@ -3172,10 +3256,12 @@ namespace PetDB
             cn.Close();
         }
 
-        private void consultarConsultasAnimalTabPage_Click(object sender, EventArgs e)
+        protected void consultarConsultasAnimalTabPage_Click(object sender, EventArgs e)
         {
             entity = "ConsultaAnimal";
             listBox1.Items.Clear();
+            consultarConsultasAnimalBtnVerRelatório.Enabled = false;
+            consultarConsultasAnimalBtnVerTratamentos.Enabled = false;
             LoadAnimaisComboBox(consultarConsultasAnimalComboBox, null);
         }
 
@@ -3184,6 +3270,10 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            consultarConsultasAnimalIdText.Text = "";
+            consultarConsultasAnimalMedicoText.Text = "";
+            consultarConsultasAnimalBtnVerRelatório.Enabled = false;
+            consultarConsultasAnimalBtnVerTratamentos.Enabled = false;
             String searchContent = null;
             if (searchTextBox.Text.Length >= 3)
             {
@@ -3193,7 +3283,7 @@ namespace PetDB
 
             Pet p = (Pet)consultarConsultasAnimalComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(@PetId, NULL, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(@PetId, NULL, NULL, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@PetId", int.Parse(p.Numero));
             if (!string.IsNullOrWhiteSpace(searchContent))
@@ -3248,9 +3338,11 @@ namespace PetDB
 
         }
 
-        private void consultarConsultasVetTabPage_Click(object sender, EventArgs e)
+        protected void consultarConsultasVetTabPage_Click(object sender, EventArgs e)
         {
             entity = "ConsultaMedico";
+            consultarConsultasMedicoBtnVerRelatorio.Enabled = false;
+            consultarConsultasMedicoBtnVerTratamentos.Enabled = false;
             listBox1.Items.Clear();
             LoadMedicosComboBox(consultarConsultasMedicoComboBox, null);
         }
@@ -3259,6 +3351,11 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
+
+            consultarConsultasMedicoIdText.Text = "";
+            consultarConsultasMedicoAnimalText.Text = "";
+            consultarConsultasMedicoBtnVerRelatorio.Enabled = false;
+            consultarConsultasMedicoBtnVerTratamentos.Enabled = false;
             String searchContent = null;
             if (searchTextBox.Text.Length >= 3)
             {
@@ -3269,7 +3366,7 @@ namespace PetDB
 
             Vet v = (Vet)consultarConsultasMedicoComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(NULL, @VetOMV, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(NULL, @VetOMV, NULL, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@VetOMV", int.Parse(v.NumOMV));
             if (!string.IsNullOrWhiteSpace(searchContent))
@@ -3325,9 +3422,10 @@ namespace PetDB
             popup.ShowDialog();
         }
 
-        private void consultarPrescricoesAnimalTabPage_Click(object sender, EventArgs e)
+        protected void consultarPrescricoesAnimalTabPage_Click(object sender, EventArgs e)
         {
             entity = "PrescricaoAnimal";
+            consultarPrescricaoAnimalBtnVerMedicamentos.Enabled = false;
             listBox1.Items.Clear();
             LoadAnimaisComboBox(consultarPrescricaoAnimalComboBox, null);
         }
@@ -3336,6 +3434,11 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
+
+            consultarPrescricaoAnimalBtnVerMedicamentos.Enabled = false;
+            consultarPrescricaoAnimalNumeroText.Text = "";
+            consultarPrescricaoAnimalMedicoText.Text = "";
+
             String searchContent = null;
             if (searchTextBox.Text.Length >= 3)
             {
@@ -3345,7 +3448,7 @@ namespace PetDB
 
             Pet p = (Pet)consultarPrescricaoAnimalComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionInfo(@PetId, NULL, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionInfo(@PetId, NULL, NULL, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@PetId", int.Parse(p.Numero));
             if (!string.IsNullOrWhiteSpace(searchContent))
@@ -3387,7 +3490,7 @@ namespace PetDB
             popup.ShowDialog();
         }
 
-        private void consultarPagamentosDonoTabPage_Click(object sender, EventArgs e)
+        protected void consultarPagamentosDonoTabPage_Click(object sender, EventArgs e)
         {
             entity = "PagamentoDono";
             listBox1.Items.Clear();
@@ -3398,6 +3501,12 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
+
+            consultarPagamentosDonoNumeroText.Text = "";
+            consultarPagamentosDonoEstadoText.Text = "";
+            consultarPagamentosDonoValorText.Text = "";
+            consultarPagamentosDonoMetodoText.Text = "";
+
             String searchContent = null;
             if (searchTextBox.Text.Length >= 3)
             {
@@ -3406,7 +3515,7 @@ namespace PetDB
             listBox1.Items.Clear();
             Owner o = (Owner)consultarPagamentosDonoComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentInfo(@OwnerNIF, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentInfo(@OwnerNIF, NULL, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@OwnerNIF", o.NIF);
             if (!string.IsNullOrWhiteSpace(searchContent))
@@ -3437,7 +3546,7 @@ namespace PetDB
             cn.Close();
         }
 
-        private void consultarTabControl_onSelectedIndexChange(object sender, EventArgs e)
+        protected virtual void consultarTabControl_onSelectedIndexChange(object sender, EventArgs e)
         {
             int selectedTabIndex = consultarTabControl.SelectedIndex;
             switch (selectedTabIndex)
@@ -3544,7 +3653,7 @@ namespace PetDB
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            if(tab != "Consultar")
+            if (tab != "Consultar")
             {
                 switch (entity)
                 {
@@ -3616,7 +3725,17 @@ namespace PetDB
                     default: break;
                 }
             }
-            
+
+        }
+
+        private void auditLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clínicaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
