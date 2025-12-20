@@ -268,7 +268,7 @@ namespace PetDB
                     }
                     else
                     {
-                        cmd = new SqlCommand("SELECT * FROM fn_GetOwnerTable(@OwnerNIF, DEFAULT) ORDER BY NOME", cn);
+                        cmd = new SqlCommand("SELECT * FROM fn_GetOwnerTable(@OwnerNIF, DEFAULT, NULL) ORDER BY NOME", cn);
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@OwnerNIF", id);
                     }
@@ -431,7 +431,7 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT, NULL) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())

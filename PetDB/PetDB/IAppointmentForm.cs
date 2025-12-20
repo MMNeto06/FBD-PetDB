@@ -6,7 +6,7 @@ namespace PetDB
 {
     public interface IAppointmentForm
     {
-        List<Treatment> GetTreatments(); 
+        List<Treatment> GetTreatments(String searchContent); 
         void AddTreatmentToAppointment(Treatment newTreatment, UC_ListTreatments uc);
         void UpdateReport(String reportContent);
     }

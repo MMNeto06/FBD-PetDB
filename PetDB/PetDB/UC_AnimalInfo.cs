@@ -72,7 +72,7 @@ namespace PetDB
                 return;
 
             entity = "Consulta";
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(@PetId, NULL, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(@PetId, NULL, DEFAULT, NULL) ORDER BY [Data] DESC", cn);
             cmd.Parameters.AddWithValue("@PetId", _animal.Numero);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();

@@ -66,7 +66,7 @@ namespace PetDB
         {
             UC_NewTreatment uc = new UC_NewTreatment();
             uc.SetUCListTreatments(this);
-            allTreatments = mainForm.GetTreatments();
+            allTreatments = mainForm.GetTreatments(null);
             uc.LoadTreatmentsComboBox(allTreatments);
 
             PopUpForm popup = new PopUpForm(uc, "Editar Tratamento");

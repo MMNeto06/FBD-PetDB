@@ -21,12 +21,12 @@ namespace PetDB
 
         public ClinicaForm(Login loginPage, int nif) : base()
         {
-            InitializeComponent();
+            /*InitializeComponent();
             base.loginPage = loginPage;
             this.nif = nif;
             registarTabControl.TabPages.Remove(clinicaTabPage);
             medicoBaseControls();
-            registarToolStripMenuItem_Click(null, null); 
+            registarToolStripMenuItem_Click(null, null); */
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -61,7 +61,7 @@ namespace PetDB
             medicoVeterinarioTab_Click(sender, e); 
         }
 
-        protected override List<Vet> GetMedicos()
+        /*protected override List<Vet> GetMedicos()
         {
             if (!verifySGBDConnection())
                 return null;
@@ -92,7 +92,7 @@ namespace PetDB
             cn.Close();
 
             return vets;
-        }
+        }*/
 
         protected override void registarTabControl_onSelectedIndexChange(object sender, EventArgs e)
         {

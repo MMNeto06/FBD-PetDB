@@ -57,7 +57,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
             cardsFlowLayoutPanel.Controls.Clear();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(@OwnerNIF, DEFAULT) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(@OwnerNIF, DEFAULT, NULL) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@OwnerNIF", this.nif);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -99,7 +99,7 @@ namespace PetDB
 
             BindingList<Payment> payments = new BindingList<Payment>();
             dataGridView1.DataSource = payments;
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentInfo(@OwnerNIF, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentInfo(@OwnerNIF, DEFAULT, NULL) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@OwnerNIF", this.nif);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -171,7 +171,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetOwnerTable(@OwnerNIF, DEFAULT) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetOwnerTable(@OwnerNIF, DEFAULT, NULL) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@OwnerNIF", this.nif);
             SqlDataReader reader = cmd.ExecuteReader();

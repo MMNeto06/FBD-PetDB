@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Security.AccessControl;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 namespace PetDB
@@ -67,7 +68,7 @@ namespace PetDB
             registarTabControl.Visible = true;
             generalBaseControls();
             registarTabControl.SelectedIndex = 0;
-            SelecionarRegistarAbaInicial(sender, e); 
+            SelecionarRegistarAbaInicial(sender, e);
         }
 
         private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -107,7 +108,7 @@ namespace PetDB
             btnRestaurar.Visible = true;
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
-            registarTabControl.SelectedIndex = 0; 
+            registarTabControl.SelectedIndex = 0;
             clinicaVeterinariaTab_Click(sender, e);
         }
 
@@ -119,6 +120,7 @@ namespace PetDB
             okBtn.Visible = false;
             cancelBtn.Visible = false;
             btnRestaurar.Visible = false;
+            searchTextBox.Enabled = true;
         }
 
         protected void generalEditControls()
@@ -128,6 +130,7 @@ namespace PetDB
             remBtn.Visible = false;
             okBtn.Visible = true;
             cancelBtn.Visible = true;
+            searchTextBox.Enabled = false;
         }
 
         private void clinicaBaseControls()
@@ -515,7 +518,7 @@ namespace PetDB
                 return null;
 
             List<Med> meds = new List<Med>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionMedsById(@prescriptionID) ORDER BY Descricao", cn); 
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionMedsById(@prescriptionID) ORDER BY Descricao", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@prescriptionID", prescriptionId);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -541,7 +544,7 @@ namespace PetDB
                 return null;
 
             List<String> vets = new List<String>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetsBySpeciality(@specialityID) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetVetsBySpeciality(@specialityID) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@specialityID", especialidade);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -564,7 +567,7 @@ namespace PetDB
                 return null;
 
             List<String> animals = new List<String>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAnimalsBySpecie(@specieID) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAnimalsBySpecie(@specieID) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@specieID", especie);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -580,19 +583,28 @@ namespace PetDB
             return animals;
         }
 
-        private List<CliVet> GetClinicasVeterinarias()
+        private List<CliVet> GetClinicasVeterinarias(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(@IsActive) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetClinicTable(@IsActive, @Search) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             }
             else cmd.Parameters.AddWithValue("@IsActive", 1);
+
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -617,14 +629,20 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
+
             entity = "Clinica";
             clinicaBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
+                RestaurarControls();
 
             listBox1.Items.Clear();
 
-            List<CliVet> clinicas = GetClinicasVeterinarias();
+            List<CliVet> clinicas = GetClinicasVeterinarias(searchContent);
 
             foreach (var CV in clinicas)
             {
@@ -641,27 +659,33 @@ namespace PetDB
                 clinicaTelefoneText.Text = "";
                 clinicaEmailText.Text = "";
                 clinicaEnderecoText.Text = "";
-                return; 
+                return;
             }
 
             currentListIndex = 0;
             ShowClinicaVeterinaria();
         }
 
-        protected virtual List<Vet> GetMedicos()
+        protected virtual List<Vet> GetMedicos(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Vet> vets = new List<Vet>();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(NULL, NULL, @IsActive) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetVetInfo(@ClinicNIF, @VetOMV, @IsActive, @Search) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
-            if (tab == "Restaurar")
+            cmd.Parameters.Add("@ClinicNIF", SqlDbType.Int).Value = DBNull.Value;
+            cmd.Parameters.Add("@VetOMV", SqlDbType.Int).Value = DBNull.Value;
+            cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value =(tab == "Restaurar") ? 0 : 1;
+            if (!string.IsNullOrWhiteSpace(searchContent))
             {
-                cmd.Parameters.AddWithValue("@IsActive", 0);
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
             }
-            else cmd.Parameters.AddWithValue("@IsActive", 1);
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -686,14 +710,20 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
+
             entity = "Medico";
             medicoBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
+                RestaurarControls();
 
             listBox1.Items.Clear();
 
-            List<Vet> vets = GetMedicos();
+            List<Vet> vets = GetMedicos(searchContent);
 
             foreach (var v in vets)
                 listBox1.Items.Add(v);
@@ -716,18 +746,26 @@ namespace PetDB
             ShowVet();
         }
 
-        private List<Owner> GetDonos()
+        private List<Owner> GetDonos(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Owner> owners = new List<Owner>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetOwnerTable(NULL, @IsActive) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetOwnerTable(NULL, @IsActive, @Search) ORDER BY Nome", cn);
             if (tab == "Restaurar")
             {
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             }
             else cmd.Parameters.AddWithValue("@IsActive", 1);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -748,13 +786,17 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             entity = "Dono";
             donoBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
+                RestaurarControls();
 
-            List<Owner> owners = GetDonos();
+            List<Owner> owners = GetDonos(searchContent);
             listBox1.Items.Clear();
 
             foreach (var owner in owners)
@@ -778,17 +820,25 @@ namespace PetDB
             ShowOwner();
         }
 
-        private List<Pet> GetAnimais()
+        private List<Pet> GetAnimais(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Pet> pets = new List<Pet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(NULL, @IsActive) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPetInfo(NULL, @IsActive, @Search) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             else cmd.Parameters.AddWithValue("IsActive", 1);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -814,14 +864,20 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
+
             entity = "Animal";
             animalBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
+                RestaurarControls();
 
             listBox1.Items.Clear();
 
-            List<Pet> pets = GetAnimais();
+            List<Pet> pets = GetAnimais(searchContent);
 
             foreach (var p in pets)
                 listBox1.Items.Add(p);
@@ -845,16 +901,24 @@ namespace PetDB
             ShowPet();
         }
 
-        public List<Med> GetMeds()
+        public List<Med> GetMeds(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Med> meds = new List<Med>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetMedInfo(@IsActive) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetMedInfo(@IsActive, @Search) ORDER BY Nome", cn);
             if (tab == "Restaurar")
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             else cmd.Parameters.AddWithValue("@IsActive", 1);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -873,15 +937,19 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             entity = "Medicamento";
             medicamentoBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
+                RestaurarControls();
 
             listBox1.Items.Clear();
 
-            List<Med> meds = GetMeds();
+            List<Med> meds = GetMeds(searchContent);
 
             foreach (var m in meds)
                 listBox1.Items.Add(m);
@@ -901,18 +969,26 @@ namespace PetDB
             ShowMed();
         }
 
-        private List<Appointment> GetConsultas()
+        private List<Appointment> GetConsultas(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Appointment> consultas = new List<Appointment>();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(NULL, NULL, @IsActive) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(NULL, NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             else cmd.Parameters.AddWithValue("@IsActive", 1);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -935,13 +1011,19 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
+
             entity = "Consulta";
             consultaBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
+                RestaurarControls();
             listBox1.Items.Clear();
 
-            List<Appointment> consultas = GetConsultas();
+            List<Appointment> consultas = GetConsultas(searchContent);
 
             foreach (var c in consultas)
                 listBox1.Items.Add(c);
@@ -956,7 +1038,7 @@ namespace PetDB
                 consultaAnimalText.Text = "";
                 consultaMedicoText.Text = "";
                 btnVerTratamentos.Enabled = false;
-                btnConsultarRelatorio.Enabled = false; 
+                btnConsultarRelatorio.Enabled = false;
                 return;
             }
 
@@ -968,11 +1050,15 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             entity = "Pagamento";
             pagamentoBaseControls();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentInfo(NULL, @IsActive) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentInfo(NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
@@ -980,7 +1066,15 @@ namespace PetDB
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             }
             else cmd.Parameters.AddWithValue("@IsActive", 1);
-                  
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -1021,10 +1115,14 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             entity = "Prescricao";
             prescricaoBaseControls();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(NULL, NULL, @IsActive) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionInfo(NULL, NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
@@ -1032,7 +1130,14 @@ namespace PetDB
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             }
             else cmd.Parameters.AddWithValue("@IsActive", 1);
-
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -1051,7 +1156,7 @@ namespace PetDB
             if (listBox1.Items.Count <= 0)
             {
                 listBox1.Items.Add("Não existem prescrições inativas!");
-                prescricaoBtnVerMedicamentos.Enabled = false; 
+                prescricaoBtnVerMedicamentos.Enabled = false;
                 prescricaoNumeroText.Text = "";
                 prescricaoDataText.Text = "";
                 prescricaoAnimalText.Text = "";
@@ -1063,17 +1168,26 @@ namespace PetDB
             ShowPrescription();
         }
 
-        private List<Especialidade> GetEspecialidades()
+        private List<Especialidade> GetEspecialidades(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Especialidade> especialidades = new List<Especialidade>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecialityInfo(@IsActive) ORDER BY Descricao", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetSpecialityInfo(@IsActive, @Search) ORDER BY Descricao", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
-                cmd.Parameters.AddWithValue("@IsActive", 0); 
+                cmd.Parameters.AddWithValue("@IsActive", 0);
             else cmd.Parameters.AddWithValue("@IsActive", 1);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1093,12 +1207,16 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             entity = "Especialidade";
             especialidadeBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
-            List<Especialidade> especialidades = GetEspecialidades();
+                RestaurarControls();
+            List<Especialidade> especialidades = GetEspecialidades(searchContent);
 
             listBox1.Items.Clear();
 
@@ -1110,7 +1228,7 @@ namespace PetDB
             if (listBox1.Items.Count <= 0)
             {
                 listBox1.Items.Add("Não existem especialidades inativas!");
-                btnConsultarMedicos.Enabled = false; 
+                btnConsultarMedicos.Enabled = false;
                 especialidadeCodigoText.Text = "";
                 especialidadeDescricaoText.Text = "";
                 return;
@@ -1120,17 +1238,26 @@ namespace PetDB
             ShowEspecialidade();
         }
 
-        private List<Especie> GetEspecies()
+        private List<Especie> GetEspecies(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Especie> especies = new List<Especie>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecieInfo(@IsActive) ORDER BY Descricao", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetSpecieInfo(@IsActive, @Search) ORDER BY Descricao", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             else cmd.Parameters.AddWithValue("@IsActive", 1);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1148,12 +1275,16 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             entity = "Especie";
             especieBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
-            List<Especie> especies = GetEspecies();
+                RestaurarControls();
+            List<Especie> especies = GetEspecies(searchContent);
 
             listBox1.Items.Clear();
 
@@ -1164,7 +1295,7 @@ namespace PetDB
 
             if (listBox1.Items.Count <= 0)
             {
-                listBox1.Items.Add("Não existem especialidades inativas!");
+                listBox1.Items.Add("Não existem espécies inativas!");
                 btnConsultaAnimais.Enabled = false;
                 especieCodigoText.Text = "";
                 especieDescricaoText.Text = "";
@@ -1175,18 +1306,27 @@ namespace PetDB
             ShowEspecie();
         }
 
-        private List<PaymentMethod> GetMetodosPagamento()
+        private List<PaymentMethod> GetMetodosPagamento(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<PaymentMethod> methods = new List<PaymentMethod>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentMethods(@IsActive)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentMethods(@IsActive, @Search)", cn);
             if (tab == "Restaurar")
             {
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             }
             else cmd.Parameters.AddWithValue("@IsActive", 1);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1207,12 +1347,16 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             entity = "MetodoPagamento";
             metodoPagamentoBaseControls();
             if (tab == "Restaurar")
-                RestaurarControls(); 
-            List<PaymentMethod> methods = GetMetodosPagamento();
+                RestaurarControls();
+            List<PaymentMethod> methods = GetMetodosPagamento(searchContent);
 
             listBox1.Items.Clear();
 
@@ -1234,16 +1378,25 @@ namespace PetDB
             ShowMetodoPagamento();
         }
 
-        public List<Treatment> GetTreatments()
+        public List<Treatment> GetTreatments(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetTreatments(@IsActive)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetTreatments(@IsActive, @Search)", cn);
             if (tab == "Restaurar")
                 cmd.Parameters.AddWithValue("@IsActive", 0);
             else cmd.Parameters.AddWithValue("@IsActive", 1);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -1263,13 +1416,17 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             entity = "Tratamento";
             tratamentoBaseControls();
             if (tab == "Restaurar")
                 RestaurarControls();
 
-            List<Treatment> treatments = GetTreatments();
+            List<Treatment> treatments = GetTreatments(searchContent);
 
             listBox1.Items.Clear();
 
@@ -1281,7 +1438,7 @@ namespace PetDB
             if (listBox1.Items.Count <= 0)
             {
                 listBox1.Items.Add("Não existem tratamentos inativos!");
-                tratamentoBtnConsultas.Enabled = false; 
+                tratamentoBtnConsultas.Enabled = false;
                 tratamentoCodigoText.Text = "";
                 tratamentoDescricaoText.Text = "";
                 return;
@@ -1602,7 +1759,7 @@ namespace PetDB
 
             medicoEspecialidadeComboBox.Items.Clear();
 
-            List<Especialidade> especialidades = GetEspecialidades();
+            List<Especialidade> especialidades = GetEspecialidades(null);
 
             foreach (var e in especialidades)
             {
@@ -1632,7 +1789,7 @@ namespace PetDB
 
             cb.Items.Clear();
 
-            List<CliVet> clinicas = GetClinicasVeterinarias();
+            List<CliVet> clinicas = GetClinicasVeterinarias(null);
 
             foreach (var CV in clinicas)
             {
@@ -1686,7 +1843,7 @@ namespace PetDB
 
             animalEspecieComboBox.Items.Clear();
 
-            List<Especie> especies = GetEspecies();
+            List<Especie> especies = GetEspecies(null);
 
             foreach (var e in especies)
             {
@@ -1716,7 +1873,7 @@ namespace PetDB
 
             cb.Items.Clear();
 
-            List<Owner> owners = GetDonos();
+            List<Owner> owners = GetDonos(null);
 
             foreach (var o in owners)
             {
@@ -1746,7 +1903,7 @@ namespace PetDB
 
             cb.Items.Clear();
 
-            List<Pet> pets = GetAnimais();
+            List<Pet> pets = GetAnimais(null);
 
             foreach (var p in pets)
             {
@@ -1776,7 +1933,7 @@ namespace PetDB
 
             cb.Items.Clear();
 
-            List<Vet> vets = GetMedicos();
+            List<Vet> vets = GetMedicos(null);
 
             foreach (var v in vets)
             {
@@ -1806,7 +1963,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return appointmentId;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentAppointment(@PaymentId)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentAppointment(@PaymentId)", cn);
             cmd.Parameters.AddWithValue("@PaymentId", paymentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -1828,7 +1985,7 @@ namespace PetDB
 
             pagamentoConsultaComboBox.Items.Clear();
 
-            List<Appointment> consultas = GetConsultas();
+            List<Appointment> consultas = GetConsultas(null);
 
             foreach (var c in consultas)
             {
@@ -1882,7 +2039,7 @@ namespace PetDB
 
             pagamentoMetodoComboBox.Items.Clear();
 
-            List<PaymentMethod> methods = GetMetodosPagamento();
+            List<PaymentMethod> methods = GetMetodosPagamento(null);
 
             foreach (var m in methods)
             {
@@ -1956,20 +2113,20 @@ namespace PetDB
                     break;
                 case "Consulta":
                     consultaEditControls();
-                    consultaDateTimePicker.Value = GetDateTimeById("SELECT * FROM fn_GetAppointmentDateById(@appointmentID)", "@appointmentID", int.Parse(consultaIdText.Text));
+                    consultaDateTimePicker.Value = GetDateTimeById("SELECT * FROM dbo.fn_GetAppointmentDateById(@appointmentID)", "@appointmentID", int.Parse(consultaIdText.Text));
                     LoadAnimaisComboBox(consultaAnimaisComboBox, consultaAnimalText);
                     LoadMedicosComboBox(consultaMedicoComboBox, consultaMedicoText);
                     break;
                 case "Pagamento":
                     pagamentoEditControls();
-                    pagamentoDateTimePicker.Value = GetDateTimeById("SELECT * FROM fn_GetPaymentDate(@PaymentId)", "@PaymentId", int.Parse(pagamentoIdText.Text));
+                    pagamentoDateTimePicker.Value = GetDateTimeById("SELECT * FROM dbo.fn_GetPaymentDate(@PaymentId)", "@PaymentId", int.Parse(pagamentoIdText.Text));
                     LoadEstadoComboBox();
                     LoadMetodoComboBox();
                     LoadConsultasComboBox();
                     break;
                 case "Prescricao":
                     prescricaoEditControls();
-                    prescricaoDateTimePicker.Value = GetDateTimeById("SELECT * FROM fn_GetPrescriptionDate(@PrescriptionID)", "@PrescriptionId", int.Parse(prescricaoNumeroText.Text));
+                    prescricaoDateTimePicker.Value = GetDateTimeById("SELECT * FROM dbo.fn_GetPrescriptionDate(@PrescriptionID)", "@PrescriptionId", int.Parse(prescricaoNumeroText.Text));
                     LoadAnimaisComboBox(prescricaoAnimalComboBox, prescricaoAnimalText);
                     LoadMedicosComboBox(prescricaoMedicoComboBox, prescricaoMedicoText);
                     break;
@@ -2562,7 +2719,7 @@ namespace PetDB
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentTreatmentsById(@appointmentID) ORDER BY Descricao", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentTreatmentsById(@appointmentID) ORDER BY Descricao", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -2589,7 +2746,7 @@ namespace PetDB
                 return null;
 
             String reportContent = "";
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentReportById(@appointmentID)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentReportById(@appointmentID)", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -2780,7 +2937,7 @@ namespace PetDB
                 return null;
 
             List<String> payments = new List<String>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentsByMethod(@MethodID) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentsByMethod(@MethodID) ORDER BY [Data] DESC", cn);
             cmd.Parameters.AddWithValue("@MethodId", paymentMethodId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -2822,7 +2979,7 @@ namespace PetDB
                 return null;
 
             List<String> appointments = new List<String>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentsByTreatment(@TreatmentId)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentsByTreatment(@TreatmentId)", cn);
             cmd.Parameters.AddWithValue("@TreatmentId", treatmentId);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -2869,14 +3026,36 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
+
             listBox1.Items.Clear();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(@ClinicNIF, NULL, DEFAULT) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetVetInfo(@ClinicNIF, NULL, DEFAULT, @Search) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             CliVet cv = (CliVet)consultarMedicosClinicaComboBox.SelectedItem;
             cmd.Parameters.AddWithValue("@ClinicNIF", cv.NIF);
-            SqlDataReader reader = cmd.ExecuteReader();
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
 
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             while (reader.Read())
             {
                 Vet vet = new Vet();
@@ -2904,14 +3083,26 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             listBox1.Items.Clear();
 
             Owner o = (Owner)consultarAnimaisDonoComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(@OwnerNIF, DEFAULT) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPetInfo(@OwnerNIF, DEFAULT, @Search) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@OwnerNIF", int.Parse(o.NIF));
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -2942,14 +3133,27 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             listBox1.Items.Clear();
 
             CliVet cv = (CliVet)consultarAnimaisClinicaComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetsByClinic(@ClinicNIF) ORDER BY Dono", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPetsByClinic(@ClinicNIF, @Search) ORDER BY Dono", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@ClinicNIF", int.Parse(cv.NIF));
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -2980,13 +3184,26 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             listBox1.Items.Clear();
 
             Pet p = (Pet)consultarConsultasAnimalComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(@PetId, NULL, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(@PetId, NULL, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@PetId", int.Parse(p.Numero));
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -3042,14 +3259,28 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
 
             listBox1.Items.Clear();
 
             Vet v = (Vet)consultarConsultasMedicoComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(NULL, @VetOMV, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetAppointmentInfo(NULL, @VetOMV, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@VetOMV", int.Parse(v.NumOMV));
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -3105,14 +3336,27 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             listBox1.Items.Clear();
 
             Pet p = (Pet)consultarPrescricaoAnimalComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(@PetId, NULL, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionInfo(@PetId, NULL, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@PetId", int.Parse(p.Numero));
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -3154,13 +3398,26 @@ namespace PetDB
         {
             if (!verifySGBDConnection())
                 return;
-
+            String searchContent = null;
+            if (searchTextBox.Text.Length >= 3)
+            {
+                searchContent = searchTextBox.Text;
+            }
             listBox1.Items.Clear();
             Owner o = (Owner)consultarPagamentosDonoComboBox.SelectedItem;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPaymentInfo(@OwnerNIF, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPaymentInfo(@OwnerNIF, DEFAULT, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@OwnerNIF", o.NIF);
+            if (!string.IsNullOrWhiteSpace(searchContent))
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
+            }
+            else
+            {
+                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
+            }
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -3283,6 +3540,83 @@ namespace PetDB
 
             }
 
+        }
+
+        private void searchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if(tab != "Consultar")
+            {
+                switch (entity)
+                {
+                    case "Clinica":
+                        clinicaVeterinariaTab_Click(sender, e);
+                        break;
+                    case "Medico":
+                        medicoVeterinarioTab_Click(sender, e);
+                        break;
+                    case "Dono":
+                        donoTab_Click(sender, e);
+                        break;
+                    case "Animal":
+                        animalTab_Click(sender, e);
+                        break;
+                    case "Medicamento":
+                        medTab_Click(sender, e);
+                        break;
+                    case "Consulta":
+                        consultaTab_Click(sender, e);
+                        break;
+                    case "Pagamento":
+                        pagamentoTab_Click(sender, e);
+                        break;
+                    case "Prescricao":
+                        prescricaoTab_Click(sender, e);
+                        break;
+                    case "Especialidade":
+                        especialidadeTab_Click(sender, e);
+                        break;
+                    case "Especie":
+                        especieTab_Click(sender, e);
+                        break;
+                    case "MetodoPagamento":
+                        metodoPagamentoTab_Click(sender, e);
+                        break;
+                    case "Tratamento":
+                        tratamentoTab_Click(sender, e);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (entity)
+                {
+                    case "Medico":
+                        consultarMedicosClinicaComboBox_SelectedIndexChanged(sender, e);
+                        break;
+                    case "AnimalDono":
+                        consultarAnimaisDonoComboBox_SelectedIndexChanged(sender, e);
+                        break;
+                    case "AnimalClinica":
+                        consultarAnimaisClinicaComboBox_SelectedIndexChanged(sender, e);
+                        break;
+                    case "PrescricaoAnimal":
+                        consultarPrescricaoAnimalComboBox_SelectedIndexChanged(sender, e);
+                        break;
+                    case "PagamentoDono":
+                        consultarPagamentosDonoComboBox_SelectedIndexChanged(sender, e);
+                        break;
+                    case "ConsultaAnimal":
+                        consultarConsultasAnimalComboBox_SelectedIndexChanged(sender, e);
+                        break;
+                    case "ConsultaMedico":
+                        consultarConsultasMedicoComboBox_SelectedIndexChanged(sender, e);
+                        break;
+                    default: break;
+                }
+            }
+            
         }
     }
 }

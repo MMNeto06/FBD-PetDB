@@ -6,7 +6,7 @@ namespace PetDB
 {
     public interface IMedForm
     {
-        List<Med> GetMeds(); 
+        List<Med> GetMeds(String searchContent); 
         void AddMedToPrescription(Med newMed, UC_ListMeds uc);
     }
 }

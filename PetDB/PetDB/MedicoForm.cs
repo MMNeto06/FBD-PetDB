@@ -68,7 +68,7 @@ namespace PetDB
             consultaBaseControls();
             listBox1.Items.Clear();
 
-            List<Appointment> consultas = GetConsultas();
+            List<Appointment> consultas = GetConsultas(null);
 
             foreach (var c in consultas)
                 listBox1.Items.Add(c);
@@ -92,7 +92,7 @@ namespace PetDB
 
             entity = "Prescricao";
             prescricaoBaseControls();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(NULL, @VetOMV, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(NULL, @VetOMV, DEFAULT, NULL) ORDER BY [Data] DESC", cn);
             cmd.Parameters.AddWithValue("@VetOMV", omv);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
@@ -126,7 +126,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(NULL, @VetOMV, DEFAULT) ORDER BY NOME", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(NULL, @VetOMV, DEFAULT, NULL) ORDER BY NOME", cn);
             cmd.Parameters.AddWithValue("@VetOMV", omv);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -257,14 +257,14 @@ namespace PetDB
             cancelBtn.Visible = true;
         }
 
-        private List<Appointment> GetConsultas()
+        private List<Appointment> GetConsultas(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Appointment> consultas = new List<Appointment>();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(NULL, @VetOMV, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(DEFAULT, @VetOMV, DEFAULT, DEFAULT) ORDER BY [Data] DESC", cn);
             cmd.Parameters.AddWithValue("@VetOMV", omv);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -413,7 +413,7 @@ namespace PetDB
 
             cn.Close();
         }
-        public List<Med> GetMeds()
+        public List<Med> GetMeds(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
@@ -531,7 +531,7 @@ namespace PetDB
                 return null;
 
             List<Pet> pets = new List<Pet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(NULL, DEFAULT) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo() ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -761,13 +761,13 @@ namespace PetDB
             popup.ShowDialog();
         }
 
-        public List<Treatment> GetTreatments()
+        public List<Treatment> GetTreatments(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetTreatments(DEFAULT)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetTreatments()", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -883,7 +883,7 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable() ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
