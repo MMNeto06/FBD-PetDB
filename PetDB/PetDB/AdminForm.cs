@@ -31,6 +31,7 @@ namespace PetDB
             this.loginPage = loginPage;
             registarTabControl.Visible = true;
             consultarTabControl.Visible = false;
+            auditLogDataGrid.Visible = false; 
             clinicaBaseControls();
             registarToolStripMenuItem_Click(null, null);
         }
@@ -64,9 +65,11 @@ namespace PetDB
 
         protected void registarToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Size = new Size(679, 352);
             tab = "Registar";
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
+            auditLogDataGrid.Visible = false; 
             generalBaseControls();
             registarTabControl.SelectedIndex = 0;
             SelecionarRegistarAbaInicial(sender, e);
@@ -79,10 +82,12 @@ namespace PetDB
 
         private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Size = new Size(679, 352); 
             tab = "Consultar";
             option = "";
             consultarTabControl.Visible = true;
             registarTabControl.Visible = false;
+            auditLogDataGrid.Visible = false; 
             addBtn.Visible = false;
             editBtn.Visible = false;
             remBtn.Visible = false;
@@ -109,6 +114,7 @@ namespace PetDB
 
         private void restaurarToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Size = new Size(679, 352);
             tab = "Restaurar";
             option = "";
             RestaurarControls();
@@ -611,7 +617,7 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetClinicTable(@IsActive, @Search) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetClinicTable(DEFAULT, @IsActive, @Search) ORDER BY Nome", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
@@ -2192,7 +2198,7 @@ namespace PetDB
             }
         }
 
-        private bool ExecuteInsertSP(SqlCommand cmd)
+        protected bool ExecuteInsertSP(SqlCommand cmd)
         {
             try
             {
@@ -3730,12 +3736,46 @@ namespace PetDB
 
         private void auditLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!verifySGBDConnection())
+                return;
 
-        }
+            this.Size = new Size(1000, 500);
+            auditLogDataGrid.Visible = true;
 
-        private void clínicaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+            string query = @"
+                SELECT Entidade,
+                       Identificador,
+                       Descricao,
+                       ActionType AS Acao,
+                       ActionDate AS Data,
+                       ActionBy AS Utilizador
+                FROM PETDB_VW_AuditLog_Global
+                ORDER BY ActionDate DESC";
 
+            try
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(query, cn))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    auditLogDataGrid.DataSource = dt;
+                }
+
+                auditLogDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                auditLogDataGrid.ReadOnly = true;
+                auditLogDataGrid.AllowUserToAddRows = false;
+                auditLogDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Erro ao carregar o audit log:\n" + ex.Message,
+                    "Erro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
     }
 }

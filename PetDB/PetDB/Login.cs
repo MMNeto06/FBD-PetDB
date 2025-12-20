@@ -258,7 +258,7 @@ namespace PetDB
                     SqlCommand cmd;
                     if (idType == "Clinica")
                     {
-                        cmd = new SqlCommand("SELECT * FROM fn_GetClinicByNIF(@ClinicNIF)", cn);
+                        cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(@ClinicNIF, DEFAULT, DEFAULT)", cn);
                         cmd.Parameters.AddWithValue("@ClinicNIF", id);
                     }
                     else if (idType == "Medico")
@@ -431,7 +431,7 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT, NULL) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT, DEFAULT, NULL) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())

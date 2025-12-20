@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\medicoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\medicoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\clinicaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,8 +15,24 @@
       "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\clinicaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\clinicaform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\clinicaform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\medicoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\medicoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\medicoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\medicoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\adminform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|solutionrelative:petdb\\adminform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{05F946B4-2CF4-4553-6DAB-341FAFCF8E0B}|PetDB\\PetDB.csproj|c:\\users\\diosi\\documents\\github\\fbd-petdb\\petdb\\petdb\\imedform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,17 +46,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "AdminForm.cs",
               "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs",
               "RelativeDocumentMoniker": "PetDB\\AdminForm.cs",
               "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs",
               "RelativeToolTip": "PetDB\\AdminForm.cs",
-              "ViewState": "AgIAAHoOAAAAAAAAAAAiwJQOAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGACAAAAAAAAAAArwHwCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-20T11:59:03.542Z",
               "IsPinned": true,
@@ -56,20 +64,82 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "Login.cs",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\Login.cs",
+              "RelativeDocumentMoniker": "PetDB\\Login.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\Login.cs",
+              "RelativeToolTip": "PetDB\\Login.cs",
+              "ViewState": "AgIAAPoAAAAAAAAAAAAEwBIBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T22:09:38.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ClinicaForm.cs [Projeto]",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\ClinicaForm.cs",
+              "RelativeDocumentMoniker": "PetDB\\ClinicaForm.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\ClinicaForm.cs [Projeto]",
+              "RelativeToolTip": "PetDB\\ClinicaForm.cs [Projeto]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T22:08:54.635Z",
+              "EditorCaption": " [Projeto]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MedicoForm.cs [Projeto]",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\MedicoForm.cs",
+              "RelativeDocumentMoniker": "PetDB\\MedicoForm.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\MedicoForm.cs [Projeto]",
+              "RelativeToolTip": "PetDB\\MedicoForm.cs [Projeto]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T21:39:04.182Z",
+              "EditorCaption": " [Projeto]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AdminForm.cs [Projeto]",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs",
+              "RelativeDocumentMoniker": "PetDB\\AdminForm.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs [Projeto]",
+              "RelativeToolTip": "PetDB\\AdminForm.cs [Projeto]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T21:07:45.644Z",
+              "EditorCaption": " [Projeto]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AdminForm.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.Designer.cs",
+              "RelativeDocumentMoniker": "PetDB\\AdminForm.Designer.cs",
+              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.Designer.cs",
+              "RelativeToolTip": "PetDB\\AdminForm.Designer.cs",
+              "ViewState": "AgIAAM0JAAAAAAAAAAAqwOMJAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T21:07:36.596Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ClinicaForm.cs",
               "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\ClinicaForm.cs",
               "RelativeDocumentMoniker": "PetDB\\ClinicaForm.cs",
               "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\ClinicaForm.cs",
               "RelativeToolTip": "PetDB\\ClinicaForm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAM0BAAAAAAAAAAAWwOYBAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-20T12:30:46.315Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "IMedForm.cs",
               "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\IMedForm.cs",
               "RelativeDocumentMoniker": "PetDB\\IMedForm.cs",
@@ -77,58 +147,20 @@
               "RelativeToolTip": "PetDB\\IMedForm.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T15:09:34.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T15:09:34.247Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ClinicaForm.cs [Projeto]",
-              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\ClinicaForm.cs",
-              "RelativeDocumentMoniker": "PetDB\\ClinicaForm.cs",
-              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\ClinicaForm.cs [Projeto]",
-              "RelativeToolTip": "PetDB\\ClinicaForm.cs [Projeto]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T13:41:58.339Z",
-              "EditorCaption": " [Projeto]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ClinicaForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\ClinicaForm.Designer.cs",
-              "RelativeDocumentMoniker": "PetDB\\ClinicaForm.Designer.cs",
-              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\ClinicaForm.Designer.cs",
-              "RelativeToolTip": "PetDB\\ClinicaForm.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T12:31:25.26Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "MedicoForm.cs",
               "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\MedicoForm.cs",
               "RelativeDocumentMoniker": "PetDB\\MedicoForm.cs",
               "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\MedicoForm.cs",
               "RelativeToolTip": "PetDB\\MedicoForm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAI0DAAAAAAAAAAAQwJ4DAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-20T11:54:10.278Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AdminForm.cs [Projeto]",
-              "DocumentMoniker": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs",
-              "RelativeDocumentMoniker": "PetDB\\AdminForm.cs",
-              "ToolTip": "C:\\Users\\diosi\\Documents\\GitHub\\FBD-PetDB\\PetDB\\PetDB\\AdminForm.cs [Projeto]",
-              "RelativeToolTip": "PetDB\\AdminForm.cs [Projeto]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T11:51:33.535Z",
-              "EditorCaption": " [Projeto]"
             }
           ]
         }

@@ -165,14 +165,14 @@ AS
 GO 
 
 CREATE FUNCTION dbo.fn_GetClinicTable
-	(@IsActive BIT = 1, @Search varchar(64) = NULL)
+	(@ClinicNIF int = NULL, @IsActive BIT = 1, @Search varchar(64) = NULL)
 RETURNS TABLE
 AS 
 
 	RETURN( 
 
 	SELECT * FROM PETDB_ClinicaVeterinaria
-	WHERE IsActive = @IsActive AND (@Search IS NULL OR Nome LIKE '%' + @Search + '%')
+	WHERE (@ClinicNIF IS NULL OR NIF=@ClinicNIF) AND IsActive = @IsActive AND (@Search IS NULL OR Nome LIKE '%' + @Search + '%')
 	-- ORDER BY Nome;
 )
 GO
@@ -270,16 +270,6 @@ RETURN
     WHERE IsActive = 1
     -- ORDER BY Descricao
 );
-GO
-
-
-CREATE FUNCTION dbo.fn_GetClinicByNIF --pode ser trocada provavelmente
-	(@ClinicNIF int)
-RETURNS TABLE
-AS
-	RETURN(
-	SELECT * FROM PETDB_ClinicaVeterinaria WHERE NIF=@ClinicNIF AND IsActive = 1
-)
 GO
 
 CREATE FUNCTION dbo.fn_GetMedicByOMV --pode ser trocada provavelmente

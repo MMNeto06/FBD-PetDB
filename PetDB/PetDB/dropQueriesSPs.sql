@@ -18,7 +18,6 @@ DROP FUNCTION dbo.fn_GetOwnerTable;
 DROP FUNCTION dbo.fn_GetPetsByClinic;
 DROP FUNCTION dbo.fn_GetPrescriptionsByPet;
 DROP FUNCTION dbo.fn_GetSpecialtyTable;
-DROP FUNCTION dbo.fn_GetClinicByNIF;
 DROP FUNCTION dbo.fn_GetMedicByOMV;
 DROP FUNCTION dbo.fn_GetPaymentAppointment;
 DROP FUNCTION dbo.fn_GetPaymentMethods;

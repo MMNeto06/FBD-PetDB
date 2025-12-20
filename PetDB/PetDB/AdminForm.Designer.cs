@@ -260,7 +260,6 @@ namespace PetDB
             btnRestaurar = new Button();
             searchTextBox = new TextBox();
             auditLogDataGrid = new DataGridView();
-            clínicaToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             registarTabControl.SuspendLayout();
             clinicaTabPage.SuspendLayout();
@@ -327,7 +326,6 @@ namespace PetDB
             // 
             // auditLogToolStripMenuItem
             // 
-            auditLogToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { clínicaToolStripMenuItem });
             auditLogToolStripMenuItem.Name = "auditLogToolStripMenuItem";
             auditLogToolStripMenuItem.Size = new Size(71, 20);
             auditLogToolStripMenuItem.Text = "Audit Log";
@@ -2528,15 +2526,8 @@ namespace PetDB
             auditLogDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             auditLogDataGrid.Location = new Point(10, 25);
             auditLogDataGrid.Name = "auditLogDataGrid";
-            auditLogDataGrid.Size = new Size(642, 280);
+            auditLogDataGrid.Size = new Size(982, 468);
             auditLogDataGrid.TabIndex = 24;
-            // 
-            // clínicaToolStripMenuItem
-            // 
-            clínicaToolStripMenuItem.Name = "clínicaToolStripMenuItem";
-            clínicaToolStripMenuItem.Size = new Size(180, 22);
-            clínicaToolStripMenuItem.Text = "Clínica";
-            clínicaToolStripMenuItem.Click += clínicaToolStripMenuItem_Click;
             // 
             // AdminForm
             // 
@@ -2844,8 +2835,7 @@ namespace PetDB
         protected ToolStripMenuItem restaurarToolStripMenuItem;
         protected MenuStrip menuStrip1;
         protected TextBox medicoClinicaText;
-        private ToolStripMenuItem auditLogToolStripMenuItem;
         private DataGridView auditLogDataGrid;
-        private ToolStripMenuItem clínicaToolStripMenuItem;
+        protected ToolStripMenuItem auditLogToolStripMenuItem;
     }
 }

@@ -264,7 +264,7 @@ namespace PetDB
 
             List<Appointment> consultas = new List<Appointment>();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(DEFAULT, @VetOMV, DEFAULT, DEFAULT) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(DEFAULT, @VetOMV, DEFAULT, DEFAULT, DEFAULT) ORDER BY [Data] DESC", cn);
             cmd.Parameters.AddWithValue("@VetOMV", omv);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -883,7 +883,7 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable() ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT, DEFAULT) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -908,7 +908,7 @@ namespace PetDB
                 return null;
 
             List<Especialidade> especialidades = new List<Especialidade>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecialityInfo() ORDER BY Descricao", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecialityInfo(DEFAULT, DEFAULT) ORDER BY Descricao", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())

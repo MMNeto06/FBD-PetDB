@@ -24,17 +24,25 @@ namespace PetDB
             base.nif = this.nif;
             this.Text = "Bem-Vindo " + GetThisClinicName();
             restaurarToolStripMenuItem.Text = "Histórico";
+            auditLogToolStripMenuItem.Visible = false;
+            auditLogToolStripMenuItem.Enabled = false;
             btnRestaurar.Visible = false;
-            medicoClinicaComboBox.Visible = false; 
+            medicoClinicaComboBox.Visible = false;
             registarTabControl.TabPages.Remove(clinicaTabPage);
             consultarTabControl.TabPages.Remove(consultarVetCliTabPage);
             consultarTabControl.TabPages.Remove(consultarAnimaisClinicaTabPage);
+            ToolStripMenuItem perfilItem = new ToolStripMenuItem("Perfil");
+            perfilItem.Name = "perfilToolStripMenuItem";
+            perfilItem.Alignment = ToolStripItemAlignment.Left;
+            perfilItem.Click += new EventHandler(perfilToolStripMenuItem_Click);
+            this.menuStrip1.Items.Add(perfilItem);
+            perfilPanel.Visible = false;
             medicoBaseControls();
             registarToolStripMenuItem_Click(null, null);
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnFormClosing(e); 
+            base.OnFormClosing(e);
         }
 
         private SqlConnection getSGBDConnection()
@@ -70,12 +78,12 @@ namespace PetDB
                     return cv.Nome;
             }
 
-            return ""; 
+            return "";
         }
 
         protected override void SelecionarRegistarAbaInicial(object sender, EventArgs e)
         {
-            medicoVeterinarioTab_Click(sender, e); 
+            medicoVeterinarioTab_Click(sender, e);
         }
 
         protected override void MedicoClinicaComboBoxVisible()
@@ -85,7 +93,7 @@ namespace PetDB
 
         protected override void MedicoClinicaNomeTextEnabled()
         {
-            medicoClinicaText.Enabled = false; 
+            medicoClinicaText.Enabled = false;
         }
 
         protected override void MedicoClinicaText()
@@ -402,6 +410,81 @@ namespace PetDB
         protected override void RestaurarBtnVisible()
         {
             btnRestaurar.Visible = false;
+        }
+
+        private void FillClinicInfo()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetClinicTable(@ClinicNIF, DEFAULT, DEFAULT) ORDER BY Nome", cn);
+            cmd.Parameters.AddWithValue("@ClinicNIF", this.nif);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                clinicaPerfilNomeText.Text = reader["Nome"].ToString();
+                clinicaPerfilTelefoneText.Text = reader["Telefone"].ToString();
+                clinicaPerfilEmailText.Text = reader["Email"].ToString();
+                clinicaPerfilEnderecoText.Text = reader["Endereco"].ToString();
+            }
+
+            reader.Close();
+            cn.Close();
+        }
+
+        private void perfilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            perfilPanel.Visible = true;
+            clinicaPerfilBtnCancelar.Visible = false;
+            clinicaPerfilBtnOK.Visible = false;
+            clinicaPerfilNomeText.Enabled = false;
+            clinicaPerfilTelefoneText.Enabled = false;
+            clinicaPerfilEmailText.Enabled = false;
+            clinicaPerfilEnderecoText.Enabled = false;
+            FillClinicInfo();
+        }
+
+        private void clinicaPerfilBtnEditar_Click(object sender, EventArgs e)
+        {
+            clinicaPerfilBtnCancelar.Visible = true;
+            clinicaPerfilBtnOK.Visible = true;
+            clinicaPerfilNomeText.Enabled = true;
+            clinicaPerfilTelefoneText.Enabled = true;
+            clinicaPerfilEmailText.Enabled = true;
+            clinicaPerfilEnderecoText.Enabled = true;
+        }
+
+        private void UpdateClinicInfo()
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SP_UpdateClinic", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ClinicNIF", this.nif);
+            cmd.Parameters.AddWithValue("@ClinicName", clinicaPerfilNomeText.Text);
+            cmd.Parameters.AddWithValue("@ClinicPhone", clinicaPerfilTelefoneText.Text);
+            cmd.Parameters.AddWithValue("@ClinicEmail", clinicaPerfilEmailText.Text);
+            cmd.Parameters.AddWithValue("@ClinicAddress", clinicaPerfilEnderecoText.Text);
+
+            if (ExecuteInsertSP(cmd))
+            {
+                MessageBox.Show("Informações atualizadas com sucesso!");
+            }
+
+            cn.Close();
+        }
+
+        private void clinicaPerfilBtnCancelar_Click(object sender, EventArgs e)
+        {
+            perfilToolStripMenuItem_Click(sender, e);
+        }
+
+        private void clinicaPerfilBtnOK_Click(object sender, EventArgs e)
+        {
+            UpdateClinicInfo();
+            perfilToolStripMenuItem_Click(sender, e); 
         }
     }
 }
