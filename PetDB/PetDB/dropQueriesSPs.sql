@@ -21,4 +21,5 @@ DROP FUNCTION dbo.fn_GetTreatments;
 DROP FUNCTION dbo.fn_GetPrescriptionDate;
 DROP FUNCTION dbo.fn_GetPaymentsByMethod;
 DROP FUNCTION dbo.fn_GetAppointmentsByTreatment;
+DROP FUNCTION dbo.fn_GetPetsByClinic; 
 GO

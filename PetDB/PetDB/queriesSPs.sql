@@ -280,3 +280,19 @@ AS
 	WHERE ct.CodigoTratamento = @TreatmentId AND c.IsActive = 1
 )
 GO
+
+CREATE FUNCTION dbo.fn_GetPetsByClinic
+		(@ClinicNIF int, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
+RETURNS TABLE
+AS
+ 
+	RETURN( 
+	SELECT a.Numero, a.Nome, a.DataNascimento, a.Peso, a.Sexo, d.Nome as Dono, e.Descricao as Especie , d.NIF as DonoNIF
+	FROM PETDB_Animal as a
+	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
+	JOIN PETDB_Consulta as c ON a.Numero=Animal
+	JOIN PETDB_MedicoVeterinario as m ON c.Medico=m.NumOMV
+	JOIN PETDB_Dono as d ON d.NIF = a.Dono
+	WHERE m.Clinica=@ClinicNIF AND a.IsActive = @IsActive AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%')
+)
+GO
