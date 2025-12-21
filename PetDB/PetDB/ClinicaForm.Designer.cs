@@ -48,10 +48,27 @@
             perfilPanel.SuspendLayout();
             SuspendLayout();
             // 
+            // clinicaTabPage
+            // 
+            clinicaTabPage.Location = new Point(4, 64);
+            clinicaTabPage.Margin = new Padding(2, 2, 2, 2);
+            clinicaTabPage.Padding = new Padding(2, 2, 2, 2);
+            clinicaTabPage.Size = new Size(323, 156);
+            // 
             // listBox1
             // 
             listBox1.Items.AddRange(new object[] { resources.GetObject("listBox1.Items"), resources.GetObject("listBox1.Items1"), resources.GetObject("listBox1.Items2"), resources.GetObject("listBox1.Items3"), resources.GetObject("listBox1.Items4"), resources.GetObject("listBox1.Items5"), resources.GetObject("listBox1.Items6"), resources.GetObject("listBox1.Items7"), resources.GetObject("listBox1.Items8"), resources.GetObject("listBox1.Items9") });
-            listBox1.Size = new Size(355, 224);
+            listBox1.Size = new Size(285, 169);
+            // 
+            // consultarVetCliTabPage
+            // 
+            consultarVetCliTabPage.Location = new Point(4, 64);
+            consultarVetCliTabPage.Size = new Size(346, 207);
+            // 
+            // consultarAnimaisClinicaTabPage
+            // 
+            consultarAnimaisClinicaTabPage.Location = new Point(4, 64);
+            consultarAnimaisClinicaTabPage.Size = new Size(346, 207);
             // 
             // toolStripMenuItem1
             // 
@@ -75,16 +92,17 @@
             perfilPanel.Controls.Add(clinicaPerfilEmailText);
             perfilPanel.Controls.Add(clinicaPerfilTelefoneText);
             perfilPanel.Location = new Point(10, 25);
-            perfilPanel.Margin = new Padding(3, 2, 3, 2);
+            perfilPanel.Margin = new Padding(2, 2, 2, 2);
             perfilPanel.Name = "perfilPanel";
-            perfilPanel.Size = new Size(666, 290);
+            perfilPanel.Size = new Size(644, 291);
             perfilPanel.TabIndex = 25;
             // 
             // clinicaPerfilBtnOK
             // 
-            clinicaPerfilBtnOK.Location = new Point(548, 229);
+            clinicaPerfilBtnOK.Location = new Point(438, 183);
+            clinicaPerfilBtnOK.Margin = new Padding(2, 2, 2, 2);
             clinicaPerfilBtnOK.Name = "clinicaPerfilBtnOK";
-            clinicaPerfilBtnOK.Size = new Size(84, 28);
+            clinicaPerfilBtnOK.Size = new Size(67, 22);
             clinicaPerfilBtnOK.TabIndex = 50;
             clinicaPerfilBtnOK.Text = "Ok";
             clinicaPerfilBtnOK.UseVisualStyleBackColor = true;
@@ -92,9 +110,10 @@
             // 
             // clinicaPerfilBtnCancelar
             // 
-            clinicaPerfilBtnCancelar.Location = new Point(375, 229);
+            clinicaPerfilBtnCancelar.Location = new Point(300, 183);
+            clinicaPerfilBtnCancelar.Margin = new Padding(2, 2, 2, 2);
             clinicaPerfilBtnCancelar.Name = "clinicaPerfilBtnCancelar";
-            clinicaPerfilBtnCancelar.Size = new Size(91, 27);
+            clinicaPerfilBtnCancelar.Size = new Size(73, 22);
             clinicaPerfilBtnCancelar.TabIndex = 49;
             clinicaPerfilBtnCancelar.Text = "Cancelar";
             clinicaPerfilBtnCancelar.UseVisualStyleBackColor = true;
@@ -102,9 +121,10 @@
             // 
             // clinicaPerfilBtnEditar
             // 
-            clinicaPerfilBtnEditar.Location = new Point(459, 199);
+            clinicaPerfilBtnEditar.Location = new Point(367, 159);
+            clinicaPerfilBtnEditar.Margin = new Padding(2, 2, 2, 2);
             clinicaPerfilBtnEditar.Name = "clinicaPerfilBtnEditar";
-            clinicaPerfilBtnEditar.Size = new Size(86, 28);
+            clinicaPerfilBtnEditar.Size = new Size(69, 22);
             clinicaPerfilBtnEditar.TabIndex = 48;
             clinicaPerfilBtnEditar.Text = "Editar";
             clinicaPerfilBtnEditar.UseVisualStyleBackColor = true;
@@ -114,89 +134,90 @@
             // 
             panelTitleLabel.AutoSize = true;
             panelTitleLabel.Font = new Font("Segoe UI", 15F);
-            panelTitleLabel.Location = new Point(15, 21);
+            panelTitleLabel.Location = new Point(12, 17);
+            panelTitleLabel.Margin = new Padding(2, 0, 2, 0);
             panelTitleLabel.Name = "panelTitleLabel";
-            panelTitleLabel.Size = new Size(143, 35);
+            panelTitleLabel.Size = new Size(111, 28);
             panelTitleLabel.TabIndex = 47;
             panelTitleLabel.Text = "O seu perfil";
             // 
             // label32
             // 
             label32.AutoSize = true;
-            label32.Location = new Point(17, 191);
+            label32.Location = new Point(14, 153);
             label32.Margin = new Padding(2, 0, 2, 0);
             label32.Name = "label32";
-            label32.Size = new Size(71, 20);
+            label32.Size = new Size(56, 15);
             label32.TabIndex = 46;
             label32.Text = "Endereço";
             // 
             // clinicaPerfilEnderecoText
             // 
-            clinicaPerfilEnderecoText.Location = new Point(17, 209);
+            clinicaPerfilEnderecoText.Location = new Point(14, 167);
             clinicaPerfilEnderecoText.Margin = new Padding(2);
             clinicaPerfilEnderecoText.Name = "clinicaPerfilEnderecoText";
-            clinicaPerfilEnderecoText.Size = new Size(290, 27);
+            clinicaPerfilEnderecoText.Size = new Size(233, 23);
             clinicaPerfilEnderecoText.TabIndex = 45;
             // 
             // label33
             // 
             label33.AutoSize = true;
-            label33.Location = new Point(17, 55);
+            label33.Location = new Point(14, 44);
             label33.Margin = new Padding(2, 0, 2, 0);
             label33.Name = "label33";
-            label33.Size = new Size(50, 20);
+            label33.Size = new Size(40, 15);
             label33.TabIndex = 40;
             label33.Text = "Nome";
             // 
             // clinicaPerfilNomeText
             // 
-            clinicaPerfilNomeText.Location = new Point(17, 73);
+            clinicaPerfilNomeText.Location = new Point(14, 58);
             clinicaPerfilNomeText.Margin = new Padding(2);
             clinicaPerfilNomeText.Name = "clinicaPerfilNomeText";
-            clinicaPerfilNomeText.Size = new Size(290, 27);
+            clinicaPerfilNomeText.Size = new Size(233, 23);
             clinicaPerfilNomeText.TabIndex = 38;
             // 
             // label34
             // 
             label34.AutoSize = true;
-            label34.Location = new Point(15, 98);
+            label34.Location = new Point(12, 78);
             label34.Margin = new Padding(2, 0, 2, 0);
             label34.Name = "label34";
-            label34.Size = new Size(66, 20);
+            label34.Size = new Size(52, 15);
             label34.TabIndex = 42;
             label34.Text = "Telefone";
             // 
             // label35
             // 
             label35.AutoSize = true;
-            label35.Location = new Point(17, 146);
+            label35.Location = new Point(14, 117);
             label35.Margin = new Padding(2, 0, 2, 0);
             label35.Name = "label35";
-            label35.Size = new Size(46, 20);
+            label35.Size = new Size(36, 15);
             label35.TabIndex = 44;
             label35.Text = "Email";
             // 
             // clinicaPerfilEmailText
             // 
-            clinicaPerfilEmailText.Location = new Point(17, 164);
+            clinicaPerfilEmailText.Location = new Point(14, 131);
             clinicaPerfilEmailText.Margin = new Padding(2);
             clinicaPerfilEmailText.Name = "clinicaPerfilEmailText";
-            clinicaPerfilEmailText.Size = new Size(292, 27);
+            clinicaPerfilEmailText.Size = new Size(234, 23);
             clinicaPerfilEmailText.TabIndex = 43;
             // 
             // clinicaPerfilTelefoneText
             // 
-            clinicaPerfilTelefoneText.Location = new Point(18, 116);
+            clinicaPerfilTelefoneText.Location = new Point(14, 93);
             clinicaPerfilTelefoneText.Margin = new Padding(2);
             clinicaPerfilTelefoneText.Name = "clinicaPerfilTelefoneText";
-            clinicaPerfilTelefoneText.Size = new Size(292, 27);
+            clinicaPerfilTelefoneText.Size = new Size(234, 23);
             clinicaPerfilTelefoneText.TabIndex = 41;
             // 
             // ClinicaForm
             // 
-            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(818, 388);
+            ClientSize = new Size(654, 310);
             Controls.Add(perfilPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ClinicaForm";
