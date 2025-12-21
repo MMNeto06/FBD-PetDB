@@ -1,0 +1,14 @@
+DROP INDEX IX_PETDB_Animal_Dono ON PETDB_Animal;
+DROP INDEX IX_PETDB_Animal_Especie ON PETDB_Animal;
+DROP INDEX IX_PETDB_Medico_Clinica ON PETDB_MedicoVeterinario;
+DROP INDEX IX_PETDB_Medico_Especialidade ON PETDB_MedicoVeterinario;
+DROP INDEX IX_PETDB_Consulta_Animal ON PETDB_Consulta;
+DROP INDEX IX_PETDB_Consulta_Medico ON PETDB_Consulta;
+DROP INDEX IX_PETDB_Dono_Nome ON PETDB_Dono;
+DROP INDEX IX_PETDB_Clinica_Nome ON PETDB_ClinicaVeterinaria;
+DROP INDEX IX_PETDB_ConsultaTratamento_Codigo ON PETDB_ConsultaTratamento;
+DROP INDEX IX_PETDB_PrescricaoMed_Codigo ON PETDB_PrescricaoMedicamento;
+DROP INDEX IX_PETDB_Pagamento_Ativo_Estado ON PETDB_Pagamento;
+DROP INDEX IX_PETDB_Pagamento_BuscaRelatorio ON PETDB_Pagamento;
+DROP INDEX IX_PETDB_Prescricao_Animal ON PETDB_Prescricao;
+DROP INDEX IX_PETDB_Prescricao ON PETDB_Prescricao;
