@@ -139,10 +139,12 @@ CREATE TABLE PETDB_Prescricao(
 	Numero int PRIMARY KEY, 
 	[Data] date NOT NULL, 
 	Animal int NOT NULL, 
+	VetOMV int NOT NULL,
 	IsActive BIT NOT NULL DEFAULT 1, 
 	DeletedAt DATETIME NULL, 
 	DeletedBy VARCHAR(64) NULL,
-	FOREIGN KEY (Animal) REFERENCES PETDB_Animal(Numero)
+	FOREIGN KEY (Animal) REFERENCES PETDB_Animal(Numero), 
+	FOREIGN KEY (VetOMV) REFERENCES PETDB_MedicoVeterinario(NumOMV)
 );
 GO 
 
@@ -163,13 +165,4 @@ CREATE TABLE PETDB_PrescricaoMedicamento(
 	FOREIGN KEY (NumeroPrescricao) REFERENCES PETDB_Prescricao(Numero),
 	FOREIGN KEY (CodigoMedicamento) REFERENCES PETDB_Medicamento(Codigo)
 );
-GO
-
-CREATE TABLE PETDB_PrescricaoMedico (
-	NumeroPrescricao int, 
-	NumeroOMVMedico int, 
-	PRIMARY KEY (NumeroPrescricao, NumeroOMVMedico), 
-	FOREIGN KEY (NumeroPrescricao) REFERENCES PETDB_Prescricao(Numero), 
-	FOREIGN KEY (NumeroOMVMedico) REFERENCES PETDB_MedicoVeterinario(NumOMV)
-); 
 GO

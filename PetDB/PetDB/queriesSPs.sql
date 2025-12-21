@@ -68,8 +68,7 @@ AS
 	SELECT p.Numero, p.[Data], a.Nome as Animal, m.Nome as Medico
 	FROM PETDB_Prescricao as p 
 	JOIN PETDB_Animal as a ON p.Animal = a.Numero
-	JOIN PETDB_PrescricaoMedico as pm ON p.Numero = pm.NumeroPrescricao
-	JOIN PETDB_MedicoVeterinario as m ON pm.NumeroOMVMedico = m.NumOMV
+	JOIN PETDB_MedicoVeterinario as m ON p.VetOMV = m.NumOMV
 	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR m.NumOMV = @VetOMV) AND (@ClinicNIF IS NULL OR m.Clinica = @ClinicNIF)
 	AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND p.IsActive = @IsActive
 ) 

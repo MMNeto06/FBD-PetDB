@@ -1,5 +1,5 @@
 DROP TABLE PETDB_PrescricaoMedicamento;
-DROP TABLE PETDB_PrescricaoMedico;
+--DROP TABLE PETDB_PrescricaoMedico;
 DROP TABLE PETDB_Medicamento;
 DROP TABLE PETDB_Prescricao;
 DROP TABLE PETDB_Pagamento;
