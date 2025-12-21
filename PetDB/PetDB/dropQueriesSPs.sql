@@ -1,7 +1,6 @@
 DROP FUNCTION dbo.fn_GetMedInfo;
 DROP FUNCTION dbo.fn_GetAnimalsBySpecie;
 DROP FUNCTION dbo.fn_GetSpecieInfo;
-DROP FUNCTION dbo.fn_GetSpecieName;
 DROP FUNCTION dbo.fn_GetSpecialityInfo;
 DROP FUNCTION dbo.fn_GetVetsBySpeciality;
 DROP FUNCTION dbo.fn_GetPrescriptionMedsById;
@@ -15,17 +14,11 @@ DROP FUNCTION dbo.fn_GetClinicTable;
 DROP FUNCTION dbo.fn_GetVetInfo;
 DROP FUNCTION dbo.fn_GetPetInfo;
 DROP FUNCTION dbo.fn_GetOwnerTable;
-DROP FUNCTION dbo.fn_GetPetsByClinic;
-DROP FUNCTION dbo.fn_GetPrescriptionsByPet;
-DROP FUNCTION dbo.fn_GetSpecialtyTable;
-DROP FUNCTION dbo.fn_GetMedicByOMV;
 DROP FUNCTION dbo.fn_GetPaymentAppointment;
 DROP FUNCTION dbo.fn_GetPaymentMethods;
 DROP FUNCTION dbo.fn_GetPaymentDate;
 DROP FUNCTION dbo.fn_GetTreatments;
-DROP FUNCTION dbo.fn_GetMostRecentAppointmentId;
 DROP FUNCTION dbo.fn_GetPrescriptionDate;
 DROP FUNCTION dbo.fn_GetPaymentsByMethod;
 DROP FUNCTION dbo.fn_GetAppointmentsByTreatment;
-DROP FUNCTION dbo.fn_GetOwnersByClinic; 
 GO

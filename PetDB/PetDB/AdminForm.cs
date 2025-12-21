@@ -17,7 +17,7 @@ namespace PetDB
         private int currentListIndex;
         protected Login loginPage;
         private String option = "";
-        private String entity = "";
+        protected String entity = "";
         protected String tab = "";
         protected int nif;
 
@@ -120,15 +120,20 @@ namespace PetDB
             RestaurarControls();
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
+            auditLogDataGrid.Visible = false; 
             registarTabControl.SelectedIndex = 0;
             SelecionarRegistarAbaInicial(sender, e);
         }
 
+        protected virtual void AtualizarBotoesAcao()
+        {
+            addBtn.Visible = editBtn.Visible = remBtn.Visible = true;
+        }
+
+
         protected void generalBaseControls()
         {
-            addBtn.Visible = true;
-            editBtn.Visible = true;
-            remBtn.Visible = true;
+            AtualizarBotoesAcao();
             okBtn.Visible = false;
             cancelBtn.Visible = false;
             btnRestaurar.Visible = false;
@@ -774,7 +779,7 @@ namespace PetDB
             ShowVet();
         }
 
-        protected virtual List<Owner> GetDonos(String searchContent)
+        private List<Owner> GetDonos(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
@@ -848,7 +853,7 @@ namespace PetDB
             ShowOwner();
         }
 
-        protected virtual List<Pet> GetAnimais(String searchContent)
+        private List<Pet> GetAnimais(String searchContent)
         {
             if (!verifySGBDConnection())
                 return null;
@@ -1161,7 +1166,7 @@ namespace PetDB
                 return null;
 
             List<Prescription> prescriptions = new List<Prescription>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionInfo(NULL, NULL, @IsActive, @Search) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionInfo(NULL, NULL, DEFAULT, @IsActive, @Search) ORDER BY [Data] DESC", cn);
             cmd.CommandType = CommandType.Text;
             if (tab == "Restaurar")
             {
@@ -1186,7 +1191,7 @@ namespace PetDB
                 prescription.Numero = reader["Numero"].ToString();
                 prescription.Data = ((DateTime)reader["Data"]).ToString("dd/MM/yyyy");
                 prescription.Animal = reader["Animal"].ToString();
-                prescription.Medico = reader["Medico"].ToString();
+                prescription.Medico = reader["Medico"].ToString();  
                 prescriptions.Add(prescription);
             }
             reader.Close();
@@ -2212,12 +2217,12 @@ namespace PetDB
             }
         }
 
-        private void OnInfoMessage(object sender, SqlInfoMessageEventArgs e)
+        protected void OnInfoMessage(object sender, SqlInfoMessageEventArgs e)
         {
             MessageBox.Show(e.Message, "Info do SQL Server", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void DeleteTuples(String sp, int pk, String param)
+        protected virtual void DeleteTuples(String sp, int pk, String param)
         {
             if (!verifySGBDConnection())
                 return;

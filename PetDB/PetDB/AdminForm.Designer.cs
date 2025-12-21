@@ -2523,6 +2523,7 @@ namespace PetDB
             // 
             // auditLogDataGrid
             // 
+            auditLogDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             auditLogDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             auditLogDataGrid.Location = new Point(10, 25);
             auditLogDataGrid.Name = "auditLogDataGrid";

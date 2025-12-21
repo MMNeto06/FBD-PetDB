@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PetDB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53d7043e2a5649ed9bbc9e3b73a99d815304ab9c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+706037f7af3fd5c3dc4a3fe4c4a2bb580f19c17f")]
 [assembly: System.Reflection.AssemblyProductAttribute("PetDB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PetDB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

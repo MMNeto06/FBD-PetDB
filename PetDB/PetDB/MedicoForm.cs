@@ -92,8 +92,9 @@ namespace PetDB
 
             entity = "Prescricao";
             prescricaoBaseControls();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(NULL, @VetOMV, DEFAULT, NULL) ORDER BY [Data] DESC", cn);
-            cmd.Parameters.AddWithValue("@VetOMV", omv);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPrescriptionInfo(NULL, @VetOMV, DEFAULT, DEFAULT, NULL) ORDER BY [Data] DESC", cn);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.Add("@VetOMV", SqlDbType.Int).Value = this.omv;
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
 
@@ -531,7 +532,7 @@ namespace PetDB
                 return null;
 
             List<Pet> pets = new List<Pet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo() ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPetInfo(DEFAULT, DEFAULT, DEFAULT) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())

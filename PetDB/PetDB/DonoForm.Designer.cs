@@ -60,35 +60,36 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, animaisToolStripMenuItem, pagamentosToolStripMenuItem, perfilToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 28);
+            menuStrip1.Padding = new Padding(5, 2, 0, 2);
+            menuStrip1.Size = new Size(700, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(39, 24);
+            toolStripMenuItem1.Size = new Size(32, 20);
             toolStripMenuItem1.Text = "<-";
             toolStripMenuItem1.Click += backBtn_Click;
             // 
             // animaisToolStripMenuItem
             // 
             animaisToolStripMenuItem.Name = "animaisToolStripMenuItem";
-            animaisToolStripMenuItem.Size = new Size(76, 24);
+            animaisToolStripMenuItem.Size = new Size(62, 20);
             animaisToolStripMenuItem.Text = "Animais";
             animaisToolStripMenuItem.Click += animaisToolStripMenuItem_Click;
             // 
             // pagamentosToolStripMenuItem
             // 
             pagamentosToolStripMenuItem.Name = "pagamentosToolStripMenuItem";
-            pagamentosToolStripMenuItem.Size = new Size(104, 24);
+            pagamentosToolStripMenuItem.Size = new Size(85, 20);
             pagamentosToolStripMenuItem.Text = "Pagamentos";
             pagamentosToolStripMenuItem.Click += pagamentosToolStripMenuItem_Click;
             // 
             // perfilToolStripMenuItem
             // 
             perfilToolStripMenuItem.Name = "perfilToolStripMenuItem";
-            perfilToolStripMenuItem.Size = new Size(56, 24);
+            perfilToolStripMenuItem.Size = new Size(46, 20);
             perfilToolStripMenuItem.Text = "Perfil";
             perfilToolStripMenuItem.Click += perfilToolStripMenuItem_Click;
             // 
@@ -96,17 +97,18 @@
             // 
             titleLabel.AutoSize = true;
             titleLabel.Font = new Font("Segoe UI", 20F);
-            titleLabel.Location = new Point(52, 37);
+            titleLabel.Location = new Point(46, 28);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(255, 46);
+            titleLabel.Size = new Size(204, 37);
             titleLabel.TabIndex = 6;
             titleLabel.Text = "Os seus animais";
             // 
             // cardsFlowLayoutPanel
             // 
-            cardsFlowLayoutPanel.Location = new Point(52, 86);
+            cardsFlowLayoutPanel.Location = new Point(46, 64);
+            cardsFlowLayoutPanel.Margin = new Padding(3, 2, 3, 2);
             cardsFlowLayoutPanel.Name = "cardsFlowLayoutPanel";
-            cardsFlowLayoutPanel.Size = new Size(719, 324);
+            cardsFlowLayoutPanel.Size = new Size(629, 243);
             cardsFlowLayoutPanel.TabIndex = 7;
             // 
             // dataGridView1
@@ -115,11 +117,12 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.ColumnHeadersHeight = 29;
-            dataGridView1.Location = new Point(40, 103);
+            dataGridView1.Location = new Point(35, 77);
+            dataGridView1.Margin = new Padding(3, 2, 3, 2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(719, 322);
+            dataGridView1.Size = new Size(629, 242);
             dataGridView1.TabIndex = 8;
             // 
             // perfilPanel
@@ -135,17 +138,18 @@
             perfilPanel.Controls.Add(donoEmailLabel);
             perfilPanel.Controls.Add(donoEmailText);
             perfilPanel.Controls.Add(donoTelefoneText);
-            perfilPanel.Location = new Point(22, 89);
+            perfilPanel.Location = new Point(19, 67);
+            perfilPanel.Margin = new Padding(3, 2, 3, 2);
             perfilPanel.Name = "perfilPanel";
-            perfilPanel.Size = new Size(766, 321);
+            perfilPanel.Size = new Size(670, 241);
             perfilPanel.TabIndex = 9;
             // 
             // cancelBtn
             // 
-            cancelBtn.Location = new Point(226, 249);
+            cancelBtn.Location = new Point(198, 187);
             cancelBtn.Margin = new Padding(2);
             cancelBtn.Name = "cancelBtn";
-            cancelBtn.Size = new Size(94, 29);
+            cancelBtn.Size = new Size(82, 22);
             cancelBtn.TabIndex = 42;
             cancelBtn.Text = "Cancelar";
             cancelBtn.UseVisualStyleBackColor = true;
@@ -153,10 +157,10 @@
             // 
             // okBtn
             // 
-            okBtn.Location = new Point(128, 249);
+            okBtn.Location = new Point(112, 187);
             okBtn.Margin = new Padding(2);
             okBtn.Name = "okBtn";
-            okBtn.Size = new Size(94, 29);
+            okBtn.Size = new Size(82, 22);
             okBtn.TabIndex = 41;
             okBtn.Text = "OK";
             okBtn.UseVisualStyleBackColor = true;
@@ -164,10 +168,10 @@
             // 
             // editBtn
             // 
-            editBtn.Location = new Point(30, 249);
+            editBtn.Location = new Point(26, 187);
             editBtn.Margin = new Padding(2);
             editBtn.Name = "editBtn";
-            editBtn.Size = new Size(94, 29);
+            editBtn.Size = new Size(82, 22);
             editBtn.TabIndex = 40;
             editBtn.Text = "Editar";
             editBtn.UseVisualStyleBackColor = true;
@@ -176,87 +180,88 @@
             // donoEnderecoLabel
             // 
             donoEnderecoLabel.AutoSize = true;
-            donoEnderecoLabel.Location = new Point(30, 182);
+            donoEnderecoLabel.Location = new Point(26, 136);
             donoEnderecoLabel.Margin = new Padding(2, 0, 2, 0);
             donoEnderecoLabel.Name = "donoEnderecoLabel";
-            donoEnderecoLabel.Size = new Size(71, 20);
+            donoEnderecoLabel.Size = new Size(56, 15);
             donoEnderecoLabel.TabIndex = 39;
             donoEnderecoLabel.Text = "Endereço";
             // 
             // donoEnderecoText
             // 
-            donoEnderecoText.Location = new Point(30, 204);
+            donoEnderecoText.Location = new Point(26, 153);
             donoEnderecoText.Margin = new Padding(2);
             donoEnderecoText.Name = "donoEnderecoText";
-            donoEnderecoText.Size = new Size(386, 27);
+            donoEnderecoText.Size = new Size(338, 23);
             donoEnderecoText.TabIndex = 38;
             // 
             // donoNomeLabel
             // 
             donoNomeLabel.AutoSize = true;
-            donoNomeLabel.Location = new Point(30, 25);
+            donoNomeLabel.Location = new Point(26, 19);
             donoNomeLabel.Margin = new Padding(2, 0, 2, 0);
             donoNomeLabel.Name = "donoNomeLabel";
-            donoNomeLabel.Size = new Size(50, 20);
+            donoNomeLabel.Size = new Size(40, 15);
             donoNomeLabel.TabIndex = 33;
             donoNomeLabel.Text = "Nome";
             // 
             // donoNomeText
             // 
-            donoNomeText.Location = new Point(30, 47);
+            donoNomeText.Location = new Point(26, 35);
             donoNomeText.Margin = new Padding(2);
             donoNomeText.Name = "donoNomeText";
-            donoNomeText.Size = new Size(386, 27);
+            donoNomeText.Size = new Size(338, 23);
             donoNomeText.TabIndex = 31;
             // 
             // donoTelefoneLabel
             // 
             donoTelefoneLabel.AutoSize = true;
-            donoTelefoneLabel.Location = new Point(30, 76);
+            donoTelefoneLabel.Location = new Point(26, 57);
             donoTelefoneLabel.Margin = new Padding(2, 0, 2, 0);
             donoTelefoneLabel.Name = "donoTelefoneLabel";
-            donoTelefoneLabel.Size = new Size(66, 20);
+            donoTelefoneLabel.Size = new Size(52, 15);
             donoTelefoneLabel.TabIndex = 35;
             donoTelefoneLabel.Text = "Telefone";
             // 
             // donoEmailLabel
             // 
             donoEmailLabel.AutoSize = true;
-            donoEmailLabel.Location = new Point(30, 129);
+            donoEmailLabel.Location = new Point(26, 97);
             donoEmailLabel.Margin = new Padding(2, 0, 2, 0);
             donoEmailLabel.Name = "donoEmailLabel";
-            donoEmailLabel.Size = new Size(46, 20);
+            donoEmailLabel.Size = new Size(36, 15);
             donoEmailLabel.TabIndex = 37;
             donoEmailLabel.Text = "Email";
             // 
             // donoEmailText
             // 
-            donoEmailText.Location = new Point(30, 153);
+            donoEmailText.Location = new Point(26, 115);
             donoEmailText.Margin = new Padding(2);
             donoEmailText.Name = "donoEmailText";
-            donoEmailText.Size = new Size(386, 27);
+            donoEmailText.Size = new Size(338, 23);
             donoEmailText.TabIndex = 36;
             // 
             // donoTelefoneText
             // 
-            donoTelefoneText.Location = new Point(30, 100);
+            donoTelefoneText.Location = new Point(26, 75);
             donoTelefoneText.Margin = new Padding(2);
             donoTelefoneText.Name = "donoTelefoneText";
-            donoTelefoneText.Size = new Size(386, 27);
+            donoTelefoneText.Size = new Size(338, 23);
             donoTelefoneText.TabIndex = 34;
             // 
             // DonoForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(perfilPanel);
+            ClientSize = new Size(700, 338);
             Controls.Add(dataGridView1);
             Controls.Add(titleLabel);
             Controls.Add(menuStrip1);
             Controls.Add(cardsFlowLayoutPanel);
+            Controls.Add(perfilPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "DonoForm";
             Text = "Bem Vindo Dono";
             menuStrip1.ResumeLayout(false);

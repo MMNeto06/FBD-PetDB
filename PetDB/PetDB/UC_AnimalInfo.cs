@@ -72,7 +72,7 @@ namespace PetDB
                 return;
 
             entity = "Consulta";
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(@PetId, NULL, DEFAULT, NULL) ORDER BY [Data] DESC", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetAppointmentInfo(@PetId, NULL, DEFAULT, DEFAULT, NULL) ORDER BY [Data] DESC", cn);
             cmd.Parameters.AddWithValue("@PetId", _animal.Numero);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
@@ -110,7 +110,7 @@ namespace PetDB
                 return;
 
             entity = "Prescricao";
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionsByPet(@PetId)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetPrescriptionInfo(@PetId, DEFAULT, DEFAULT, DEFAULT, DEFAULT)", cn);
             cmd.Parameters.AddWithValue("@PetId", _animal.Numero);
             SqlDataReader reader = cmd.ExecuteReader();
             listBox1.Items.Clear();
@@ -191,6 +191,7 @@ namespace PetDB
 
             UC_ShowReport uc = new UC_ShowReport();
             uc.setReportText(reportContent);
+            uc.SetMethod("View");
 
             PopUpForm popup = new PopUpForm(uc, "Relatório da Consulta");
             popup.ShowDialog();
@@ -248,7 +249,7 @@ namespace PetDB
                         ShowConsulta();
                         break;
                     case "Prescricao":
-                        //ShowPrescription();
+                        ShowPrescription();
                         break;
                     default:
                         break;

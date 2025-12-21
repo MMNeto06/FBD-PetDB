@@ -5,7 +5,6 @@ RETURNS TABLE
 AS 
 	RETURN(SELECT Codigo, Descricao AS Nome, Dose FROM PETDB_Medicamento
 	WHERE IsActive = @IsActive AND (@Search IS NULL OR Descricao LIKE '%' + @Search + '%'))
-	--ORDER BY Descricao
 GO
 
 CREATE FUNCTION dbo.fn_GetAnimalsBySpecie (@specieID INT)
@@ -15,7 +14,6 @@ AS
 	SELECT a.Nome 
 	FROM PETDB_Animal as a
 	WHERE a.Especie = @specieID AND a.IsActive = 1)
-	-- ORDER BY a.Nome
 GO
 
 CREATE FUNCTION dbo.fn_GetSpecieInfo (@IsActive BIT = 1, @Search VARCHAR(64) = NULL)
@@ -26,20 +24,6 @@ RETURN
     SELECT *
     FROM PETDB_Especie
     WHERE IsActive = @IsActive AND (@Search IS NULL OR Descricao LIKE '%' + @Search + '%')
-    -- ORDER BY Descricao
-);
-GO
-
-
-CREATE FUNCTION dbo.fn_GetSpecieName (@SpecieID INT) -- possivelmente obsoleto, não encontro referência a isto 
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT Descricao
-    FROM PETDB_Especie
-    WHERE Codigo = @SpecieID AND IsActive = 1
-    -- ORDER BY Descricao
 );
 GO
 
@@ -51,7 +35,6 @@ RETURN
     SELECT *
     FROM PETDB_Especialidade
     WHERE IsActive = @IsActive AND (@Search IS NULL OR Descricao LIKE '%' + @Search + '%')
-    -- ORDER BY Descricao
 );
 GO
 
@@ -63,7 +46,6 @@ RETURN
     SELECT v.Nome
     FROM PETDB_MedicoVeterinario v
     WHERE v.Especialidade = @SpecialityID AND v.IsActive = 1
-    -- ORDER BY v.Nome
 );
 GO
 
@@ -74,7 +56,6 @@ AS
 	FROM PETDB_PrescricaoMedicamento as pm 
 	JOIN PETDB_Medicamento as m ON pm.CodigoMedicamento = m.Codigo
 	WHERE pm.NumeroPrescricao = @prescriptionID AND m.IsActive = 1 )
-	-- ORDER BY m.Descricao;
 GO
 
 CREATE FUNCTION dbo.fn_GetPrescriptionInfo(
@@ -91,7 +72,6 @@ AS
 	JOIN PETDB_MedicoVeterinario as m ON pm.NumeroOMVMedico = m.NumOMV
 	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR m.NumOMV = @VetOMV) AND (@ClinicNIF IS NULL OR m.Clinica = @ClinicNIF)
 	AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND p.IsActive = @IsActive
-	-- ORDER BY p.[Data] DESC;
 ) 
 GO 
 
@@ -117,7 +97,6 @@ AS
 	FROM PETDB_ConsultaTratamento as ct
 	JOIN PETDB_Tratamento as t ON ct.CodigoTratamento = t.Codigo
 	WHERE ct.IdConsulta = @appointmentID
-	-- ORDER BY Descricao;
 ) 
 GO 
 
@@ -143,7 +122,6 @@ AS
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
 	WHERE (@OwnerNIF IS NULL OR a.Dono = @OwnerNIF) AND (@ClinicNIF IS NULL OR v.Clinica = @ClinicNIF) AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND p.IsActive = @IsActive
-	-- ORDER BY p.[Data] DESC;
 ) 
 GO
 
@@ -160,7 +138,6 @@ AS
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
 	WHERE (@PetId IS NULL OR a.Numero = @PetId) AND (@VetOMV IS NULL OR v.NumOMV = @VetOMV) AND 
 	(@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%') AND (@ClinicNIF IS NULL OR v.Clinica = @ClinicNIF) AND c.IsActive = @IsActive
-	-- ORDER BY c.[Data] DESC;
 ) 
 GO 
 
@@ -173,7 +150,6 @@ AS
 
 	SELECT * FROM PETDB_ClinicaVeterinaria
 	WHERE (@ClinicNIF IS NULL OR NIF=@ClinicNIF) AND IsActive = @IsActive AND (@Search IS NULL OR Nome LIKE '%' + @Search + '%')
-	-- ORDER BY Nome;
 )
 GO
 
@@ -194,7 +170,6 @@ RETURN
     JOIN PETDB_ClinicaVeterinaria c ON v.Clinica = c.NIF
     WHERE (@ClinicNIF IS NULL OR c.NIF = @ClinicNIF) AND (@VetOMV IS NULL OR v.NumOMV = @VetOMV) AND
 	(@Search IS NULL OR v.Nome LIKE '%' + @Search + '%') AND v.IsActive = @IsActive
-    -- ORDER BY v.Nome
 );
 GO
 
@@ -209,7 +184,6 @@ AS
 	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
 	JOIN PETDB_Dono as d ON d.NIF = a.Dono
 	WHERE (@OwnerNIF IS NULL OR d.NIF = @OwnerNIF) AND (@Search IS NULL OR a.Nome LIKE '%' + @Search + '%') AND a.IsActive = @IsActive
-	-- ORDER BY a.Nome;
 )
 GO
 
@@ -223,62 +197,7 @@ AS
 
 	SELECT * FROM PETDB_Dono
 	WHERE (@OwnerNIF IS NULL OR NIF=@OwnerNIF) AND (@Search IS NULL OR Nome LIKE '%' + @Search + '%') AND IsActive = @IsActive
-	-- ORDER BY Nome;
 ) 
-GO
-
-CREATE FUNCTION dbo.fn_GetPetsByClinic
-		(@ClinicNIF int, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
-RETURNS TABLE
-AS
- 
-	RETURN( 
-
-	SELECT a.Numero, a.Nome, a.DataNascimento, a.Peso, a.Sexo, d.Nome as Dono, e.Descricao as Especie , d.NIF as DonoNIF
-	FROM PETDB_Animal as a
-	JOIN PETDB_Especie as e ON e.Codigo = a.Especie
-	JOIN PETDB_Consulta as c ON a.Numero=Animal
-	JOIN PETDB_MedicoVeterinario as m ON c.Medico=m.NumOMV
-	JOIN PETDB_Dono as d ON d.NIF = a.Dono
-	WHERE m.Clinica=@ClinicNIF AND a.IsActive = @IsActive AND (@Search IS NULL OR  a.Nome LIKE '%' + @Search + '%')
-	-- ORDER BY a.Nome;
-)
-GO
-
-CREATE FUNCTION dbo.fn_GetPrescriptionsByPet
-		(@PetNum int)
-RETURNS TABLE
-AS 
-
-	RETURN( 
-
-	SELECT * FROM PETDB_Prescricao
-	WHERE Animal=@PetNum AND IsActive = 1
-	-- ORDER BY [Data] DESC; 
-) 
-GO
-
-
-
-CREATE FUNCTION dbo.fn_GetSpecialtyTable ()  -- usado no login, provavelment pode ser substituido
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT *
-    FROM PETDB_Especialidade
-    WHERE IsActive = 1
-    -- ORDER BY Descricao
-);
-GO
-
-CREATE FUNCTION dbo.fn_GetMedicByOMV --pode ser trocada provavelmente
-	(@MedicOMV int)
-RETURNS TABLE
-AS
-	RETURN(
-	SELECT * FROM PETDB_MedicoVeterinario WHERE NumOMV=@MedicOMV AND IsActive = 1
-)
 GO
 
 CREATE FUNCTION dbo.fn_GetPaymentAppointment
@@ -323,16 +242,6 @@ AS
 ) 
 GO
 
-CREATE FUNCTION dbo.fn_GetMostRecentAppointmentId() -- possivelmente obsoleto
-RETURNS TABLE
-AS 
-
-	RETURN( 
-
-	SELECT TOP 1 Id FROM PETDB_Consulta
-	ORDER BY Id DESC
-) 
-GO
 
 CREATE FUNCTION dbo.fn_GetPrescriptionDate
 	(@PrescriptionId int)
@@ -356,7 +265,6 @@ AS
 	JOIN PETDB_Animal as a ON c.Animal = a.Numero
 	JOIN PETDB_MedicoVeterinario as v ON c.Medico = v.NumOMV
 	WHERE m.Codigo = @MethodId AND p.IsActive = 1
-	--ORDER BY p.[Data] DESC;
 )
 GO 
 
@@ -372,14 +280,4 @@ AS
 	JOIN PETDB_Animal as a ON a.Numero = c.Animal
 	WHERE ct.CodigoTratamento = @TreatmentId AND c.IsActive = 1
 )
-GO
-
-CREATE FUNCTION dbo.fn_GetOwnersByClinic
-	(@ClinicNIF int, @IsActive BIT = 1, @Search VARCHAR(64) = NULL)
-RETURNS TABLE 
-AS
-	RETURN (SELECT DISTINCT d.NIF, d.Nome, d.Telefone, d.Email, d.Endereco 
-		FROM dbo.fn_GetPetsByClinic(@ClinicNIF, @IsActive, NULL) AS p 
-		JOIN PETDB_Dono as d ON d.NIF = p.DonoNIF
-		WHERE d.IsActive = @IsActive AND (@Search IS NULL OR  d.Nome LIKE '%' + @Search + '%')); 
 GO

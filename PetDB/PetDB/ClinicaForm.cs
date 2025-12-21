@@ -68,6 +68,35 @@ namespace PetDB
             this.Close();
         }
 
+        protected override void AtualizarBotoesAcao()
+        {
+            string[] abasBloqueadas = { "Medicamento", "Especialidade", "Especie" };
+            string[] restrictedAbas = { "Pagamento", "Prescricao", "MetodoPagamento", "Tratamento"};
+            if (abasBloqueadas.Contains(base.entity))
+            {
+                addBtn.Visible = false;
+                editBtn.Visible = false;
+                remBtn.Visible = false;
+            } else if (restrictedAbas.Contains(base.entity))
+            {
+                addBtn.Visible = true;
+                editBtn.Visible = false;
+                remBtn.Visible = false;
+            } else
+            {
+                addBtn.Visible = true;
+                editBtn.Visible = true;
+                remBtn.Visible = true;
+            }
+
+            if (base.entity != "PerfilClinica")
+            {
+                perfilPanel.Visible = false;
+            }
+            else
+                perfilPanel.Visible = true; 
+        }
+
         private String GetThisClinicName()
         {
             List<CliVet> cvs = GetClinicasVeterinarias("");
@@ -140,77 +169,6 @@ namespace PetDB
             return vets;
         }
 
-        protected override List<Owner> GetDonos(String searchContent)
-        {
-            if (!verifySGBDConnection())
-                return null;
-
-            List<Owner> owners = new List<Owner>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetOwnersByClinic(@ClinicNIF, @IsActive, @Search) ORDER BY Nome", cn);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@ClinicNIF", SqlDbType.Int).Value = this.nif;
-            cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = (base.tab == "Restaurar") ? 0 : 1;
-            if (!string.IsNullOrWhiteSpace(searchContent))
-            {
-                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
-            }
-            else
-            {
-                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
-            }
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                Owner owner = new Owner();
-                owner.NIF = reader["NIF"].ToString();
-                owner.Nome = reader["Nome"].ToString();
-                owner.Telefone = reader["Telefone"].ToString();
-                owner.Email = reader["Email"].ToString();
-                owner.Endereco = reader["Endereco"].ToString();
-                owners.Add(owner);
-            }
-            reader.Close();
-            return owners;
-        }
-
-        protected override List<Pet> GetAnimais(String searchContent)
-        {
-            if (!verifySGBDConnection())
-                return null;
-
-            List<Pet> pets = new List<Pet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.fn_GetPetsByClinic(@ClinicNIF, @IsActive, @Search) ORDER BY Nome", cn);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@ClinicNIF", SqlDbType.Int).Value = this.nif;
-            cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = (base.tab == "Restaurar") ? 0 : 1;
-            if (!string.IsNullOrWhiteSpace(searchContent))
-            {
-                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = searchContent;
-            }
-            else
-            {
-                cmd.Parameters.Add("@Search", SqlDbType.VarChar, 64).Value = DBNull.Value;
-            }
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                Pet pet = new Pet();
-                pet.Numero = reader["Numero"].ToString();
-                pet.Nome = reader["Nome"].ToString();
-                pet.DataNascimento = ((DateTime)reader["DataNascimento"]).ToString("dd/MM/yyyy");
-                pet.Sexo = reader["Sexo"].ToString();
-                pet.Peso = reader["Peso"].ToString();
-                pet.Especie = reader["Especie"].ToString();
-                pet.Dono = reader["Dono"].ToString();
-                pets.Add(pet);
-            }
-            reader.Close();
-            cn.Close();
-
-            return pets;
-        }
 
         protected override List<Appointment> GetConsultas(String searchContent)
         {
@@ -435,6 +393,7 @@ namespace PetDB
 
         private void perfilToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            base.entity = "PerfilClinica"; 
             perfilPanel.Visible = true;
             clinicaPerfilBtnCancelar.Visible = false;
             clinicaPerfilBtnOK.Visible = false;
@@ -485,6 +444,24 @@ namespace PetDB
         {
             UpdateClinicInfo();
             perfilToolStripMenuItem_Click(sender, e); 
+        }
+
+        protected override void DeleteTuples(String sp, int pk, String param)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            cn.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            SqlCommand cmd = new SqlCommand(sp, cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue(param, pk);
+            cmd.Parameters.AddWithValue("@DeletedBy", GetThisClinicName());
+            ExecuteInsertSP(cmd);
+
+            cn.InfoMessage -= new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            cn.Close();
         }
     }
 }

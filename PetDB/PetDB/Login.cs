@@ -169,7 +169,7 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecialtyTable() ORDER BY Descricao", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetSpecialityInfo(DEFAULT, DEFAULT) ORDER BY Descricao", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -263,8 +263,8 @@ namespace PetDB
                     }
                     else if (idType == "Medico")
                     {
-                        cmd = new SqlCommand("SELECT * FROM fn_GetMedicByOMV(@MedicOMV)", cn);
-                        cmd.Parameters.AddWithValue("@MedicOMV", id);
+                        cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(DEFAULT, @VetOMV, DEFAULT, DEFAULT)", cn);
+                        cmd.Parameters.AddWithValue("@VetOMV", id);
                     }
                     else
                     {

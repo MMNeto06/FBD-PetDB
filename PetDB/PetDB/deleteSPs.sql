@@ -273,7 +273,7 @@ BEGIN
                 DELETE FROM PETDB_Medicamento
                 WHERE Codigo = @Codigo;
 
-                PRINT 'Medicamento removido com sucesso! Existem dependentes ativos.';
+                PRINT 'Medicamento removido com sucesso!';
             COMMIT TRANSACTION SCHEDULEDELETE
         END TRY 
         BEGIN CATCH 
