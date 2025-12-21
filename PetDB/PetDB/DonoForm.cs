@@ -20,9 +20,28 @@ namespace PetDB
             InitializeComponent();
             this.loginPage = loginPage;
             this.nif = nif;
-            this.Text = "Bem Vindo Dono";
+            this.Text = "Bem Vindo " + getDonoName();
             animaisToolStripMenuItem_Click(null, null);
         }
+
+        public String getDonoName()
+        {
+            if (!verifySGBDConnection())
+                return "";
+
+            String d = "";
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetOwnerTable(@OwnerNIF, DEFAULT, NULL) ORDER BY Nome", cn);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@OwnerNIF", this.nif);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                d = reader["Nome"].ToString();
+            }
+            reader.Close();
+            cn.Close();
+            return d;
+        } 
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -182,7 +201,9 @@ namespace PetDB
                 donoEnderecoText.Text = reader["Endereco"].ToString();
                 donoTelefoneText.Text = reader["Telefone"].ToString();
             }
+            reader.Close();
             cn.Close();
+            this.Text = "Bem Vindo " + donoNomeText.Text;
         }
         private bool ExecuteInsertSP(SqlCommand cmd)
         {
@@ -221,7 +242,7 @@ namespace PetDB
         private void okBtn_Click(object sender, EventArgs e)
         {
             DonoTuples("SP_UpdateOwner", "Informações atualizadas com sucesso!");
-            donoBaseControls();
+            perfilToolStripMenuItem_Click(sender, e);
         }
 
         private void editBtn_Click(object sender, EventArgs e)

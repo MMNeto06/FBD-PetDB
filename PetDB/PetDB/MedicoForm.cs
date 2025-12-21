@@ -22,7 +22,7 @@ namespace PetDB
             InitializeComponent();
             this.loginPage = loginPage;
             this.omv = omv;
-            //this.Text = "Bem Vindo Médico";
+            this.Text = "Bem Vindo " + getVetName();
             consultasToolStripMenuItem_Click(this, new EventArgs());
         }
 
@@ -41,6 +41,25 @@ namespace PetDB
         private SqlConnection getSGBDConnection()
         {
             return new SqlConnection("data source= localhost\\SQLEXPRESS ;integrated security=true;initial catalog=PETDB;TrustServerCertificate=true");
+        }
+
+        private String getVetName()
+        {
+            if (!verifySGBDConnection())
+                return "";
+
+            String v = "";
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetVetInfo(NULL, @VetOMV, DEFAULT, NULL) ORDER BY NOME", cn);
+            cmd.Parameters.AddWithValue("@VetOMV", this.omv);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                v = reader["Nome"].ToString();
+            }
+            reader.Close();
+            cn.Close();
+            return v;
         }
 
         private bool verifySGBDConnection()
@@ -141,6 +160,7 @@ namespace PetDB
             }
             reader.Close();
             cn.Close();
+            this.Text = "Bem Vindo " + medicoNomeText.Text;
 
         }
 
@@ -884,7 +904,7 @@ namespace PetDB
                 return null;
 
             List<CliVet> clinicas = new List<CliVet>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT, DEFAULT) ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetClinicTable(DEFAULT, DEFAULT, DEFAULT) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
