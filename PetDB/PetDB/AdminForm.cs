@@ -29,9 +29,10 @@ namespace PetDB
         public AdminForm(Login loginPage) : this()
         {
             this.loginPage = loginPage;
+            this.MinimumSize = this.Size;
             registarTabControl.Visible = true;
             consultarTabControl.Visible = false;
-            auditLogDataGrid.Visible = false; 
+            auditLogDataGrid.Visible = false;
             clinicaBaseControls();
             registarToolStripMenuItem_Click(null, null);
         }
@@ -69,7 +70,9 @@ namespace PetDB
             tab = "Registar";
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
-            auditLogDataGrid.Visible = false; 
+            auditLogDataGrid.Visible = false;
+            listBox1.Visible = true;
+            searchTextBox.Visible = true;
             generalBaseControls();
             registarTabControl.SelectedIndex = 0;
             SelecionarRegistarAbaInicial(sender, e);
@@ -82,12 +85,14 @@ namespace PetDB
 
         private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Size = new Size(679, 352); 
+            this.Size = new Size(679, 352);
             tab = "Consultar";
             option = "";
             consultarTabControl.Visible = true;
             registarTabControl.Visible = false;
-            auditLogDataGrid.Visible = false; 
+            auditLogDataGrid.Visible = false;
+            listBox1.Visible = true;
+            searchTextBox.Visible = true;
             addBtn.Visible = false;
             editBtn.Visible = false;
             remBtn.Visible = false;
@@ -120,7 +125,9 @@ namespace PetDB
             RestaurarControls();
             consultarTabControl.Visible = false;
             registarTabControl.Visible = true;
-            auditLogDataGrid.Visible = false; 
+            auditLogDataGrid.Visible = false;
+            listBox1.Visible = true;
+            searchTextBox.Visible = true;
             registarTabControl.SelectedIndex = 0;
             SelecionarRegistarAbaInicial(sender, e);
         }
@@ -248,7 +255,7 @@ namespace PetDB
 
         private void donoEditControls()
         {
-            donoNifText.Enabled = true;
+            donoNifText.Enabled = false;
             donoNomeText.Enabled = true;
             donoTelefoneText.Enabled = true;
             donoEmailText.Enabled = true;
@@ -1191,7 +1198,7 @@ namespace PetDB
                 prescription.Numero = reader["Numero"].ToString();
                 prescription.Data = ((DateTime)reader["Data"]).ToString("dd/MM/yyyy");
                 prescription.Animal = reader["Animal"].ToString();
-                prescription.Medico = reader["Medico"].ToString();  
+                prescription.Medico = reader["Medico"].ToString();
                 prescriptions.Add(prescription);
             }
             reader.Close();
@@ -3744,9 +3751,18 @@ namespace PetDB
             if (!verifySGBDConnection())
                 return;
 
-            this.Size = new Size(1000, 500);
+            this.Size = new Size(1300, 700);
             auditLogDataGrid.Visible = true;
-
+            consultarTabControl.Visible = false;
+            registarTabControl.Visible = false;
+            listBox1.Visible = false;
+            searchTextBox.Visible = false;
+            addBtn.Visible = false;
+            editBtn.Visible = false;
+            remBtn.Visible = false;
+            okBtn.Visible = false;
+            cancelBtn.Visible = false;
+            btnRestaurar.Visible = false;
             string query = @"
                 SELECT Entidade,
                        Identificador,
@@ -3801,7 +3817,7 @@ namespace PetDB
 
             uc.SetTreatments(getAppointmentTreatmentsById(appointmentID));
 
-            cn.Close(); 
+            cn.Close();
         }
 
         public void RemoveMedFromPrescription(int medID, UC_ListMeds uc)

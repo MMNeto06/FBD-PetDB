@@ -19,6 +19,7 @@ namespace PetDB
         public ClinicaForm(Login loginPage, int nif) : base()
         {
             InitializeComponent();
+            this.MinimumSize = this.Size;
             base.loginPage = loginPage;
             this.nif = nif;
             base.nif = this.nif;
