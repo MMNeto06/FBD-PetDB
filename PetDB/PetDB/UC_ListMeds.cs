@@ -69,6 +69,11 @@ namespace PetDB
 
         private void listMedsBtnRemove_Click(object sender, EventArgs e)
         {
+            Med m = (Med)this.listBoxMeds.SelectedItem; 
+            if (m != null)
+            {
+                mainForm.RemoveMedFromPrescription(int.Parse(m.Codigo), this);
+            }
 
         }
     }

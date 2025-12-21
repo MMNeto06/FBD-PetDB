@@ -2222,7 +2222,7 @@ namespace PetDB
             MessageBox.Show(e.Message, "Info do SQL Server", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        protected virtual void DeleteTuples(String sp, int pk, String param)
+        public virtual void DeleteTuples(String sp, int pk, String param)
         {
             if (!verifySGBDConnection())
                 return;
@@ -3781,6 +3781,49 @@ namespace PetDB
                     MessageBoxIcon.Error
                 );
             }
+        }
+
+        public void RemoveTreatmentFromAppointment(int treatmentID, UC_ListTreatments uc)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            cn.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            int appointmentID = int.Parse(consultaIdText.Text);
+            SqlCommand cmd = new SqlCommand("PR_RemoveTreatmentFromAppointment", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@TreatmentID", treatmentID);
+            cmd.Parameters.AddWithValue("@AppointmentID", appointmentID);
+            ExecuteInsertSP(cmd);
+
+            cn.InfoMessage -= new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            uc.SetTreatments(getAppointmentTreatmentsById(appointmentID));
+
+            cn.Close(); 
+        }
+
+        public void RemoveMedFromPrescription(int medID, UC_ListMeds uc)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            cn.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            int prescriptionID = int.Parse(prescricaoNumeroText.Text);
+            SqlCommand cmd = new SqlCommand("PR_RemoveMedFromPrescription", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PrescriptionID", prescriptionID);
+            cmd.Parameters.AddWithValue("@MedID", medID);
+
+            ExecuteInsertSP(cmd);
+
+            cn.InfoMessage -= new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            uc.SetMeds(getPrescriptionMedsById(prescriptionID));
+
+            cn.Close();
         }
     }
 }

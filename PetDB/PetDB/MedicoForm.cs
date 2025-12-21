@@ -440,7 +440,7 @@ namespace PetDB
                 return null;
 
             List<Med> meds = new List<Med>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetMedInfo() ORDER BY Nome", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetMedInfo(DEFAULT, DEFAULT) ORDER BY Nome", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -644,7 +644,7 @@ namespace PetDB
                     break;
                 case "Prescricao":
                     prescricaoEditControls();
-                    prescricaoDateTimePicker.Value = GetDateTimeById("SELECT * FRPM fn_GetPrescriptionDate(@appointmentID)", "@PrescriptionId", int.Parse(prescricaoNumeroText.Text));
+                    prescricaoDateTimePicker.Value = GetDateTimeById("SELECT * FROM fn_GetPrescriptionDate(@PrescriptionID)", "@PrescriptionID", int.Parse(prescricaoNumeroText.Text));
                     LoadAnimaisComboBox(prescricaoAnimalComboBox, prescricaoAnimalText);
                     break;
                 default: break;
@@ -788,7 +788,7 @@ namespace PetDB
                 return null;
 
             List<Treatment> treatments = new List<Treatment>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetTreatments()", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM fn_GetTreatments(DEFAULT, DEFAULT)", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -965,6 +965,54 @@ namespace PetDB
             {
                 MessageBox.Show(msgShow);
             }
+
+            cn.Close();
+        }
+
+        protected void OnInfoMessage(object sender, SqlInfoMessageEventArgs e)
+        {
+            MessageBox.Show(e.Message, "Info do SQL Server", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void RemoveTreatmentFromAppointment(int treatmentID, UC_ListTreatments uc)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            cn.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            int appointmentID = idConsulta;
+            SqlCommand cmd = new SqlCommand("PR_RemoveTreatmentFromAppointment", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@TreatmentID", treatmentID);
+            cmd.Parameters.AddWithValue("@AppointmentID", appointmentID);
+            ExecuteInsertSP(cmd);
+
+            cn.InfoMessage -= new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            uc.SetTreatments(getAppointmentTreatmentsById(appointmentID));
+
+            cn.Close();
+        }
+
+        public void RemoveMedFromPrescription(int medID, UC_ListMeds uc)
+        {
+            if (!verifySGBDConnection())
+                return;
+
+            cn.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            int prescriptionID = int.Parse(prescricaoNumeroText.Text);
+            SqlCommand cmd = new SqlCommand("PR_RemoveMedFromPrescription", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PrescriptionID", prescriptionID);
+            cmd.Parameters.AddWithValue("@MedID", medID);
+
+            ExecuteInsertSP(cmd);
+
+            cn.InfoMessage -= new SqlInfoMessageEventHandler(OnInfoMessage);
+
+            uc.SetMeds(getPrescriptionMedsById(prescriptionID));
 
             cn.Close();
         }

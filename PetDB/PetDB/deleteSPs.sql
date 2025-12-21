@@ -72,7 +72,7 @@ BEGIN
         SELECT 1 FROM PETDB_Consulta WHERE Medico = @NumOMV
     )
     OR EXISTS (
-        SELECT 1 FROM PETDB_PrescricaoMedico WHERE NumeroOMVMedico = @NumOMV
+        SELECT 1 FROM PETDB_Prescricao WHERE VetOMV = @NumOMV
     )
     BEGIN
         BEGIN TRY 
@@ -608,3 +608,68 @@ BEGIN
     END
 END
 GO
+
+CREATE PROCEDURE PR_RemoveTreatmentFromAppointment
+    (@TreatmentID int, @AppointmentID int) 
+AS
+BEGIN 
+    SET NOCOUNT ON; 
+
+    IF NOT EXISTS (SELECT 1 FROM PETDB_Tratamento WHERE Codigo = @TreatmentID) 
+    BEGIN 
+        RAISERROR('Esse tratamento não existe!', 16, 1); 
+        RETURN; 
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM PETDB_Consulta WHERE Id = @AppointmentID) 
+    BEGIN 
+        RAISERROR('Essa consulta não existe!', 16, 1); 
+        RETURN; 
+    END 
+
+    BEGIN TRY 
+        BEGIN TRANSACTION SCHEDULEDELETE 
+            DELETE FROM PETDB_ConsultaTratamento
+            WHERE (IdConsulta = @AppointmentID AND CodigoTratamento = @TreatmentID); 
+        COMMIT TRANSACTION SCHEDULEDELETE
+    END TRY
+    BEGIN CATCH 
+        ROLLBACK TRANSACTION SCHEDULEDELETE
+        RAISERROR('Não foi possível concluir a operação.', 16, 1); 
+    END CATCH 
+
+    PRINT 'Tratamento removido da consulta com sucesso!'; 
+END
+GO
+
+CREATE PROCEDURE PR_RemoveMedFromPrescription
+    (@PrescriptionID int, @MedID int) 
+AS
+BEGIN 
+    SET NOCOUNT ON; 
+
+    IF NOT EXISTS (SELECT 1 FROM PETDB_Prescricao WHERE Numero = @PrescriptionID) 
+    BEGIN 
+        RAISERROR('Essa prescrição não existe!', 16, 1); 
+        RETURN; 
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM PETDB_Medicamento WHERE Codigo = @MedID) 
+    BEGIN 
+        RAISERROR('Esse medicamento não existe!', 16, 1); 
+        RETURN; 
+    END 
+
+    BEGIN TRY 
+        BEGIN TRANSACTION SCHEDULEDELETE 
+            DELETE FROM PETDB_PrescricaoMedicamento
+            WHERE (NumeroPrescricao = @PrescriptionID AND CodigoMedicamento = @MedID); 
+        COMMIT TRANSACTION SCHEDULEDELETE
+    END TRY
+    BEGIN CATCH 
+        ROLLBACK TRANSACTION SCHEDULEDELETE
+        RAISERROR('Não foi possível concluir a operação.', 16, 1); 
+    END CATCH 
+
+    PRINT 'Medicamento removido da prescrição com sucesso!'; 
+END

@@ -75,6 +75,11 @@ namespace PetDB
 
         private void btnRemoveTreatment_Click(object sender, EventArgs e)
         {
+            Treatment t = (Treatment) this.treatmentsListBox.SelectedItem;
+            if (t != null)
+            {
+                mainForm.RemoveTreatmentFromAppointment(int.Parse(t.Codigo), this);
+            }
 
         }
     }

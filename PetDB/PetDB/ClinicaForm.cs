@@ -446,7 +446,7 @@ namespace PetDB
             perfilToolStripMenuItem_Click(sender, e); 
         }
 
-        protected override void DeleteTuples(String sp, int pk, String param)
+        public override void DeleteTuples(String sp, int pk, String param)
         {
             if (!verifySGBDConnection())
                 return;

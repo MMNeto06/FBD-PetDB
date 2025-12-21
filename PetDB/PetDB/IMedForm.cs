@@ -8,5 +8,6 @@ namespace PetDB
     {
         List<Med> GetMeds(String searchContent); 
         void AddMedToPrescription(Med newMed, UC_ListMeds uc);
+        void RemoveMedFromPrescription(int medID, UC_ListMeds uc);
     }
 }

@@ -10,4 +10,6 @@ DROP PROCEDURE PR_SoftDeleteEspecialidade;
 DROP PROCEDURE PR_SoftDeleteEspecie; 
 DROP PROCEDURE PR_SoftDeleteMetodoPagamento; 
 DROP PROCEDURE PR_SoftDeleteTratamento; 
+DROP PROCEDURE PR_RemoveTreatmentFromAppointment; 
+DROP PROCEDURE PR_RemoveMedFromPrescription; 
 GO

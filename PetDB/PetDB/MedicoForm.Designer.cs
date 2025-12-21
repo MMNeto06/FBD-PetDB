@@ -87,35 +87,36 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, consultasToolStripMenuItem, prescricoesToolStripMenuItem, perfilToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 28);
+            menuStrip1.Padding = new Padding(5, 2, 0, 2);
+            menuStrip1.Size = new Size(700, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(39, 24);
+            toolStripMenuItem1.Size = new Size(32, 20);
             toolStripMenuItem1.Text = "<-";
             toolStripMenuItem1.Click += backBtn_Click;
             // 
             // consultasToolStripMenuItem
             // 
             consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
-            consultasToolStripMenuItem.Size = new Size(86, 24);
+            consultasToolStripMenuItem.Size = new Size(71, 20);
             consultasToolStripMenuItem.Text = "Consultas";
             consultasToolStripMenuItem.Click += consultasToolStripMenuItem_Click;
             // 
             // prescricoesToolStripMenuItem
             // 
             prescricoesToolStripMenuItem.Name = "prescricoesToolStripMenuItem";
-            prescricoesToolStripMenuItem.Size = new Size(96, 24);
+            prescricoesToolStripMenuItem.Size = new Size(78, 20);
             prescricoesToolStripMenuItem.Text = "Prescrições";
             prescricoesToolStripMenuItem.Click += prescricoesToolStripMenuItem_Click;
             // 
             // perfilToolStripMenuItem
             // 
             perfilToolStripMenuItem.Name = "perfilToolStripMenuItem";
-            perfilToolStripMenuItem.Size = new Size(56, 24);
+            perfilToolStripMenuItem.Size = new Size(46, 20);
             perfilToolStripMenuItem.Text = "Perfil";
             perfilToolStripMenuItem.Click += perfilToolStripMenuItem_Click;
             // 
@@ -131,33 +132,34 @@
             consultasPanel.Controls.Add(consultaAnimalLabel);
             consultasPanel.Controls.Add(btnConsultarRelatorio);
             consultasPanel.Controls.Add(btnVerTratamentos);
-            consultasPanel.Location = new Point(388, 71);
+            consultasPanel.Location = new Point(340, 53);
+            consultasPanel.Margin = new Padding(3, 2, 3, 2);
             consultasPanel.Name = "consultasPanel";
-            consultasPanel.Size = new Size(364, 253);
+            consultasPanel.Size = new Size(318, 190);
             consultasPanel.TabIndex = 1;
             // 
             // consultaAnimalText
             // 
-            consultaAnimalText.Location = new Point(184, 42);
-            consultaAnimalText.Margin = new Padding(4);
+            consultaAnimalText.Location = new Point(161, 32);
+            consultaAnimalText.Margin = new Padding(4, 3, 4, 3);
             consultaAnimalText.Name = "consultaAnimalText";
-            consultaAnimalText.Size = new Size(166, 27);
+            consultaAnimalText.Size = new Size(146, 23);
             consultaAnimalText.TabIndex = 31;
             // 
             // consultaDataText
             // 
-            consultaDataText.Location = new Point(12, 42);
-            consultaDataText.Margin = new Padding(4);
+            consultaDataText.Location = new Point(10, 32);
+            consultaDataText.Margin = new Padding(4, 3, 4, 3);
             consultaDataText.Name = "consultaDataText";
-            consultaDataText.Size = new Size(166, 27);
+            consultaDataText.Size = new Size(146, 23);
             consultaDataText.TabIndex = 30;
             // 
             // consultaBtnEditarRelatorio
             // 
-            consultaBtnEditarRelatorio.Location = new Point(100, 131);
-            consultaBtnEditarRelatorio.Margin = new Padding(4);
+            consultaBtnEditarRelatorio.Location = new Point(88, 98);
+            consultaBtnEditarRelatorio.Margin = new Padding(4, 3, 4, 3);
             consultaBtnEditarRelatorio.Name = "consultaBtnEditarRelatorio";
-            consultaBtnEditarRelatorio.Size = new Size(166, 29);
+            consultaBtnEditarRelatorio.Size = new Size(145, 22);
             consultaBtnEditarRelatorio.TabIndex = 24;
             consultaBtnEditarRelatorio.Text = "Editar Relatório";
             consultaBtnEditarRelatorio.UseVisualStyleBackColor = true;
@@ -166,37 +168,37 @@
             // consultaDateTimePicker
             // 
             consultaDateTimePicker.Format = DateTimePickerFormat.Custom;
-            consultaDateTimePicker.Location = new Point(11, 40);
-            consultaDateTimePicker.Margin = new Padding(4);
+            consultaDateTimePicker.Location = new Point(10, 30);
+            consultaDateTimePicker.Margin = new Padding(4, 3, 4, 3);
             consultaDateTimePicker.Name = "consultaDateTimePicker";
-            consultaDateTimePicker.Size = new Size(167, 27);
+            consultaDateTimePicker.Size = new Size(147, 23);
             consultaDateTimePicker.TabIndex = 23;
             // 
             // consultaAnimaisComboBox
             // 
             consultaAnimaisComboBox.FormattingEnabled = true;
-            consultaAnimaisComboBox.Location = new Point(185, 40);
-            consultaAnimaisComboBox.Margin = new Padding(4);
+            consultaAnimaisComboBox.Location = new Point(162, 30);
+            consultaAnimaisComboBox.Margin = new Padding(4, 3, 4, 3);
             consultaAnimaisComboBox.Name = "consultaAnimaisComboBox";
-            consultaAnimaisComboBox.Size = new Size(165, 28);
+            consultaAnimaisComboBox.Size = new Size(145, 23);
             consultaAnimaisComboBox.TabIndex = 21;
             // 
             // consultaDataLabel
             // 
             consultaDataLabel.AutoSize = true;
-            consultaDataLabel.Location = new Point(12, 16);
+            consultaDataLabel.Location = new Point(10, 12);
             consultaDataLabel.Margin = new Padding(4, 0, 4, 0);
             consultaDataLabel.Name = "consultaDataLabel";
-            consultaDataLabel.Size = new Size(41, 20);
+            consultaDataLabel.Size = new Size(31, 15);
             consultaDataLabel.TabIndex = 17;
             consultaDataLabel.Text = "Data";
             // 
             // consultaBtnEditarTratamentos
             // 
-            consultaBtnEditarTratamentos.Location = new Point(100, 168);
-            consultaBtnEditarTratamentos.Margin = new Padding(4);
+            consultaBtnEditarTratamentos.Location = new Point(88, 126);
+            consultaBtnEditarTratamentos.Margin = new Padding(4, 3, 4, 3);
             consultaBtnEditarTratamentos.Name = "consultaBtnEditarTratamentos";
-            consultaBtnEditarTratamentos.Size = new Size(165, 29);
+            consultaBtnEditarTratamentos.Size = new Size(144, 22);
             consultaBtnEditarTratamentos.TabIndex = 20;
             consultaBtnEditarTratamentos.Text = "Editar Tratamentos";
             consultaBtnEditarTratamentos.UseVisualStyleBackColor = true;
@@ -205,19 +207,19 @@
             // consultaAnimalLabel
             // 
             consultaAnimalLabel.AutoSize = true;
-            consultaAnimalLabel.Location = new Point(184, 16);
+            consultaAnimalLabel.Location = new Point(161, 12);
             consultaAnimalLabel.Margin = new Padding(4, 0, 4, 0);
             consultaAnimalLabel.Name = "consultaAnimalLabel";
-            consultaAnimalLabel.Size = new Size(56, 20);
+            consultaAnimalLabel.Size = new Size(45, 15);
             consultaAnimalLabel.TabIndex = 18;
             consultaAnimalLabel.Text = "Animal";
             // 
             // btnConsultarRelatorio
             // 
-            btnConsultarRelatorio.Location = new Point(100, 131);
-            btnConsultarRelatorio.Margin = new Padding(4);
+            btnConsultarRelatorio.Location = new Point(88, 98);
+            btnConsultarRelatorio.Margin = new Padding(4, 3, 4, 3);
             btnConsultarRelatorio.Name = "btnConsultarRelatorio";
-            btnConsultarRelatorio.Size = new Size(165, 29);
+            btnConsultarRelatorio.Size = new Size(144, 22);
             btnConsultarRelatorio.TabIndex = 33;
             btnConsultarRelatorio.Text = "Consultar Relatório";
             btnConsultarRelatorio.UseVisualStyleBackColor = true;
@@ -225,10 +227,10 @@
             // 
             // btnVerTratamentos
             // 
-            btnVerTratamentos.Location = new Point(100, 168);
-            btnVerTratamentos.Margin = new Padding(4);
+            btnVerTratamentos.Location = new Point(88, 126);
+            btnVerTratamentos.Margin = new Padding(4, 3, 4, 3);
             btnVerTratamentos.Name = "btnVerTratamentos";
-            btnVerTratamentos.Size = new Size(166, 29);
+            btnVerTratamentos.Size = new Size(145, 22);
             btnVerTratamentos.TabIndex = 32;
             btnVerTratamentos.Text = "Ver Tratamentos";
             btnVerTratamentos.UseVisualStyleBackColor = true;
@@ -237,10 +239,10 @@
             // listBox1
             // 
             listBox1.FormattingEnabled = true;
-            listBox1.Location = new Point(17, 87);
+            listBox1.Location = new Point(15, 65);
             listBox1.Margin = new Padding(2);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(356, 324);
+            listBox1.Size = new Size(312, 244);
             listBox1.TabIndex = 3;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
@@ -256,53 +258,54 @@
             prescricoesPanel.Controls.Add(prescricaoDataText);
             prescricoesPanel.Controls.Add(prescricaoDataLabel);
             prescricoesPanel.Controls.Add(prescricaoBtnEditarMedicamentos);
-            prescricoesPanel.Location = new Point(378, 87);
+            prescricoesPanel.Location = new Point(331, 65);
+            prescricoesPanel.Margin = new Padding(3, 2, 3, 2);
             prescricoesPanel.Name = "prescricoesPanel";
-            prescricoesPanel.Size = new Size(393, 247);
+            prescricoesPanel.Size = new Size(344, 185);
             prescricoesPanel.TabIndex = 0;
             // 
             // prescricaoNumeroText
             // 
-            prescricaoNumeroText.Location = new Point(110, 43);
-            prescricaoNumeroText.Margin = new Padding(4);
+            prescricaoNumeroText.Location = new Point(96, 32);
+            prescricaoNumeroText.Margin = new Padding(4, 3, 4, 3);
             prescricaoNumeroText.Name = "prescricaoNumeroText";
-            prescricaoNumeroText.Size = new Size(169, 27);
+            prescricaoNumeroText.Size = new Size(148, 23);
             prescricaoNumeroText.TabIndex = 26;
             // 
             // prescricaoNumeroLabel
             // 
             prescricaoNumeroLabel.AutoSize = true;
-            prescricaoNumeroLabel.Location = new Point(108, 19);
+            prescricaoNumeroLabel.Location = new Point(94, 14);
             prescricaoNumeroLabel.Margin = new Padding(4, 0, 4, 0);
             prescricaoNumeroLabel.Name = "prescricaoNumeroLabel";
-            prescricaoNumeroLabel.Size = new Size(63, 20);
+            prescricaoNumeroLabel.Size = new Size(51, 15);
             prescricaoNumeroLabel.TabIndex = 25;
             prescricaoNumeroLabel.Text = "Número";
             // 
             // prescricaoAnimalComboBox
             // 
             prescricaoAnimalComboBox.FormattingEnabled = true;
-            prescricaoAnimalComboBox.Location = new Point(215, 98);
-            prescricaoAnimalComboBox.Margin = new Padding(4);
+            prescricaoAnimalComboBox.Location = new Point(188, 74);
+            prescricaoAnimalComboBox.Margin = new Padding(4, 3, 4, 3);
             prescricaoAnimalComboBox.Name = "prescricaoAnimalComboBox";
-            prescricaoAnimalComboBox.Size = new Size(169, 28);
+            prescricaoAnimalComboBox.Size = new Size(148, 23);
             prescricaoAnimalComboBox.TabIndex = 24;
             // 
             // prescricaoDateTimePicker
             // 
             prescricaoDateTimePicker.Format = DateTimePickerFormat.Short;
-            prescricaoDateTimePicker.Location = new Point(10, 99);
-            prescricaoDateTimePicker.Margin = new Padding(4);
+            prescricaoDateTimePicker.Location = new Point(9, 74);
+            prescricaoDateTimePicker.Margin = new Padding(4, 3, 4, 3);
             prescricaoDateTimePicker.Name = "prescricaoDateTimePicker";
-            prescricaoDateTimePicker.Size = new Size(195, 27);
+            prescricaoDateTimePicker.Size = new Size(171, 23);
             prescricaoDateTimePicker.TabIndex = 23;
             // 
             // prescricaoBtnVerMedicamentos
             // 
-            prescricaoBtnVerMedicamentos.Location = new Point(122, 150);
-            prescricaoBtnVerMedicamentos.Margin = new Padding(4);
+            prescricaoBtnVerMedicamentos.Location = new Point(107, 112);
+            prescricaoBtnVerMedicamentos.Margin = new Padding(4, 3, 4, 3);
             prescricaoBtnVerMedicamentos.Name = "prescricaoBtnVerMedicamentos";
-            prescricaoBtnVerMedicamentos.Size = new Size(149, 29);
+            prescricaoBtnVerMedicamentos.Size = new Size(130, 22);
             prescricaoBtnVerMedicamentos.TabIndex = 19;
             prescricaoBtnVerMedicamentos.Text = "Ver Medicamentos";
             prescricaoBtnVerMedicamentos.UseVisualStyleBackColor = true;
@@ -310,46 +313,46 @@
             // 
             // prescricaoAnimalText
             // 
-            prescricaoAnimalText.Location = new Point(215, 98);
-            prescricaoAnimalText.Margin = new Padding(4);
+            prescricaoAnimalText.Location = new Point(188, 74);
+            prescricaoAnimalText.Margin = new Padding(4, 3, 4, 3);
             prescricaoAnimalText.Name = "prescricaoAnimalText";
-            prescricaoAnimalText.Size = new Size(169, 27);
+            prescricaoAnimalText.Size = new Size(148, 23);
             prescricaoAnimalText.TabIndex = 18;
             // 
             // prescricaoAnimalLabel
             // 
             prescricaoAnimalLabel.AutoSize = true;
-            prescricaoAnimalLabel.Location = new Point(215, 74);
+            prescricaoAnimalLabel.Location = new Point(188, 56);
             prescricaoAnimalLabel.Margin = new Padding(4, 0, 4, 0);
             prescricaoAnimalLabel.Name = "prescricaoAnimalLabel";
-            prescricaoAnimalLabel.Size = new Size(56, 20);
+            prescricaoAnimalLabel.Size = new Size(45, 15);
             prescricaoAnimalLabel.TabIndex = 17;
             prescricaoAnimalLabel.Text = "Animal";
             // 
             // prescricaoDataText
             // 
-            prescricaoDataText.Location = new Point(10, 99);
-            prescricaoDataText.Margin = new Padding(4);
+            prescricaoDataText.Location = new Point(9, 74);
+            prescricaoDataText.Margin = new Padding(4, 3, 4, 3);
             prescricaoDataText.Name = "prescricaoDataText";
-            prescricaoDataText.Size = new Size(195, 27);
+            prescricaoDataText.Size = new Size(171, 23);
             prescricaoDataText.TabIndex = 16;
             // 
             // prescricaoDataLabel
             // 
             prescricaoDataLabel.AutoSize = true;
-            prescricaoDataLabel.Location = new Point(10, 76);
+            prescricaoDataLabel.Location = new Point(9, 57);
             prescricaoDataLabel.Margin = new Padding(4, 0, 4, 0);
             prescricaoDataLabel.Name = "prescricaoDataLabel";
-            prescricaoDataLabel.Size = new Size(120, 20);
+            prescricaoDataLabel.Size = new Size(93, 15);
             prescricaoDataLabel.TabIndex = 15;
             prescricaoDataLabel.Text = "Data de Emissão";
             // 
             // prescricaoBtnEditarMedicamentos
             // 
-            prescricaoBtnEditarMedicamentos.Location = new Point(110, 150);
-            prescricaoBtnEditarMedicamentos.Margin = new Padding(4);
+            prescricaoBtnEditarMedicamentos.Location = new Point(96, 112);
+            prescricaoBtnEditarMedicamentos.Margin = new Padding(4, 3, 4, 3);
             prescricaoBtnEditarMedicamentos.Name = "prescricaoBtnEditarMedicamentos";
-            prescricaoBtnEditarMedicamentos.Size = new Size(178, 29);
+            prescricaoBtnEditarMedicamentos.Size = new Size(156, 22);
             prescricaoBtnEditarMedicamentos.TabIndex = 22;
             prescricaoBtnEditarMedicamentos.Text = "Editar Medicamentos";
             prescricaoBtnEditarMedicamentos.UseVisualStyleBackColor = true;
@@ -369,116 +372,117 @@
             perfilPanel.Controls.Add(medicoEmailText);
             perfilPanel.Controls.Add(medicoTelefoneText);
             perfilPanel.Controls.Add(medicoClinicaLabel);
-            perfilPanel.Location = new Point(22, 71);
+            perfilPanel.Location = new Point(19, 53);
+            perfilPanel.Margin = new Padding(3, 2, 3, 2);
             perfilPanel.Name = "perfilPanel";
-            perfilPanel.Size = new Size(391, 294);
+            perfilPanel.Size = new Size(342, 220);
             perfilPanel.TabIndex = 1;
             // 
             // medicoClinicaComboBox
             // 
             medicoClinicaComboBox.FormattingEnabled = true;
-            medicoClinicaComboBox.Location = new Point(24, 257);
-            medicoClinicaComboBox.Margin = new Padding(4);
+            medicoClinicaComboBox.Location = new Point(21, 193);
+            medicoClinicaComboBox.Margin = new Padding(4, 3, 4, 3);
             medicoClinicaComboBox.Name = "medicoClinicaComboBox";
-            medicoClinicaComboBox.Size = new Size(325, 28);
+            medicoClinicaComboBox.Size = new Size(285, 23);
             medicoClinicaComboBox.TabIndex = 49;
             // 
             // medicoEspecialidadeComboBox
             // 
             medicoEspecialidadeComboBox.FormattingEnabled = true;
-            medicoEspecialidadeComboBox.Location = new Point(22, 201);
-            medicoEspecialidadeComboBox.Margin = new Padding(4);
+            medicoEspecialidadeComboBox.Location = new Point(19, 151);
+            medicoEspecialidadeComboBox.Margin = new Padding(4, 3, 4, 3);
             medicoEspecialidadeComboBox.Name = "medicoEspecialidadeComboBox";
-            medicoEspecialidadeComboBox.Size = new Size(327, 28);
+            medicoEspecialidadeComboBox.Size = new Size(287, 23);
             medicoEspecialidadeComboBox.TabIndex = 48;
             // 
             // medicoClinicaText
             // 
-            medicoClinicaText.Location = new Point(23, 258);
+            medicoClinicaText.Location = new Point(20, 194);
             medicoClinicaText.Margin = new Padding(2);
             medicoClinicaText.Name = "medicoClinicaText";
-            medicoClinicaText.Size = new Size(326, 27);
+            medicoClinicaText.Size = new Size(286, 23);
             medicoClinicaText.TabIndex = 47;
             // 
             // medicoEspecialidadeLabel
             // 
             medicoEspecialidadeLabel.AutoSize = true;
-            medicoEspecialidadeLabel.Location = new Point(20, 177);
+            medicoEspecialidadeLabel.Location = new Point(18, 133);
             medicoEspecialidadeLabel.Margin = new Padding(2, 0, 2, 0);
             medicoEspecialidadeLabel.Name = "medicoEspecialidadeLabel";
-            medicoEspecialidadeLabel.Size = new Size(101, 20);
+            medicoEspecialidadeLabel.Size = new Size(78, 15);
             medicoEspecialidadeLabel.TabIndex = 46;
             medicoEspecialidadeLabel.Text = "Especialidade";
             // 
             // medicoEspecialidadeText
             // 
-            medicoEspecialidadeText.Location = new Point(20, 201);
+            medicoEspecialidadeText.Location = new Point(18, 151);
             medicoEspecialidadeText.Margin = new Padding(2);
             medicoEspecialidadeText.Name = "medicoEspecialidadeText";
-            medicoEspecialidadeText.Size = new Size(331, 27);
+            medicoEspecialidadeText.Size = new Size(290, 23);
             medicoEspecialidadeText.TabIndex = 45;
             // 
             // medicoNomeLabel
             // 
             medicoNomeLabel.AutoSize = true;
-            medicoNomeLabel.Location = new Point(20, 16);
+            medicoNomeLabel.Location = new Point(18, 12);
             medicoNomeLabel.Margin = new Padding(2, 0, 2, 0);
             medicoNomeLabel.Name = "medicoNomeLabel";
-            medicoNomeLabel.Size = new Size(50, 20);
+            medicoNomeLabel.Size = new Size(40, 15);
             medicoNomeLabel.TabIndex = 40;
             medicoNomeLabel.Text = "Nome";
             // 
             // medicoNomeText
             // 
-            medicoNomeText.Location = new Point(20, 40);
+            medicoNomeText.Location = new Point(18, 30);
             medicoNomeText.Margin = new Padding(2);
             medicoNomeText.Name = "medicoNomeText";
-            medicoNomeText.Size = new Size(331, 27);
+            medicoNomeText.Size = new Size(290, 23);
             medicoNomeText.TabIndex = 38;
             // 
             // medicoTelefoneLabel
             // 
             medicoTelefoneLabel.AutoSize = true;
-            medicoTelefoneLabel.Location = new Point(18, 68);
+            medicoTelefoneLabel.Location = new Point(16, 51);
             medicoTelefoneLabel.Margin = new Padding(2, 0, 2, 0);
             medicoTelefoneLabel.Name = "medicoTelefoneLabel";
-            medicoTelefoneLabel.Size = new Size(66, 20);
+            medicoTelefoneLabel.Size = new Size(52, 15);
             medicoTelefoneLabel.TabIndex = 42;
             medicoTelefoneLabel.Text = "Telefone";
             // 
             // medicoEmailLabel
             // 
             medicoEmailLabel.AutoSize = true;
-            medicoEmailLabel.Location = new Point(18, 126);
+            medicoEmailLabel.Location = new Point(16, 94);
             medicoEmailLabel.Margin = new Padding(2, 0, 2, 0);
             medicoEmailLabel.Name = "medicoEmailLabel";
-            medicoEmailLabel.Size = new Size(46, 20);
+            medicoEmailLabel.Size = new Size(36, 15);
             medicoEmailLabel.TabIndex = 44;
             medicoEmailLabel.Text = "Email";
             // 
             // medicoEmailText
             // 
-            medicoEmailText.Location = new Point(18, 150);
+            medicoEmailText.Location = new Point(16, 112);
             medicoEmailText.Margin = new Padding(2);
             medicoEmailText.Name = "medicoEmailText";
-            medicoEmailText.Size = new Size(333, 27);
+            medicoEmailText.Size = new Size(292, 23);
             medicoEmailText.TabIndex = 43;
             // 
             // medicoTelefoneText
             // 
-            medicoTelefoneText.Location = new Point(18, 92);
+            medicoTelefoneText.Location = new Point(16, 69);
             medicoTelefoneText.Margin = new Padding(2);
             medicoTelefoneText.Name = "medicoTelefoneText";
-            medicoTelefoneText.Size = new Size(333, 27);
+            medicoTelefoneText.Size = new Size(292, 23);
             medicoTelefoneText.TabIndex = 41;
             // 
             // medicoClinicaLabel
             // 
             medicoClinicaLabel.AutoSize = true;
-            medicoClinicaLabel.Location = new Point(20, 233);
+            medicoClinicaLabel.Location = new Point(18, 175);
             medicoClinicaLabel.Margin = new Padding(2, 0, 2, 0);
             medicoClinicaLabel.Name = "medicoClinicaLabel";
-            medicoClinicaLabel.Size = new Size(53, 20);
+            medicoClinicaLabel.Size = new Size(43, 15);
             medicoClinicaLabel.TabIndex = 36;
             medicoClinicaLabel.Text = "Clínica";
             // 
@@ -486,18 +490,18 @@
             // 
             panelTitleLabel.AutoSize = true;
             panelTitleLabel.Font = new Font("Segoe UI", 15F);
-            panelTitleLabel.Location = new Point(40, 33);
+            panelTitleLabel.Location = new Point(35, 25);
             panelTitleLabel.Name = "panelTitleLabel";
-            panelTitleLabel.Size = new Size(143, 35);
+            panelTitleLabel.Size = new Size(111, 28);
             panelTitleLabel.TabIndex = 0;
             panelTitleLabel.Text = "O seu perfil";
             // 
             // cancelBtn
             // 
-            cancelBtn.Location = new Point(455, 372);
+            cancelBtn.Location = new Point(398, 279);
             cancelBtn.Margin = new Padding(2);
             cancelBtn.Name = "cancelBtn";
-            cancelBtn.Size = new Size(94, 29);
+            cancelBtn.Size = new Size(82, 22);
             cancelBtn.TabIndex = 33;
             cancelBtn.Text = "Cancelar";
             cancelBtn.UseVisualStyleBackColor = true;
@@ -505,10 +509,10 @@
             // 
             // okBtn
             // 
-            okBtn.Location = new Point(580, 372);
+            okBtn.Location = new Point(508, 279);
             okBtn.Margin = new Padding(2);
             okBtn.Name = "okBtn";
-            okBtn.Size = new Size(94, 29);
+            okBtn.Size = new Size(82, 22);
             okBtn.TabIndex = 32;
             okBtn.Text = "OK";
             okBtn.UseVisualStyleBackColor = true;
@@ -516,10 +520,10 @@
             // 
             // editBtn
             // 
-            editBtn.Location = new Point(580, 339);
+            editBtn.Location = new Point(508, 254);
             editBtn.Margin = new Padding(2);
             editBtn.Name = "editBtn";
-            editBtn.Size = new Size(94, 29);
+            editBtn.Size = new Size(82, 22);
             editBtn.TabIndex = 31;
             editBtn.Text = "Editar";
             editBtn.UseVisualStyleBackColor = true;
@@ -527,10 +531,10 @@
             // 
             // addBtn
             // 
-            addBtn.Location = new Point(455, 339);
+            addBtn.Location = new Point(398, 254);
             addBtn.Margin = new Padding(2);
             addBtn.Name = "addBtn";
-            addBtn.Size = new Size(94, 29);
+            addBtn.Size = new Size(82, 22);
             addBtn.TabIndex = 30;
             addBtn.Text = "Adicionar";
             addBtn.UseVisualStyleBackColor = true;
@@ -538,10 +542,9 @@
             // 
             // MedicoForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(perfilPanel);
+            ClientSize = new Size(700, 338);
             Controls.Add(cancelBtn);
             Controls.Add(okBtn);
             Controls.Add(editBtn);
@@ -549,10 +552,12 @@
             Controls.Add(panelTitleLabel);
             Controls.Add(menuStrip1);
             Controls.Add(listBox1);
-            Controls.Add(prescricoesPanel);
             Controls.Add(consultasPanel);
+            Controls.Add(perfilPanel);
+            Controls.Add(prescricoesPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "MedicoForm";
             Text = "Bem Vindo Médico";
             menuStrip1.ResumeLayout(false);
